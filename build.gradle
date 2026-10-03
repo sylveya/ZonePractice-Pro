@@ -1,0 +1,44 @@
+plugins {
+    id 'base'
+    id 'com.gradleup.shadow' version '9.6.1' apply false
+}
+
+def buildVersion = providers.gradleProperty('buildVersion')
+        .orElse(providers.gradleProperty('version')).get()
+
+allprojects {
+    group = 'dev.nandi0813'
+    version = buildVersion
+}
+
+subprojects {
+    apply plugin: 'java-library'
+
+    java {
+        toolchain.languageVersion = JavaLanguageVersion.of(25)
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = 25
+    }
+
+    tasks.withType(ProcessResources).configureEach {
+        filteringCharset = 'UTF-8'
+    }
+}
+
+tasks.named('build') {
+    dependsOn ':core:build', ':distribution:build'
+}
+
+tasks.named('clean') {
+    dependsOn ':core:clean', ':distribution:clean'
+}
+
+tasks.register('printVersion') {
+    description = 'Prints the effective build version.'
+    doLast {
+        println buildVersion
+    }
+}

@@ -1,0 +1,62 @@
+plugins {
+    id 'com.gradleup.shadow'
+}
+
+dependencies {
+    implementation project(':core')
+}
+
+tasks.named('jar') {
+    enabled = false
+}
+
+def pluginJar = tasks.named('shadowJar') {
+    archiveBaseName = 'ZonePracticePro'
+    archiveClassifier = ''
+
+    // ServiceLoader must find relocated MariaDB authentication plugins and JDBC drivers.
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    filesMatching('META-INF/services/**') {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+    mergeServiceFiles()
+
+    exclude 'META-INF/maven/**', 'META-INF/proguard/**'
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+    exclude '**/module-info.class', 'org/intellij/**', 'org/jetbrains/**', 'org/jspecify/**'
+    exclude '**/.DS_Store'
+
+    relocate 'net.megavex.scoreboardlibrary', 'dev.nandi0813.practice.dependencies.sidebar'
+    relocate 'dev.dejvokep.boostedyaml', 'dev.nandi0813.practice.dependencies.boostedyaml'
+    relocate 'net.wesjd.anvilgui', 'dev.nandi0813.practice.dependencies.anvilgui'
+    relocate 'dev.nandi0813.license', 'dev.nandi0813.practice.dependencies.license'
+    relocate 'org.bstats', 'dev.nandi0813.practice.dependencies.bstats'
+    relocate 'dev.faststats', 'dev.nandi0813.practice.dependencies.faststats'
+    relocate 'com.google.gson', 'dev.nandi0813.practice.dependencies.gson'
+    relocate 'org.objectweb.asm', 'dev.nandi0813.practice.dependencies.asm'
+    relocate 'com.zaxxer.hikari', 'dev.nandi0813.practice.dependencies.hikari'
+    relocate 'org.mariadb.jdbc', 'dev.nandi0813.practice.dependencies.mariadb'
+}
+
+def deployToTestServers = tasks.register('deployToTestServers') {
+    group = 'distribution'
+    description = 'Copies the plugin JAR to the local test servers.'
+}
+
+['1.21.11', '1.21.11_base', '26.1'].eachWithIndex { server, index ->
+    def copyPlugin = tasks.register("deployToTestServer${index + 1}", Copy) {
+        from pluginJar.flatMap { it.archiveFile }
+        into rootProject.layout.projectDirectory.dir("test_servers/${server}/plugins")
+        rename { 'ZonePracticePro.jar' }
+    }
+    deployToTestServers.configure {
+        dependsOn copyPlugin
+    }
+}
+
+tasks.named('assemble') {
+    dependsOn pluginJar
+    if (providers.gradleProperty('autoDeploy').map { it.toBoolean() }.getOrElse(false)) {
+        dependsOn deployToTestServers
+    }
+}

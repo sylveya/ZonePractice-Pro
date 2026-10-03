@@ -55,6 +55,26 @@ Use the `/setup` command to create and manage arenas and kits through intuitive 
 
 ---
 
+## 🛠️ Building from source
+
+Install JDK 25 and run the included Gradle Wrapper (use `gradlew.bat` on Windows):
+
+```sh
+./gradlew clean build
+```
+
+The plugin JAR is generated at `distribution/build/libs/ZonePracticePro-7.8.5-SNAPSHOT.jar`.
+The default version is defined in `gradle.properties`. Override it without editing files:
+
+```sh
+./gradlew clean build -PbuildVersion=7.8.5
+```
+
+To build and copy the plugin to the local test servers in `test_servers/`, run
+`./gradlew deployToTestServers` or `./gradlew build -PautoDeploy=true`.
+
+---
+
 ## 💬 Support
 
 Join our [Discord server](https://discord.gg/3t8tZRkJ6H) for help, bug reports, and feature requests.

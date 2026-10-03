@@ -1,8 +1,8 @@
 package dev.nandi0813.practice;
 
 import com.github.retrooper.packetevents.PacketEvents;
-import dev.faststats.bukkit.BukkitMetrics;
-import dev.faststats.core.ErrorTracker;
+import dev.faststats.ErrorTracker;
+import dev.faststats.bukkit.BukkitContext;
 import dev.nandi0813.practice.command.arena.ArenaCommand;
 import dev.nandi0813.practice.command.event.EventCommand;
 import dev.nandi0813.practice.command.ffa.FFACommand;
@@ -91,11 +91,7 @@ public final class ZonePractice extends JavaPlugin {
     private Metrics metrics;
 
     public static final ErrorTracker ERROR_TRACKER = ErrorTracker.contextAware();
-    private final BukkitMetrics faststats_metrics = BukkitMetrics.factory()
-        .token("a515f033e0639d1407b9bd6a926c2efb")
-        .errorTracker(ERROR_TRACKER)
-        .debug(false)
-        .create(this);
+    private BukkitContext faststatsContext;
 
     @Override
     public void onLoad() {
@@ -109,13 +105,18 @@ public final class ZonePractice extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        faststatsContext = new BukkitContext.Factory(this, "a515f033e0639d1407b9bd6a926c2efb")
+                .errorTrackerService(ERROR_TRACKER)
+                .metrics(factory -> factory.create())
+                .create();
+
         miniMessage = MiniMessage.miniMessage();
         entityHider = new EntityHider(this, EntityHider.Policy.BLACKLIST);
         arenaCopyUtilListener = new ArenaCopyUtilListener();
 
         PacketEvents.getAPI().init();
         metrics = new Metrics(this, 34393);
-        faststats_metrics.ready();
+        faststatsContext.ready();
 
         if (VersionChecker.getBukkitVersion() == null) {
             Common.sendConsoleMMMessage("<red>Unsupported server version! Please use 1.21.11 or 26.1.2");
@@ -229,7 +230,8 @@ public final class ZonePractice extends JavaPlugin {
         SidebarManager.getInstance().close();
         InventoryManager.getInstance().setData();
         if (metrics != null) metrics.shutdown();
-        faststats_metrics.shutdown();
+        if (faststatsContext != null) faststatsContext.shutdown();
+        ERROR_TRACKER.detachErrorContext();
         if (database != null) database.close();
         BackendManager.save();
     }
