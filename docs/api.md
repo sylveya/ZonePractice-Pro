@@ -4,6 +4,20 @@
 
 # API
 
+## Gradle
+
+Add JitPack and the API to your plugin's build:
+
+```groovy
+repositories {
+    maven { url = uri('https://jitpack.io') }
+}
+
+dependencies {
+    compileOnly 'com.github.sylveya:ZonePracticePro-Api:2.4.0'
+}
+```
+
 ## Maven
 
 - Add jitpack to repositories and ZonePractice Pro to dependencies:
