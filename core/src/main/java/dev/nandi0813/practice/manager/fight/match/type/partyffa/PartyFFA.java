@@ -150,7 +150,7 @@ public class PartyFFA extends Match {
         if (!players.contains(player)) return;
 
         players.remove(player);
-        MatchManager.getInstance().getPlayerMatches().remove(player);
+        MatchManager.getInstance().getPlayerMatches().remove(player, this);
 
         // Only process quit logic if the match hasn't ended yet
         // When match status is END or OVER, players are being removed as part of cleanup

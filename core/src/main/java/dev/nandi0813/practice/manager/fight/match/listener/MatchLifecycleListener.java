@@ -50,9 +50,9 @@ public class MatchLifecycleListener implements Listener {
     public void onMatchEnd(MatchEndEvent e) {
         Match match = (Match) e.getMatch();
 
-        // Unregister match from manager
+        // If the player already joined a new match, keep that mapping.
         for (Player player : match.getPlayers())
-            MatchManager.getInstance().getPlayerMatches().remove(player);
+            MatchManager.getInstance().getPlayerMatches().remove(player, match);
 
         // A party-vs-party match belongs to both parties, so the ended match
         // must be cleared from all of them, not only the first one found.
