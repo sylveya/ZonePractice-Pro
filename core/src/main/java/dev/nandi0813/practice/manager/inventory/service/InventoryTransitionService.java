@@ -1,6 +1,7 @@
 package dev.nandi0813.practice.manager.inventory.service;
 
 import dev.nandi0813.practice.ZonePractice;
+import dev.nandi0813.practice.manager.fight.match.MatchManager;
 import dev.nandi0813.practice.manager.inventory.Inventory;
 import dev.nandi0813.practice.manager.inventory.InventoryManager;
 import dev.nandi0813.practice.manager.inventory.InventoryUtil;
@@ -21,6 +22,13 @@ public final class InventoryTransitionService {
     }
 
     public void setLobbyInventory(Player player, boolean teleport) {
+        // The old match cleans players up with a delay, so a player may already be
+        // in a new match by the time we get here. If so, don't send them back to the
+        // lobby - otherwise they keep lobby items and can't fight in the new match.
+        if (MatchManager.getInstance().getLiveMatchByPlayer(player) != null) {
+            return;
+        }
+
         Profile profile = ProfileManager.getInstance().getProfile(player);
         profile.setStatus(ProfileStatus.LOBBY);
         dev.nandi0813.practice.manager.fight.util.PlayerUtil.resetAttackSpeed(player);

@@ -1,4 +1,4 @@
-VERSION: 51
+VERSION: 52
 
 CONSOLE-NAME: "<red>Console"
 CANT-USE-CONSOLE: "<red>You can't use this command from the console."
@@ -1323,6 +1323,7 @@ PARTY:
   MATCH-END: "<red>The fight was forced to end because the party has been disbanded!"
   BROADCAST-MSG: "<gold>%player%'s <gray>party is <green>public<gray>. <hover:show_text:'<yellow>Click here to <green>join <yellow>the party.'><click:run_command:/party join %player%><yellow><u>Click here</click></hover> <gray>to join."
   NOT-ENOUGH-PLAYER-FOR-GAME: "<red>The party needs at least two players to be able to start a game."
+  PREVIOUS-MATCH-ENDED: "<red>Your previous party match was ended because a new one was started!"
   NOT-LEADER: "<red>You are not the leader of the party."
   CANT-DECREASE-LIMIT: "<red>You can't decrease the limit further than the number of players in the party."
   PARTY-NOT-PUBLIC: "<red>You have to have a public party for that."
