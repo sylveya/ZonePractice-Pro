@@ -74,9 +74,9 @@ public class PartyManager implements Listener {
     /**
      * Whether the given party currently has a match that is still running.
      * <p>
-     * A party match is only considered active while it is registered among the
-     * live matches, so stale {@code party.match} references left behind after a
-     * match ends (or after a cancelled start) don't block new games.
+     * A match only counts as active while it is registered among the live
+     * matches, so a stale {@code party.match} reference left behind after a
+     * match ends (or after a cancelled start) is ignored.
      *
      * @param party the party to check
      * @return true if the party has an ongoing match

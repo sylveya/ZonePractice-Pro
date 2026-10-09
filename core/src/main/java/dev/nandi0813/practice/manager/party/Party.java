@@ -3,6 +3,7 @@ package dev.nandi0813.practice.manager.party;
 import dev.nandi0813.practice.manager.backend.ConfigManager;
 import dev.nandi0813.practice.manager.backend.LanguageManager;
 import dev.nandi0813.practice.manager.fight.match.Match;
+import dev.nandi0813.practice.manager.fight.match.enums.MatchStatus;
 import dev.nandi0813.practice.manager.gui.GUIManager;
 import dev.nandi0813.practice.manager.gui.GUIType;
 import dev.nandi0813.practice.manager.gui.guis.party.PartySettingsGui;
@@ -51,8 +52,29 @@ public class Party implements dev.nandi0813.api.Interface.Party {
     @Setter
     private boolean duelRequests;
 
-    @Setter
     private Match match;
+
+    /**
+     * Sets the party's current match.
+     * <p>
+     * If the party already had a match that is still running, it is ended first.
+     * Otherwise the old match would stay registered among the live matches
+     * (inflating the "in fights" count) and its arena would never roll back.
+     *
+     * @param match the new match, or null to clear the current one
+     */
+    public void setMatch(Match match) {
+        if (match != null && this.match != null && !this.match.equals(match)
+                && PartyManager.getInstance().hasActiveMatch(this)
+                && this.match.getStatus() != MatchStatus.END
+                && this.match.getStatus() != MatchStatus.OVER) {
+
+            this.match.sendMessage(LanguageManager.getString("PARTY.PREVIOUS-MATCH-ENDED"), true);
+            this.match.endMatch();
+        }
+
+        this.match = match;
+    }
 
     public Party(Player owner) {
         this.leader = owner;

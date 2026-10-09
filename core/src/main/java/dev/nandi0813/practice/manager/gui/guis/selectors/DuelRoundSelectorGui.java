@@ -182,12 +182,6 @@ public class DuelRoundSelectorGui extends MatchStarterGui {
                         return;
                     }
 
-                    if (PartyManager.getInstance().hasActiveMatch(party)) {
-                        player.closeInventory();
-                        Common.sendMMMessage(player, LanguageManager.getString("PARTY.ALREADY-IN-MATCH"));
-                        return;
-                    }
-
                     if (openPartySplitGui(player, party, arena, rounds)) return;
 
                     Match match = getMatch(party, arena, rounds);

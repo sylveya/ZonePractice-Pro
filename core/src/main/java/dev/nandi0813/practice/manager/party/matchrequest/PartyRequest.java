@@ -103,11 +103,6 @@ public class PartyRequest {
     }
 
     public void acceptRequest() {
-        if (PartyManager.getInstance().hasActiveMatch(sender) || PartyManager.getInstance().hasActiveMatch(target)) {
-            Common.sendMMMessage(target.getLeader(), LanguageManager.getString("PARTY.ALREADY-IN-MATCH"));
-            return;
-        }
-
         requestManager.getRequests().get(target).remove(this);
 
         Arena arena;
