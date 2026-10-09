@@ -324,6 +324,11 @@ public class LadderSelectorGui extends GUI {
     }
 
     private void startPartyMatch(Player player, Party party, Ladder ladder, int rounds) {
+        if (PartyManager.getInstance().hasActiveMatch(party)) {
+            Common.sendMMMessage(player, LanguageManager.getString("PARTY.ALREADY-IN-MATCH"));
+            return;
+        }
+
         Arena arena = LadderUtil.getAvailableArena(ladder);
         if (arena == null) {
             Common.sendMMMessage(player, LanguageManager.getString("LADDER.SELECTOR.PARTY.NO-AVAILABLE-ARENA"));

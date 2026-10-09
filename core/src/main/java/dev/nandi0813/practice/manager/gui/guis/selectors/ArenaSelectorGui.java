@@ -229,6 +229,12 @@ public class ArenaSelectorGui extends MatchStarterGui {
                     return;
                 }
 
+                if (PartyManager.getInstance().hasActiveMatch(party)) {
+                    player.closeInventory();
+                    Common.sendMMMessage(player, LanguageManager.getString("PARTY.ALREADY-IN-MATCH"));
+                    return;
+                }
+
                 Arena arena;
                 if (slot == 49) {
                     arena = LadderUtil.getAvailableArena(ladder);

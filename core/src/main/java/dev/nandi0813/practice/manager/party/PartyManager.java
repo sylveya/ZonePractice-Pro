@@ -5,6 +5,7 @@ import dev.nandi0813.practice.ZonePractice;
 import dev.nandi0813.practice.manager.backend.ConfigManager;
 import dev.nandi0813.practice.manager.backend.LanguageManager;
 import dev.nandi0813.practice.manager.fight.match.Match;
+import dev.nandi0813.practice.manager.fight.match.MatchManager;
 import dev.nandi0813.practice.manager.gui.GUIManager;
 import dev.nandi0813.practice.manager.gui.GUIType;
 import dev.nandi0813.practice.manager.gui.guis.party.OtherPartiesGui;
@@ -68,6 +69,23 @@ public class PartyManager implements Listener {
             if (party.getMatch() != null && party.getMatch().equals(match))
                 return party;
         return null;
+    }
+
+    /**
+     * Whether the given party currently has a match that is still running.
+     * <p>
+     * A party match is only considered active while it is registered among the
+     * live matches, so stale {@code party.match} references left behind after a
+     * match ends (or after a cancelled start) don't block new games.
+     *
+     * @param party the party to check
+     * @return true if the party has an ongoing match
+     */
+    public boolean hasActiveMatch(Party party) {
+        if (party == null || party.getMatch() == null)
+            return false;
+
+        return MatchManager.getInstance().getLiveMatches().contains(party.getMatch());
     }
 
     public boolean hasJoinablePublicParty() {

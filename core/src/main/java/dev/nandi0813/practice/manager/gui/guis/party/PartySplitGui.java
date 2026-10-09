@@ -177,6 +177,12 @@ public class PartySplitGui extends GUI {
     }
 
     private void startMatch(Player player) {
+        if (PartyManager.getInstance().hasActiveMatch(party)) {
+            Common.sendMMMessage(player, LanguageManager.getString("PARTY.ALREADY-IN-MATCH"));
+            player.closeInventory();
+            return;
+        }
+
         Map<TeamEnum, List<Player>> teamAssignments = null;
 
         if (party.getMembers().size() > 2) {
