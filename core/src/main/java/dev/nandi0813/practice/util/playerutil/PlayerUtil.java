@@ -191,11 +191,6 @@ public final class PlayerUtil {
     }
 
     private static void clearStuckArrows(Player player) {
-        try {
-            Method method = player.getClass().getMethod("setArrowsInBody", int.class);
-            method.invoke(player, 0);
-        } catch (ReflectiveOperationException | SecurityException ignored) {
-            // Older APIs may not expose the arrow count method.
-        }
+        player.setArrowsInBody(0);
     }
 }
