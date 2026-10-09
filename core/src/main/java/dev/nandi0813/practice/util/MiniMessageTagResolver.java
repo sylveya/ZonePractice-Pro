@@ -1,6 +1,7 @@
 package dev.nandi0813.practice.util;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.Context;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
@@ -8,7 +9,10 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.object.ObjectContents;
 import net.kyori.adventure.text.object.PlayerHeadObjectContents;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Set;
@@ -17,114 +21,192 @@ import java.util.regex.Pattern;
 
 public final class MiniMessageTagResolver {
 
-    private static final Pattern HEX_64 = Pattern.compile("^[0-9a-fA-F]{64}$");
-    private static final Pattern UUID_PATTERN = Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
+    private static final String TEXTURE_URL =
+            "https://textures.minecraft.net/texture/";
 
-    private MiniMessageTagResolver() {}
+    private static final Set<String> TEXTURE_TAGS =
+            Set.of("head_texture", "headtexture");
+
+    private static final Pattern TEXTURE_HASH =
+            Pattern.compile("[0-9a-fA-F]{64}");
+
+    private static final Pattern UUID_PATTERN =
+            Pattern.compile(
+                    "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-"
+                            + "[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-"
+                            + "[0-9a-fA-F]{12}"
+            );
+
+    private static final Base64.Decoder DECODER = Base64.getDecoder();
+    private static final Base64.Encoder ENCODER = Base64.getEncoder();
+
+    private MiniMessageTagResolver() {
+    }
 
     /**
-     * Builds the global MiniMessage instance configured with standard Adventure tags
-     * plus custom resolvers for {@code <head_texture:...>} and base64 head textures.
+     * Creates a MiniMessage instance with standard tags
+     * and custom player-head tags.
      */
     public static MiniMessage createMiniMessage() {
         return MiniMessage.builder()
                 .tags(TagResolver.builder()
-                        .resolver(createResolver())
                         .resolver(StandardTags.defaults())
+                        .resolver(createResolver())
                         .build())
                 .build();
     }
 
     /**
-     * Resolves {@code <head_texture:texture[:outer_layer]>} as well as {@code <headtexture:...>}
-     * and intercepts {@code <head:...>} when given a base64 or URL skin texture.
+     * Creates a resolver for custom player-head tags.
      */
     public static TagResolver createResolver() {
-        TagResolver dedicatedResolver = TagResolver.resolver(
-                Set.of("head_texture", "headtexture"),
-                (args, ctx) -> {
-                    if (!args.hasNext()) {
-                        throw ctx.newException("Missing texture argument for head_texture tag", args);
-                    }
-                    String texture = args.pop().value();
-                    boolean hat = parseHatArgument(args);
-                    return createHeadTag(texture, hat);
-                }
-        );
-
-        TagResolver fallbackHeadResolver = TagResolver.resolver(
-                "head",
-                (args, ctx) -> {
-                    if (!args.hasNext()) {
-                        return null;
-                    }
-                    String raw = args.peek().value();
-                    if (isTextureString(raw)) {
-                        args.pop();
-                        boolean hat = parseHatArgument(args);
-                        return createHeadTag(raw, hat);
-                    }
-                    return null;
-                }
-        );
-
-        return TagResolver.resolver(dedicatedResolver, fallbackHeadResolver);
+        return new HeadTagResolver();
     }
 
-    private static boolean parseHatArgument(ArgumentQueue args) {
-        if (args.hasNext()) {
-            Tag.Argument hatArg = args.pop();
-            return !hatArg.isFalse() && !"false".equalsIgnoreCase(hatArg.value());
-        }
-        return true;
-    }
-
-    private static Tag createHeadTag(String rawTexture, boolean hat) {
-        String normalized = normalizeTexture(rawTexture);
-        UUID headId = UUID.nameUUIDFromBytes(normalized.getBytes(StandardCharsets.UTF_8));
+    private static Tag createHead(String texture, boolean hat) {
+        String parsedTexture = parseTexture(texture);
 
         PlayerHeadObjectContents contents = ObjectContents.playerHead()
-                .id(headId)
-                .profileProperty(PlayerHeadObjectContents.property("textures", normalized))
+                .id(UUID.nameUUIDFromBytes(
+                        parsedTexture.getBytes(StandardCharsets.UTF_8)
+                ))
+                .profileProperty(
+                        PlayerHeadObjectContents.property(
+                                "textures",
+                                parsedTexture
+                        )
+                )
                 .hat(hat)
                 .build();
 
         return Tag.selfClosingInserting(Component.object(contents));
     }
 
-    public static String normalizeTexture(String raw) {
-        if (raw == null || raw.isEmpty()) return "";
-        raw = raw.trim();
-        if (raw.startsWith("\"") && raw.endsWith("\"") && raw.length() >= 2) {
-            raw = raw.substring(1, raw.length() - 1);
+    private static String parseTexture(String texture) {
+        texture = texture.trim();
+
+        if (texture.length() >= 2
+                && texture.startsWith("\"")
+                && texture.endsWith("\"")) {
+            texture = texture.substring(1, texture.length() - 1);
         }
 
-        if (raw.startsWith("http://") || raw.startsWith("https://")) {
-            String json = "{\"textures\":{\"SKIN\":{\"url\":\"" + raw + "\"}}}";
-            return Base64.getEncoder().encodeToString(json.getBytes(StandardCharsets.UTF_8));
+        if (isHttpsUrl(texture)) {
+            return encodeTexture(texture);
         }
 
-        if (HEX_64.matcher(raw).matches()) {
-            String json = "{\"textures\":{\"SKIN\":{\"url\":\"http://textures.minecraft.net/texture/" + raw + "\"}}}";
-            return Base64.getEncoder().encodeToString(json.getBytes(StandardCharsets.UTF_8));
+        if (TEXTURE_HASH.matcher(texture).matches()) {
+            return encodeTexture(TEXTURE_URL + texture);
         }
 
-        return raw;
+        return texture;
     }
 
-    private static boolean isTextureString(String value) {
-        if (value == null) return false;
-        String trimmed = value.trim();
-        if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) return true;
-        if (HEX_64.matcher(trimmed).matches()) return true;
-        if (trimmed.length() > 16 && !UUID_PATTERN.matcher(trimmed).matches() && !trimmed.contains(":")) {
-            try {
-                Base64.getDecoder().decode(trimmed);
-                return true;
-            } catch (IllegalArgumentException ignored) {
+    private static String encodeTexture(String url) {
+        String json =
+                "{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}";
+
+        return ENCODER.encodeToString(
+                json.getBytes(StandardCharsets.UTF_8)
+        );
+    }
+
+    private static boolean isHttpsUrl(String value) {
+        try {
+            URI uri = URI.create(value);
+
+            return "https".equalsIgnoreCase(uri.getScheme())
+                    && uri.getHost() != null
+                    && !uri.getHost().isBlank()
+                    && uri.getUserInfo() == null;
+        } catch (IllegalArgumentException ignored) {
+            return false;
+        }
+    }
+
+    private static boolean isTexture(String texture) {
+        if (isHttpsUrl(texture)
+                || TEXTURE_HASH.matcher(texture).matches()) {
+            return true;
+        }
+
+        if (UUID_PATTERN.matcher(texture).matches()
+                || texture.contains(":")) {
+            return false;
+        }
+
+        try {
+            byte[] decoded = DECODER.decode(texture);
+
+            if (decoded.length == 0) {
                 return false;
             }
+
+            String decodedTexture = new String(
+                    decoded,
+                    StandardCharsets.UTF_8
+            );
+
+            return decodedTexture.contains("\"textures\"")
+                    && decodedTexture.contains("\"SKIN\"")
+                    && decodedTexture.contains("\"url\"");
+        } catch (IllegalArgumentException ignored) {
+            return false;
         }
-        return false;
+    }
+
+    private static boolean parseHat(ArgumentQueue args) {
+        if (!args.hasNext()) {
+            return true;
+        }
+
+        Tag.Argument argument = args.pop();
+        String value = argument.value();
+
+        return !argument.isFalse()
+                && !"false".equalsIgnoreCase(value);
+    }
+
+    private static final class HeadTagResolver implements TagResolver {
+
+        @Override
+        public @Nullable Tag resolve(
+                @NonNull String name,
+                @NonNull ArgumentQueue args,
+                @NonNull Context ctx
+        ) {
+            if (TEXTURE_TAGS.contains(name)) {
+                if (!args.hasNext()) {
+                    throw ctx.newException(
+                            "Missing texture argument for head_texture tag",
+                            args
+                    );
+                }
+
+                String texture = args.pop().value();
+
+                return createHead(texture, parseHat(args));
+            }
+
+            if (!"head".equals(name) || !args.hasNext()) {
+                return null;
+            }
+
+            Tag.Argument argument = args.peek();
+
+            if (argument == null || !isTexture(argument.value())) {
+                return null;
+            }
+
+            args.pop();
+
+            return createHead(argument.value(), parseHat(args));
+        }
+
+        @Override
+        public boolean has(@NonNull String name) {
+            return TEXTURE_TAGS.contains(name)
+                    || "head".equals(name);
+        }
     }
 }
