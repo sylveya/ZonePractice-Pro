@@ -88,14 +88,12 @@ public class LadderManager {
     }
 
     public void loadGUIs() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () -> {
-            LadderSetupManager.getInstance().loadGUIs();
-            GUIManager.getInstance().addGUI(new UnrankedGui());
-            GUIManager.getInstance().addGUI(new RankedGui());
-            GUIManager.getInstance().addGUI(new ChooseQueueTypeGui());
-            GUIManager.getInstance().addGUI(new CustomLadderSelectorGui());
-            GUIManager.getInstance().addGUI(new EditorMenuGui());
-        });
+        LadderSetupManager.getInstance().loadGUIs();
+        GUIManager.getInstance().addGUI(new UnrankedGui());
+        GUIManager.getInstance().addGUI(new RankedGui());
+        GUIManager.getInstance().addGUI(new ChooseQueueTypeGui());
+        GUIManager.getInstance().addGUI(new CustomLadderSelectorGui());
+        GUIManager.getInstance().addGUI(new EditorMenuGui());
     }
 
     public void saveLadders() {
