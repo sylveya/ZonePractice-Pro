@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.playerkit.guis;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUI;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
@@ -73,9 +73,9 @@ public class AmountChangeGUI extends GUI {
                 break;
             case 18:
                 new AnvilGUI.Builder()
-                        .plugin(ZonePractice.getInstance())
+                        .plugin(AstralPractice.getInstance())
                         .onClose(stateSnapshot ->
-                                Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+                                Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                                         backTo.open(player), 2L))
                         .onClick((anvilSlot, stateSnapshot) -> {
                             if (anvilSlot != AnvilGUI.Slot.OUTPUT) {
@@ -120,7 +120,7 @@ public class AmountChangeGUI extends GUI {
     public void handleCloseEvent(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (player.getOpenInventory() != null && player.getOpenInventory().getType().equals(InventoryType.ANVIL)) {
                 return;
             } else if (GUIManager.getInstance().getOpenGUI().containsKey(player)) {

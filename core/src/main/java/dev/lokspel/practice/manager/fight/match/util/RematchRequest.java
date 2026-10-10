@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.match.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.ArenaCopy;
 import dev.lokspel.practice.manager.arena.arenas.interfaces.NormalArena;
@@ -117,7 +117,7 @@ public class RematchRequest {
     }
 
     public void setInventories() {
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
         {
             if (invalidated) {
                 return;
@@ -135,7 +135,7 @@ public class RematchRequest {
     }
 
     public void startRunnable() {
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(),
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(),
                 () -> MatchManager.getInstance().invalidateRematch(this),
                 ConfigManager.getInt("MATCH-SETTINGS.REMATCH.EXPIRE-TIME") * 20L);
     }

@@ -1,8 +1,8 @@
 package dev.lokspel.practice.manager.fight.event;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.event.enums.EventStatus;
 import dev.lokspel.practice.manager.fight.event.setup.EventWandSetupManager;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.event.enums.EventType;
@@ -82,11 +82,11 @@ public class EventManager {
         this.eventListeners = new HashMap<>();
 
         this.listener = new EventListener(this);
-        Bukkit.getServer().getPluginManager().registerEvents(this.listener, ZonePractice.getInstance());
+        Bukkit.getServer().getPluginManager().registerEvents(this.listener, AstralPractice.getInstance());
     }
 
     public void loadEventData(final StartUpCallback startUpCallback) {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             this.eventData.put(EventType.BRACKETS, new BracketsData());
             this.eventListeners.put(EventType.BRACKETS, new BracketsListener());
@@ -113,7 +113,7 @@ public class EventManager {
                 data.getData();
             }
 
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
                 autoEventScheduler = new AutoEventScheduler();
                 autoEventScheduler.start();
                 startUpCallback.onLoadingDone();
@@ -154,7 +154,7 @@ public class EventManager {
         }
 
         if (!getEventData().get(eventType).isEnabled()) {
-            ZonePractice.getInstance().getLogger().warning("Event " + eventType.getName() + " is not enabled.");
+            AstralPractice.getInstance().getLogger().warning("Event " + eventType.getName() + " is not enabled.");
             return;
         }
 

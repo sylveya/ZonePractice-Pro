@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.sidebar;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigFile;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.profile.Profile;
@@ -46,7 +46,7 @@ public class SidebarManager extends ConfigFile implements Listener {
         super("", "sidebar");
         this.sidebarAdapter = new PracticeAdapter();
 
-        Bukkit.getServer().getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getServer().getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     public void load() {
@@ -68,7 +68,7 @@ public class SidebarManager extends ConfigFile implements Listener {
         }
 
         try {
-            scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(ZonePractice.getInstance());
+            scoreboardLibrary = ScoreboardLibrary.loadScoreboardLibrary(AstralPractice.getInstance());
         } catch (NoPacketAdapterAvailableException e) {
             // If no packet adapter was found, you can fallback to the no-op implementation:
             scoreboardLibrary = new NoopScoreboardLibrary();
@@ -86,7 +86,7 @@ public class SidebarManager extends ConfigFile implements Listener {
             updateTask.cancel();
         }
 
-        updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(ZonePractice.getInstance(), () -> {
+        updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(AstralPractice.getInstance(), () -> {
             for (PracticeSidebar practiceSidebar : new ArrayList<>(boards.values())) {
                 if (practiceSidebar == null || practiceSidebar.getSidebar() == null || practiceSidebar.getSidebar().closed()) {
                     continue;
@@ -107,7 +107,7 @@ public class SidebarManager extends ConfigFile implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
         {
             if (!isSidebarGloballyEnabled()) return;
 
@@ -125,7 +125,7 @@ public class SidebarManager extends ConfigFile implements Listener {
     public void onQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (Bukkit.getPlayer(player.getUniqueId()) != null) {
                 return;
             }
@@ -202,7 +202,7 @@ public class SidebarManager extends ConfigFile implements Listener {
     public void reloadSidebarConfig() {
         reloadFile();
 
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
             if (!isSidebarGloballyEnabled()) {
                 for (Player player : new ArrayList<>(boards.keySet())) {
                     unLoadSidebar(player);

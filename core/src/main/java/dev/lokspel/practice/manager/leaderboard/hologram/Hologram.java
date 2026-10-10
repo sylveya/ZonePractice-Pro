@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.leaderboard.hologram;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.BackendManager;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.division.Division;
@@ -144,7 +144,7 @@ public abstract class Hologram {
      */
     public synchronized void despawn() {
         if (!Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), this::despawn);
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), this::despawn);
             return;
         }
 
@@ -161,7 +161,7 @@ public abstract class Hologram {
      */
     private synchronized void updateSmartly(@NotNull List<String> textLines, @NotNull List<Double> spacings) {
         if (!Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> updateSmartly(textLines, spacings));
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> updateSmartly(textLines, spacings));
             return;
         }
 

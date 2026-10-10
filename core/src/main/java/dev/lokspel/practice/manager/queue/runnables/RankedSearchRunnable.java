@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.queue.runnables;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.ladder.abstraction.normal.NormalLadder;
@@ -46,7 +46,7 @@ public class RankedSearchRunnable extends SearchRunnable {
                     }
                 }
             }
-        }.runTaskTimer(ZonePractice.getInstance(), 0, 20L);
+        }.runTaskTimer(AstralPractice.getInstance(), 0, 20L);
     }
 
     @Override

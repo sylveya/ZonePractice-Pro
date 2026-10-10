@@ -6,7 +6,7 @@ import dev.lokspel.practice.util.TimeUtil;
 import dev.lokspel.api.Event.Match.MatchStartEvent;
 import dev.lokspel.api.Event.Spectate.End.MatchSpectateEndEvent;
 import dev.lokspel.api.Event.Spectate.Start.MatchSpectateStartEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.interfaces.NormalArena;
 import dev.lokspel.practice.manager.backend.GUIFile;
@@ -161,7 +161,7 @@ public abstract class Match extends BukkitRunnable implements Spectatable, dev.l
 
         this.status = MatchStatus.START;
         this.startNextRound();
-        this.runTaskTimerAsynchronously(ZonePractice.getInstance(), 0, 20L);
+        this.runTaskTimerAsynchronously(AstralPractice.getInstance(), 0, 20L);
     }
 
     public void sendMessage(String message, boolean spectator) {
@@ -173,16 +173,16 @@ public abstract class Match extends BukkitRunnable implements Spectatable, dev.l
             if (players.contains(player)) {
                 for (Entity entity : arena.getCuboid().getEntities()) {
                     if (!(entity instanceof Player)) {
-                        ZonePractice.getEntityHider().hideEntity(player, entity);
+                        AstralPractice.getEntityHider().hideEntity(player, entity);
                     }
                 }
             } else if (spectators.contains(player)) {
                 for (Entity entity : arena.getCuboid().getEntities()) {
                     if (!(entity instanceof Player)) {
                         if (fightChange.containsEntity(entity))
-                            ZonePractice.getEntityHider().showEntity(player, entity);
+                            AstralPractice.getEntityHider().showEntity(player, entity);
                         else
-                            ZonePractice.getEntityHider().hideEntity(player, entity);
+                            AstralPractice.getEntityHider().hideEntity(player, entity);
                     }
                 }
             }
@@ -303,7 +303,7 @@ public abstract class Match extends BukkitRunnable implements Spectatable, dev.l
     public abstract boolean isEndMatch();
 
     public void endMatch() {
-        if (ZonePractice.getInstance().isEnabled()) {
+        if (AstralPractice.getInstance().isEnabled()) {
             Round round = this.getCurrentRound();
             if (!round.getRoundStatus().equals(RoundStatus.END)) {
                 this.getCurrentRound().endRound();
@@ -329,7 +329,7 @@ public abstract class Match extends BukkitRunnable implements Spectatable, dev.l
 
         this.cancel();
 
-        if (ZonePractice.getInstance().isEnabled()) {
+        if (AstralPractice.getInstance().isEnabled()) {
             for (UUID uuid : rounds.get(1).getStatistics().keySet()) {
                 matchStatsGuis.put(uuid, new MatchStatsGui(this, uuid));
             }
@@ -482,7 +482,7 @@ public abstract class Match extends BukkitRunnable implements Spectatable, dev.l
             SpectatorManager.getInstance().getSpectatorMenuGui().update();
         }
 
-        if (ZonePractice.getInstance().isEnabled() && player.isOnline()) {
+        if (AstralPractice.getInstance().isEnabled() && player.isOnline()) {
             InventoryManager.getInstance().setLobbyInventory(player, true);
         }
     }
@@ -508,7 +508,7 @@ public abstract class Match extends BukkitRunnable implements Spectatable, dev.l
 
         if (!ladder.isBuild()) {
             for (Player player : MatchManager.getInstance().getHidePlayers(this)) {
-                ZonePractice.getEntityHider().hideEntity(player, entity);
+                AstralPractice.getEntityHider().hideEntity(player, entity);
             }
         }
     }
@@ -559,8 +559,8 @@ public abstract class Match extends BukkitRunnable implements Spectatable, dev.l
             }
         };
 
-        if (ZonePractice.getInstance().isEnabled()) {
-            Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        if (AstralPractice.getInstance().isEnabled()) {
+            Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                     fightChange.rollback(PermanentConfig.MATCH_ROLLBACK_MAX_CHECKS, PermanentConfig.MATCH_ROLLBACK_MAX_CHANGES, onRollbackComplete), 2L);
         } else {
             fightChange.rollback(PermanentConfig.MATCH_ROLLBACK_MAX_CHECKS, PermanentConfig.MATCH_ROLLBACK_MAX_CHANGES, onRollbackComplete);
@@ -628,7 +628,7 @@ public abstract class Match extends BukkitRunnable implements Spectatable, dev.l
                 if (ladder.getMaxDuration() - 30 == this.duration) {
                     this.sendMessage(LanguageManager.getString("MATCH.MATCH-OVER-IN-30"), true);
                 } else if (ladder.getMaxDuration() == this.duration) {
-                    Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+                    Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
                         this.setStatus(MatchStatus.END);
                         this.endMatch();
                     });

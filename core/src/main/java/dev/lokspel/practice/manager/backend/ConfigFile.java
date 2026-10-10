@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.backend;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUIItem;
 import dev.lokspel.practice.util.Common;
 import lombok.Getter;
@@ -25,7 +25,7 @@ public abstract class ConfigFile {
     protected ConfigFile(String path, String fileName) {
         this.fileName = fileName;
 
-        this.file = new File(ZonePractice.getInstance().getDataFolder() + path, fileName + ".yml");
+        this.file = new File(AstralPractice.getInstance().getDataFolder() + path, fileName + ".yml");
         this.config = YamlConfiguration.loadConfiguration(file);
     }
 

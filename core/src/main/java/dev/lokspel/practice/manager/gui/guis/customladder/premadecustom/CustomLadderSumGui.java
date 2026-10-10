@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.guis.customladder.premadecustom;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
@@ -142,7 +142,7 @@ public class CustomLadderSumGui extends GUI {
 
         PlayerUtil.clearInventory(player);
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
         {
             if (GUIManager.getInstance().getOpenGUI().containsKey(player) && (GUIManager.getInstance().getOpenGUI().get(player) instanceof CustomLadderEditorGui))
                 return;

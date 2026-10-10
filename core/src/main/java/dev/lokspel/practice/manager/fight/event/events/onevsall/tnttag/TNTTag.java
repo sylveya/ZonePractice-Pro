@@ -2,7 +2,7 @@ package dev.lokspel.practice.manager.fight.event.events.onevsall.tnttag;
 
 import dev.lokspel.api.Event.Event.EventEndEvent;
 import dev.lokspel.api.Event.Spectate.Start.EventSpectateStartEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.event.EventManager;
@@ -177,7 +177,7 @@ public class TNTTag extends Event {
 
         this.cancelAllRunnable();
         this.status = EventStatus.END;
-        if (ZonePractice.getInstance().isEnabled()) {
+        if (AstralPractice.getInstance().isEnabled()) {
             this.getEndRunnable().begin();
         } else {
             this.getEndRunnable().end();

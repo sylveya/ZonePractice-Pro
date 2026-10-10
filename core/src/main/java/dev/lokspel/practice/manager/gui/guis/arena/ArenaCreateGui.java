@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.guis.arena;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.ArenaType;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
@@ -100,7 +100,7 @@ public class ArenaCreateGui extends GUI {
 
         Common.sendMMMessage(player, LanguageManager.getString("ARENA.CREATE.ARENA-CREATED").replace("%arena%", arenaName));
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             ArenaGUISetupManager.getInstance().getArenaSetupGUIs().get(arena).get(GUIType.Arena_Main).open(player);
             ArenaSetupManager.getInstance().startSetup(player, arena);
         }, 3L);

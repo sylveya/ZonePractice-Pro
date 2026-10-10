@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.fight.ffa;
 
 import dev.lokspel.practice.manager.fight.listener.BuildListener;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.arenas.FFAArena;
 import dev.lokspel.practice.manager.arena.util.ArenaUtil;
 import dev.lokspel.practice.manager.backend.ConfigManager;
@@ -177,9 +177,9 @@ public class FFAListener implements Listener {
             BlockUtil.setMetadata(projectile, FIGHT_ENTITY, ffa);
 
             // Hide from every online player NOT in this FFA
-            for (org.bukkit.entity.Player online : ZonePractice.getInstance().getServer().getOnlinePlayers()) {
+            for (org.bukkit.entity.Player online : AstralPractice.getInstance().getServer().getOnlinePlayers()) {
                 if (!ffa.getPlayers().containsKey(online) && !ffa.getSpectators().contains(online)) {
-                    ZonePractice.getEntityHider().hideEntity(online, projectile);
+                    AstralPractice.getEntityHider().hideEntity(online, projectile);
                 }
             }
         }
@@ -388,7 +388,7 @@ public class FFAListener implements Listener {
         if (ffa == null) return;
 
         // Prevent picking up items (e.g. arrows) that have been hidden from this player
-        if (!ZonePractice.getEntityHider().canSee(player, e.getItem())) {
+        if (!AstralPractice.getEntityHider().canSee(player, e.getItem())) {
             e.setCancelled(true);
             return;
         }

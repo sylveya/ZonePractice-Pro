@@ -1,6 +1,6 @@
 package dev.lokspel.practice.command.singlecommands;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.gui.guis.MatchHistoryGui;
 import dev.lokspel.practice.manager.matchhistory.MatchHistoryEntry;
@@ -53,7 +53,7 @@ public class MatchHistoryCommand implements CommandExecutor, TabCompleter {
 
         // Load async, open GUI on main thread
         MatchHistoryManager.getInstance().loadHistoryAsync(targetUuid).thenAccept(entries -> {
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
                 if (!player.isOnline()) return;
 
                 if (entries == null || entries.isEmpty()) {

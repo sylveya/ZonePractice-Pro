@@ -8,7 +8,7 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPl
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
 import dev.lokspel.api.Event.Spectate.End.MatchSpectateEndEvent;
 import dev.lokspel.api.Event.Spectate.Start.MatchSpectateStartEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.match.Match;
@@ -46,7 +46,7 @@ public class PlayerHider implements Listener {
     }
 
     private PlayerHider() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     @EventHandler ( priority = EventPriority.MONITOR )
@@ -56,7 +56,7 @@ public class PlayerHider implements Listener {
         final Player player = e.getPlayer();
         final Profile profile = ProfileManager.getInstance().getProfile(player);
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
         {
             for (Player online : Bukkit.getOnlinePlayers()) {
                 if (player == online) continue;
@@ -101,7 +101,7 @@ public class PlayerHider implements Listener {
         Profile profile = ProfileManager.getInstance().getProfile(player);
         if (profile == null) return;
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
         {
             if (ServerManager.getInstance().getInWorld().get(player) != WorldEnum.LOBBY) return;
 
@@ -337,7 +337,7 @@ public class PlayerHider implements Listener {
         boolean inLobby = keepInLobbyTab && ConfigManager.isShowPlayersInLobbyTab();
         boolean showPlayersInTab = ConfigManager.isShowPlayersInTab() || inLobby;
 
-        observer.hidePlayer(ZonePractice.getInstance(), target);
+        observer.hidePlayer(AstralPractice.getInstance(), target);
 
         if (showPlayersInTab) {
             // Re-adding the entry resets the name on the client side, so the lobby tab list has to
@@ -386,7 +386,7 @@ public class PlayerHider implements Listener {
     }
 
     public void showPlayer(Player observer, Player target) {
-        observer.showPlayer(ZonePractice.getInstance(), target);
+        observer.showPlayer(AstralPractice.getInstance(), target);
     }
 
     /**

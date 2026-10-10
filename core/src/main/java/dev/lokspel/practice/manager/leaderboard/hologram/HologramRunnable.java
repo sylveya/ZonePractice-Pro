@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.leaderboard.hologram;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.leaderboard.hologram.holograms.LadderDynamicHologram;
 import lombok.Getter;
@@ -37,7 +37,7 @@ public class HologramRunnable extends BukkitRunnable {
 
         running = true;
         int updateInterval = getUpdateInterval();
-        this.runTaskTimer(ZonePractice.getInstance(), INITIAL_DELAY_TICKS, 20L * updateInterval);
+        this.runTaskTimer(AstralPractice.getInstance(), INITIAL_DELAY_TICKS, 20L * updateInterval);
     }
 
     /**

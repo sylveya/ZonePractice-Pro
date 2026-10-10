@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.ffa.game;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.util.PermanentConfig;
 import dev.lokspel.practice.util.fightmapchange.FightChangeOptimized;
@@ -45,7 +45,7 @@ public class BuildRollback extends Runnable {
     public void rollback() {
         this.seconds = ROLLBACK_SECONDS;
 
-        if (ZonePractice.getInstance().isEnabled()) {
+        if (AstralPractice.getInstance().isEnabled()) {
             fightChange.rollback(PermanentConfig.MATCH_ROLLBACK_MAX_CHECKS, PermanentConfig.MATCH_ROLLBACK_MAX_CHANGES, onRollbackComplete);
         } else {
             fightChange.quickRollback();

@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.arena.listener;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.leaderboard.hologram.TextDisplayFactory;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.ArenaCopy;
@@ -290,7 +290,7 @@ public class ArenaCopyUtilListener implements Listener {
                     }
                 }
             }
-        }.runTaskTimer(ZonePractice.getInstance(), 0, 1L);
+        }.runTaskTimer(AstralPractice.getInstance(), 0, 1L);
     }
 
     protected void deleteNormal(final String arena, final Cuboid cuboid) {
@@ -349,7 +349,7 @@ public class ArenaCopyUtilListener implements Listener {
                     }
                 }
             }
-        }.runTaskTimer(ZonePractice.getInstance(), 0, 1);
+        }.runTaskTimer(AstralPractice.getInstance(), 0, 1);
     }
 
     @EventHandler

@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.fight.event.events.ffa.oitc;
 
 import dev.lokspel.api.Event.Event.EventEndEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.event.EventManager;
@@ -103,7 +103,7 @@ public class OITC extends FFAEvent {
 
         this.cancelAllRunnable();
         this.status = EventStatus.END;
-        if (ZonePractice.getInstance().isEnabled()) {
+        if (AstralPractice.getInstance().isEnabled()) {
             this.getEndRunnable().begin();
         } else {
             this.getEndRunnable().end();

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.leaderboard.hologram;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.BackendManager;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
@@ -128,7 +128,7 @@ public class HologramManager {
             Hologram hologram = holograms.get(i);
             long delay = STARTUP_DELAY_TICKS + ((long) i * STARTUP_STAGGER_TICKS);
 
-            Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+            Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
                 if (hologram.isEnabled()) {
                     hologram.getHologramRunnable().begin();
                 } else {

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.queue;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.division.Division;
@@ -40,7 +40,7 @@ public class QueueManager implements Listener {
     private final List<Queue> queues = Collections.synchronizedList(new ArrayList<>());
 
     private QueueManager() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     public Queue getQueue(final Player queuePlayer) {

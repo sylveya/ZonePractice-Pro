@@ -21,7 +21,7 @@ import static dev.lokspel.practice.util.PermanentConfig.PLACED_IN_FIGHT;
 
 public interface TempBuild {
 
-    String TEMP_BUILD_BLOCK_ITEM = "ZONEPRACTICE_PRO_TEMP_BUILD_BLOCK_ITEM";
+    String TEMP_BUILD_BLOCK_ITEM = "ASTRALPRACTICE_TEMP_BUILD_BLOCK_ITEM";
 
     static void onBucketEmpty(final @NotNull PlayerBucketEmptyEvent e, final @NotNull Match match, final int buildDelay) {
         if (e.isCancelled()) return;

@@ -7,7 +7,7 @@ import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -153,7 +153,7 @@ public class EntityHider implements Listener {
             public void onPlayerQuit(PlayerQuitEvent e) {
                 Player player = e.getPlayer();
 
-                Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+                Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
                     if (Bukkit.getPlayer(player.getUniqueId()) != null) {
                         return;
                     }

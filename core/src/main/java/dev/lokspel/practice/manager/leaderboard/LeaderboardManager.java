@@ -2,7 +2,7 @@ package dev.lokspel.practice.manager.leaderboard;
 
 import dev.lokspel.api.Event.FFARemovePlayerEvent;
 import dev.lokspel.api.Event.Match.MatchEndEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.ffa.game.FFA;
 import dev.lokspel.practice.manager.fight.match.Match;
 import dev.lokspel.practice.manager.fight.match.type.duel.Duel;
@@ -40,7 +40,7 @@ public class LeaderboardManager implements Listener {
     private final List<Leaderboard> leaderboards = new ArrayList<>();
 
     private LeaderboardManager() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     public Leaderboard searchLB(final LbMainType mainType, final LbSecondaryType secondaryType, final Ladder ladder) {
@@ -70,7 +70,7 @@ public class LeaderboardManager implements Listener {
             }
         }
 
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), startUpCallback::onLoadingDone);
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), startUpCallback::onLoadingDone);
     }
 
     public void removeLadder(NormalLadder ladder) {
@@ -83,7 +83,7 @@ public class LeaderboardManager implements Listener {
     }
 
     public void updateLB(final LbMainType mainType, final LbSecondaryType secondaryType, final NormalLadder ladder) {
-        if (!ZonePractice.getInstance().isEnabled()) {
+        if (!AstralPractice.getInstance().isEnabled()) {
             return;
         }
 
@@ -114,7 +114,7 @@ public class LeaderboardManager implements Listener {
     }
 
     public void createLB(final LbMainType mainType, final LbSecondaryType secondaryType, final NormalLadder ladder, final LeaderboardCallback callback) {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             // Use UUID as key to prevent duplicate players
             HashMap<UUID, ProfileData> tempMap = new HashMap<>();
@@ -245,7 +245,7 @@ public class LeaderboardManager implements Listener {
                 unsorted.put(data.player, data.value);
             }
 
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> callback.onLeaderboardBuildDone(sortByValue(unsorted)));
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> callback.onLeaderboardBuildDone(sortByValue(unsorted)));
         });
     }
 
@@ -303,8 +303,8 @@ public class LeaderboardManager implements Listener {
             }
         }
 
-        if (ZonePractice.getInstance().isEnabled()) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(ZonePractice.getInstance(), () -> {
+        if (AstralPractice.getInstance().isEnabled()) {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstralPractice.getInstance(), () -> {
                 GUIManager.getInstance().searchGUI(GUIType.Queue_Unranked).update();
                 GUIManager.getInstance().searchGUI(GUIType.Queue_Ranked).update();
             }, 20L);

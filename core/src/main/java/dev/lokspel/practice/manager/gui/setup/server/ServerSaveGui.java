@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.server;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.backend.LanguageManager;
@@ -36,7 +36,7 @@ public class ServerSaveGui extends GUI {
 
     @Override
     public void update() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             Inventory inventory = gui.get(1);
 
@@ -72,33 +72,33 @@ public class ServerSaveGui extends GUI {
                     backTo.open(player);
                     break;
                 case 3:
-                    Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+                    Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
                             ArenaManager.getInstance().saveArenas());
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETUP.SERVER.DATA-SAVED-MANUALLY"));
                     break;
                 case 4:
-                    Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+                    Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
                             LadderManager.getInstance().saveLadders());
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETUP.SERVER.DATA-SAVED-MANUALLY"));
                     break;
                 case 5:
-                    Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+                    Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
                             EventManager.getInstance().saveEventData());
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETUP.SERVER.DATA-SAVED-MANUALLY"));
                     break;
                 case 6:
-                    Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+                    Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
                             ProfileManager.getInstance().saveProfiles());
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETUP.SERVER.DATA-SAVED-MANUALLY"));
                     break;
                 case 7:
-                    Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+                    Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
                             HologramManager.getInstance().saveHolograms());
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETUP.SERVER.DATA-SAVED-MANUALLY"));
                     break;
                 case 8:
-                    if (ZonePractice.getDatabase() != null) {
-                        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+                    if (AstralPractice.getDatabase() != null) {
+                        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
                                 ServerManager.getInstance().getMariadbSaveRunnable().save());
                         Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETUP.SERVER.DATA-SAVED-MANUALLY"));
                     } else

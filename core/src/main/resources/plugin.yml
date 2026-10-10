@@ -1,6 +1,6 @@
-name: ZonePracticePro
+name: AstralPractice
 version: '${version}'
-main: dev.lokspel.practice.ZonePractice
+main: dev.lokspel.practice.AstralPractice
 authors: [ lokspel ]
 softdepend: [ PlaceholderAPI, Multiverse-Core, FastAsyncWorldEdit, My_Worlds, TAB ]
 loadbefore: [ CMI, CMILib ]
@@ -19,7 +19,7 @@ commands:
   settings:
     description: Settings command
   practice:
-    aliases: [prac, zonepractice, zoneprac, zonep]
+    aliases: [prac, astralpractice, astralprac, astralp]
   staff:
     aliases: staffmode
   spectate:

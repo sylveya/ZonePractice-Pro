@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.fight.match.type.playersvsplayers;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.match.Match;
@@ -170,7 +170,7 @@ public abstract class PlayersVsPlayers extends Match implements Team {
 
         this.removePlayerFromBelowName(player);
 
-        if (ZonePractice.getInstance().isEnabled() && player.isOnline()) {
+        if (AstralPractice.getInstance().isEnabled() && player.isOnline()) {
             // Set the player inventory to lobby inventory
             InventoryManager.getInstance().setLobbyInventory(player, true);
         }

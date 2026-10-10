@@ -69,13 +69,13 @@ import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.Map;
 
-public final class ZonePractice extends JavaPlugin {
+public final class AstralPractice extends JavaPlugin {
 
     @Getter
     private final Map<StartUpTypes, Boolean> startUpProgress = new EnumMap<>(StartUpTypes.class);
 
     @Getter
-    private static ZonePractice instance;
+    private static AstralPractice instance;
     @Getter
     private static MiniMessage miniMessage = MiniMessageTagResolver.createMiniMessage();
     @Getter
@@ -140,7 +140,7 @@ public final class ZonePractice extends JavaPlugin {
         ArenaWorldUtil.createArenaWorld();
         CosmeticsPermissionManager.registerAllPermissions();
 
-        ZonePracticeApiImpl.setup();
+        AstralPracticeApiImpl.setup();
         StartUpUtil.loadStartUpProgressMap();
 
         this.registerCommands(Bukkit.getServer());
@@ -191,7 +191,7 @@ public final class ZonePractice extends JavaPlugin {
                     fullyLoaded = true;
 
                     // Check for updates asynchronously and log to console
-                    UpdateChecker.checkAsync(ZonePractice.this);
+                    UpdateChecker.checkAsync(AstralPractice.this);
                 });
             });
         });
@@ -314,8 +314,7 @@ public final class ZonePractice extends JavaPlugin {
 
     private void loadPlaceholderAPI() {
         if (SoftDependUtil.isPAPI_ENABLED) {
-            new PlayerExpansion("zppro").register();
-            new PlayerExpansion("zpp").register();
+            new PlayerExpansion("ap").register();
         }
     }
 

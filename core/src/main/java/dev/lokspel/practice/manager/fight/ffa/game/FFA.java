@@ -1,11 +1,11 @@
 package dev.lokspel.practice.manager.fight.ffa.game;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.util.DeathCause;
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
 import dev.lokspel.api.Event.FFARemovePlayerEvent;
 import dev.lokspel.api.Event.Spectate.End.FFASpectateEndEvent;
 import dev.lokspel.api.Event.Spectate.Start.FFASpectateStartEvent;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.arena.arenas.FFAArena;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.GUIFile;
@@ -109,7 +109,7 @@ public class FFA implements Spectatable, dev.lokspel.api.Interface.FFA {
             this.buildRollback = null;
         }
 
-        if (!ZonePractice.getInstance().isEnabled())
+        if (!AstralPractice.getInstance().isEnabled())
             return;
 
         if (message != null) {
@@ -297,7 +297,7 @@ public class FFA implements Spectatable, dev.lokspel.api.Interface.FFA {
             applySelectedOrDefaultKit(player);
             PlayerUtil.setAttackSpeed(player, players.get(player).getAttackCooldownModifier());
 
-            Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+            Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                     teleportPlayer(player), 1L);
         }
     }
@@ -584,7 +584,7 @@ public class FFA implements Spectatable, dev.lokspel.api.Interface.FFA {
         SpectatorManager.getInstance().getSpectators().remove(player);
         this.removePlayerFromBelowName(player);
 
-        if (ZonePractice.getInstance().isEnabled() && player.isOnline()) {
+        if (AstralPractice.getInstance().isEnabled() && player.isOnline()) {
             InventoryManager.getInstance().setLobbyInventory(player, true);
         }
 

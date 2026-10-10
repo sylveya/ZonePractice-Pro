@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.profile;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigFile;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.match.util.CustomKit;
@@ -68,14 +68,14 @@ public class ProfileFile extends ConfigFile {
 
     private void setPrefix() {
         if (profile.getPrefix() != null)
-            config.set("prefix", ZonePractice.getMiniMessage().serialize(profile.getPrefix()));
+            config.set("prefix", AstralPractice.getMiniMessage().serialize(profile.getPrefix()));
         else
             config.set("prefix", null);
     }
 
     private void setSuffix() {
         if (profile.getSuffix() != null)
-            config.set("suffix", ZonePractice.getMiniMessage().serialize(profile.getSuffix()));
+            config.set("suffix", AstralPractice.getMiniMessage().serialize(profile.getSuffix()));
         else
             config.set("suffix", null);
     }

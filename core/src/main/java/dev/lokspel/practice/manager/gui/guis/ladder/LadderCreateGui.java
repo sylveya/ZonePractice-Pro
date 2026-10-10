@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.guis.ladder;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.gui.GUI;
@@ -107,7 +107,7 @@ public class LadderCreateGui extends GUI {
 
             Common.sendMMMessage(player, LanguageManager.getString("LADDER.CREATE.LADDER-CREATED").replace("%ladder%", ladderName));
 
-            Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+            Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                     LadderSetupManager.getInstance().getLadderSetupGUIs().get(ladder).get(GUIType.Ladder_Main).open(player), 3L);
         } catch (Exception e) {
             Common.sendConsoleMMMessage("<red>Error. Please contact us on discord.");

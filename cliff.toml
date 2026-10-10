@@ -3,7 +3,7 @@
 [changelog]
 body = """
 {%- if version %}
-    ## ZonePractice Pro {{ version }}
+    ## AstralPractice {{ version }}
 {%- else %}
     ## Development Build Changes
 {%- endif %}
@@ -25,7 +25,7 @@ trim = true
 filter_unconventional = false
 skip_unconventional = false
 # Automatically links your commit hashes to the correct repository
-  remote = "https://github.com/sylveya/ZonePractice-Pro"
+  remote = "https://github.com/sylveya/AstralPractice"
 
 # Automatically sorts your commit messages into the correct categories based on keywords
 commit_parsers = [

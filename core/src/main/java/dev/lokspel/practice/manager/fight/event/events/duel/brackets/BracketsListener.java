@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.event.events.duel.brackets;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.event.enums.EventStatus;
 import dev.lokspel.practice.manager.fight.event.events.duel.interfaces.DuelFight;
 import dev.lokspel.practice.manager.fight.event.events.duel.interfaces.DuelListener;
@@ -58,13 +58,13 @@ public class BracketsListener extends DuelListener {
             for (Player eventPlayer : brackets.getPlayers()) {
                 if (duelFight.getPlayers().contains(eventPlayer)) return;
 
-                ZonePractice.getEntityHider().hideEntity(eventPlayer, e.getEntity());
+                AstralPractice.getEntityHider().hideEntity(eventPlayer, e.getEntity());
             }
 
             for (Player eventSpectator : brackets.getSpectators()) {
                 if (duelFight.getSpectators().contains(eventSpectator)) return;
 
-                ZonePractice.getEntityHider().hideEntity(eventSpectator, e.getEntity());
+                AstralPractice.getEntityHider().hideEntity(eventSpectator, e.getEntity());
             }
         }
     }

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,7 +29,7 @@ public class ModernItemCooldownHandler {
     }
 
     public static void handleFireworkRocket(Player player, double duration, Cancellable event) {
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (player.hasCooldown(Material.FIREWORK_ROCKET)) {
                 if (event != null) {
                     event.setCancelled(true);

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.guis;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.fight.util.FightUtil;
 import dev.lokspel.practice.manager.gui.GUI;
@@ -89,7 +89,7 @@ public class SpectatorMenuGui extends GUI {
             } else {
                 if (gui.containsKey(page)) {
                     int finalPage = page;
-                    Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () ->
+                    Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () ->
                     {
                         gui.remove(finalPage);
 
@@ -105,9 +105,9 @@ public class SpectatorMenuGui extends GUI {
 
     @Override
     public void update() {
-        if (!ZonePractice.getInstance().isEnabled()) return;
+        if (!AstralPractice.getInstance().isEnabled()) return;
 
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             build();
             updatePlayers();

@@ -4,7 +4,7 @@
 
 <div align="center">
   <a href="https://discord.gg/3t8tZRkJ6H" target="_blank"><img alt="Discord" src="https://img.shields.io/badge/Discord-100000?style=for-the-badge&logo=Discord&logoColor=white&labelColor=7289da&color=7289da"/></a>&nbsp;
-  <a href="https://hangar.papermc.io/Sylveya/ZonePractice" target="_blank"><img alt="Hangar" src="https://img.shields.io/badge/Hangar-100000?style=for-the-badge&logo=hangar&logoColor=white&labelColor=7289da&color=7289da"/></a>
+  <a href="https://hangar.papermc.io/Sylveya/AstralPractice" target="_blank"><img alt="Hangar" src="https://img.shields.io/badge/Hangar-100000?style=for-the-badge&logo=hangar&logoColor=white&labelColor=7289da&color=7289da"/></a>
 </div>
 
 ---
@@ -15,13 +15,13 @@
 
 1. Add the [PacketEvents](https://modrinth.com/plugin/packetevents) plugin to your server. If you have WorldEdit, remove it and replace it with [FastAsyncWorldEdit](https://modrinth.com/plugin/fastasyncworldedit).
 
-3. **Download** the ZonePractice Pro plugin.
+3. **Download** the AstralPractice plugin.
 
 > You can download from:
 >
-> - [**Dev builds**](https://github.com/sylveya/ZonePractice-Pro/actions/workflows/dev_build.yml) (**latest**; more
+> - [**Dev builds**](https://github.com/sylveya/AstralPractice/actions/workflows/dev_build.yml) (**latest**; more
     features, more bugs) <ins>**recommended**</ins>
-> - [**Hangar**](https://hangar.papermc.io/Sylveya/ZonePractice) (**stable**; less features, less bugs).
+> - [**Hangar**](https://hangar.papermc.io/Sylveya/AstralPractice) (**stable**; less features, less bugs).
 
 3. Once downloaded, extract the zip file, place the `.jar` file inside into the **`/plugins`** directory on your server.
 4. **Restart** your server.

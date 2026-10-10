@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.nametag;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
 import dev.lokspel.practice.manager.inventory.InventoryUtil;
@@ -96,7 +96,7 @@ public class NametagManager {
 
         if (listener == null) {
             listener = new NametagDisplayListener();
-            Bukkit.getPluginManager().registerEvents(listener, ZonePractice.getInstance());
+            Bukkit.getPluginManager().registerEvents(listener, AstralPractice.getInstance());
         }
 
         startRefreshTask();
@@ -731,7 +731,7 @@ public class NametagManager {
     private void startRefreshTask() {
         stopRefreshTask();
         refreshTask = Bukkit.getScheduler().runTaskTimer(
-                ZonePractice.getInstance(),
+                AstralPractice.getInstance(),
                 this::refreshAllNametags,
                 REFRESH_INTERVAL_TICKS,
                 REFRESH_INTERVAL_TICKS
@@ -741,7 +741,7 @@ public class NametagManager {
     private void startBelowNameRefreshTask() {
         stopBelowNameRefreshTask();
         belowNameRefreshTask = Bukkit.getScheduler().runTaskTimer(
-                ZonePractice.getInstance(),
+                AstralPractice.getInstance(),
                 this::updateBelowNameHealthLines,
                 0L,
                 BELOW_NAME_REFRESH_INTERVAL_TICKS

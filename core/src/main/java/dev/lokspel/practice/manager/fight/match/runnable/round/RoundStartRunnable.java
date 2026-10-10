@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.match.runnable.round;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.match.Match;
@@ -104,7 +104,7 @@ public class RoundStartRunnable extends BukkitRunnable {
 
         running = true;
         this.runTaskTimer(
-                ZonePractice.getInstance(),
+                AstralPractice.getInstance(),
                 match.getLadder().isMultiRoundStartCountdown() || round.getRoundNumber() == 1 ? 20L : 0,
                 20L);
 

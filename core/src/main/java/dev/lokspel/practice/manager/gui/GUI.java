@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.confirmgui.ConfirmGUI;
 import dev.lokspel.practice.manager.gui.confirmgui.ConfirmGuiType;
 import lombok.Getter;
@@ -71,7 +71,7 @@ public abstract class GUI {
         if (gui.containsKey(page)) {
             player.openInventory(gui.get(page));
 
-            Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+            Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
             {
                 inGuiPlayers.put(player, page);
                 GUIManager.getInstance().getOpenGUI().put(player, this);
@@ -115,7 +115,7 @@ public abstract class GUI {
         ConfirmGUI confirmGUI = new ConfirmGUI(confirmGuiType, backToConfirm, backToCancel);
         confirmGUI.openInventory(player);
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
         {
             inGuiPlayers.put(player, -1);
             inConfirmationGui.put(player, confirmGUI);

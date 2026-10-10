@@ -5,12 +5,12 @@ import dev.lokspel.api.Enum.WeightClass;
 import dev.lokspel.api.Utilities.PlayerNametag;
 import org.bukkit.entity.Player;
 
-public abstract class ZonePracticeApi
+public abstract class AstralPracticeApi
 {
 
-    public static ZonePracticeApi instance = null;
+    public static AstralPracticeApi instance = null;
 
-    public static ZonePracticeApi getInstance() {
+    public static AstralPracticeApi getInstance() {
         return instance;
     }
 

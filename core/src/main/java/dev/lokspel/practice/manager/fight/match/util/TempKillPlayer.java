@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.fight.match.util;
 
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.match.Match;
 import dev.lokspel.practice.manager.fight.match.Round;
@@ -86,7 +86,7 @@ public class TempKillPlayer extends BukkitRunnable {
         player.setFlying(true);
 
         running = true;
-        this.runTaskTimer(ZonePractice.getInstance(), 0, 20L);
+        this.runTaskTimer(AstralPractice.getInstance(), 0, 20L);
     }
 
     public void cancel(boolean setPlayer) {

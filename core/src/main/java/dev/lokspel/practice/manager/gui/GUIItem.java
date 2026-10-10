@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.ladder.util.LadderUtil;
 import dev.lokspel.practice.util.Common;
 import dev.lokspel.practice.util.ItemCreateUtil;
@@ -131,7 +131,7 @@ public class GUIItem {
         if (raw == null || raw.isEmpty()) return net.kyori.adventure.text.Component.empty();
         // Explicitly mark italic as false so Minecraft's default item-name italic doesn't apply.
         // Users can still opt back in by writing <italic> in their config.
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(raw))
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(raw))
                 .decorationIfAbsent(net.kyori.adventure.text.format.TextDecoration.ITALIC,
                         net.kyori.adventure.text.format.TextDecoration.State.FALSE);
     }

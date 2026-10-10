@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -24,7 +24,7 @@ public enum PersistentTagUtil {
     private static final Map<String, String> BLOCK_TAGS = new ConcurrentHashMap<>();
 
     private static NamespacedKey key(String tag) {
-        return new NamespacedKey(ZonePractice.getInstance(), "zpp_" + tag.toLowerCase());
+        return new NamespacedKey(AstralPractice.getInstance(), "zpp_" + tag.toLowerCase());
     }
 
     private static String register(Object value) {

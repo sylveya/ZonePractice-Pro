@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.profile;
 
 import dev.lokspel.api.Event.NewPlayerJoin;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.database.Database;
 import dev.lokspel.practice.manager.backend.database.model.GlobalStatsRow;
 import dev.lokspel.practice.manager.backend.database.model.LadderStatsRow;
@@ -42,7 +42,7 @@ public class ProfileManager {
     @Getter
     private final Map<UUID, Profile> profiles = new ConcurrentHashMap<>();
 
-    private final File folder = new File(ZonePractice.getInstance().getDataFolder() + "/profiles");
+    private final File folder = new File(AstralPractice.getInstance().getDataFolder() + "/profiles");
 
 
     public Profile getProfile(UUID uuid) {
@@ -100,14 +100,14 @@ public class ProfileManager {
         profiles.put(uuid, profile);
         loadProfileInfo(profile);
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                 Bukkit.getPluginManager().callEvent(new NewPlayerJoin(player)), 20L * 2);
 
         return profile;
     }
 
     public void loadProfiles(final StartUpCallback callback) {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             // 1. Load YAML profiles: settings, kits, cosmetics, timestamps
             loadProfilesFromDisk();
@@ -117,13 +117,13 @@ public class ProfileManager {
                 if (throwable != null) {
                     Common.sendConsoleMMMessage("<red>Error: " + throwable.getMessage());
                 }
-                Bukkit.getScheduler().runTask(ZonePractice.getInstance(), callback::onLoadingDone);
+                Bukkit.getScheduler().runTask(AstralPractice.getInstance(), callback::onLoadingDone);
             });
         });
     }
 
     private CompletableFuture<Void> loadProfilesFromDatabase() {
-        Database database = ZonePractice.getDatabase();
+        Database database = AstralPractice.getDatabase();
         if (database == null) return CompletableFuture.completedFuture(null);
 
         List<CompletableFuture<Void>> futures = new ArrayList<>(profiles.size());
@@ -215,7 +215,7 @@ public class ProfileManager {
     }
 
     public void loadAllProfileInformations() {
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
             for (Player online : Bukkit.getOnlinePlayers()) {
                 Profile profile = getProfile(online);
                 if (profile != null) {
@@ -254,7 +254,7 @@ public class ProfileManager {
      * @return a future that completes once both tables are written
      */
     public CompletableFuture<Void> saveProfilesToDatabase() {
-        Database database = ZonePractice.getDatabase();
+        Database database = AstralPractice.getDatabase();
         if (database == null) return CompletableFuture.completedFuture(null);
 
         List<Profile> present = new ArrayList<>(profiles.values());
@@ -266,7 +266,7 @@ public class ProfileManager {
     }
 
     public void saveProfileToDatabase(Profile profile) {
-        Database database = ZonePractice.getDatabase();
+        Database database = AstralPractice.getDatabase();
         if (database == null) return;
 
         database.getGlobalStatsRepository().save(profile)
@@ -274,7 +274,7 @@ public class ProfileManager {
     }
 
     public void deleteProfileFromDatabase(UUID uuid) {
-        Database database = ZonePractice.getDatabase();
+        Database database = AstralPractice.getDatabase();
         if (database == null) return;
 
         database.getGlobalStatsRepository().delete(uuid)
@@ -283,7 +283,7 @@ public class ProfileManager {
     }
 
     public void deleteLadderStatsFromDatabase(String ladderName) {
-        Database database = ZonePractice.getDatabase();
+        Database database = AstralPractice.getDatabase();
         if (database == null) return;
 
         database.getLadderStatsRepository().deleteLadder(ladderName);

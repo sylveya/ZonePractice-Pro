@@ -1,6 +1,6 @@
 package dev.lokspel.practice.listener;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.ffa.FFAManager;
@@ -77,7 +77,7 @@ public class PlayerChatListener implements Listener {
                 );
 
                 Bukkit.getScheduler().runTask(
-                        ZonePractice.getInstance(),
+                        AstralPractice.getInstance(),
                         () -> Common.sendMMMessage(player, disabled)
                 );
             }
@@ -174,7 +174,7 @@ public class PlayerChatListener implements Listener {
 
             } else {
 
-                component = ZonePractice.getMiniMessage()
+                component = AstralPractice.getMiniMessage()
                         .deserialize(
                                 StringUtil.legacyToMiniMessage(format)
                         );

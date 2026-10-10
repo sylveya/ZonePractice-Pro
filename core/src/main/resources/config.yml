@@ -8,7 +8,7 @@ MARIADB-DATABASE:
   CONNECTION:
     HOST: localhost
     PORT: 3306
-    DATABASE: zonepractice
+    DATABASE: astralpractice
     USER: root
     PASSWORD: mysecretpassword
 
@@ -729,7 +729,7 @@ PLAYER:
     TOP-LINE: "" # Line drawn above lobby players' nametags, supports PlaceholderAPI placeholders.
     BOTTOM-LINE: "" # Line drawn below lobby players' nametags, supports PlaceholderAPI placeholders.
   NAMETAG-MANAGEMENT:
-    ENABLED: true # If false, ZonePractice will not manage nametags (above-head prefix/suffix/color) or the tab-list at all.
+    ENABLED: true # If false, AstralPractice will not manage nametags (above-head prefix/suffix/color) or the tab-list at all.
   JOIN-TELEPORT-LOBBY: true # If true, the player will be teleported to the lobby when they join the server.
   JOIN-MESSAGE: false # If true, the default Minecraft join message will be shown when a player joins.
   GROUP-CHAT:

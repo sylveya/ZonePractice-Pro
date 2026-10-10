@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.util.Runnable;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.match.MatchManager;
 import dev.lokspel.practice.manager.fight.util.FightPlayer;
 import dev.lokspel.practice.manager.profile.Profile;
@@ -45,7 +45,7 @@ public abstract class GameRunnable extends BukkitRunnable {
 
         running = true;
         PlayerCooldown.addCooldown(player, cooldownObject, this.seconds);
-        this.runTaskTimerAsynchronously(ZonePractice.getInstance(), 0, 2L);
+        this.runTaskTimerAsynchronously(AstralPractice.getInstance(), 0, 2L);
     }
 
     @Override

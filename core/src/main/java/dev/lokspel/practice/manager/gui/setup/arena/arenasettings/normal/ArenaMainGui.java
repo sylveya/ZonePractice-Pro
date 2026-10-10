@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.arena.arenasettings.normal;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.setup.ArenaSetupManager;
 import dev.lokspel.practice.manager.arena.util.ArenaUtil;
@@ -56,7 +56,7 @@ public class ArenaMainGui extends GUI {
 
     @Override
     public void update() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             Inventory inventory = gui.get(1);
 

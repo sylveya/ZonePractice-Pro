@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.server;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.backend.BackendManager;
 import dev.lokspel.practice.manager.backend.ConfigManager;
@@ -24,7 +24,7 @@ public class AutoSaveRunnable extends BukkitRunnable {
 
     public void begin() {
         running = true;
-        this.runTaskTimerAsynchronously(ZonePractice.getInstance(), interval, interval);
+        this.runTaskTimerAsynchronously(AstralPractice.getInstance(), interval, interval);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class AutoSaveRunnable extends BukkitRunnable {
         if (alert) {
             ServerManager.getInstance().alertPlayers("zpp.autosave.alert", LanguageManager.getString("AUTO-SAVE.STARTED"));
 
-            Bukkit.getScheduler().runTaskLaterAsynchronously(ZonePractice.getInstance(), () ->
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstralPractice.getInstance(), () ->
                     ServerManager.getInstance().alertPlayers("zpp.autosave.alert", LanguageManager.getString("AUTO-SAVE.ENDED")), NumberUtil.getRandomNumber(4, 10) * 20L);
         }
 
@@ -44,7 +44,7 @@ public class AutoSaveRunnable extends BukkitRunnable {
         ArenaManager.getInstance().saveArenas();
         LadderManager.getInstance().saveLadders();
         ProfileManager.getInstance().saveProfiles();
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> HologramManager.getInstance().saveHolograms());
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> HologramManager.getInstance().saveHolograms());
         BackendManager.save();
     }
 

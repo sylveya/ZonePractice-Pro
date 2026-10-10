@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util.placeholderapi;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.arenas.FFAArena;
 import dev.lokspel.practice.manager.division.DivisionManager;
@@ -89,10 +89,10 @@ public class PlayerExpansion extends PlaceholderExpansion implements Relational 
                         if (input.length == 2) return group.getDisplayName();
                         break;
                     case "prefix":
-                        if (input.length == 2) return ZonePractice.getMiniMessage().serialize(group.getPrefix());
+                        if (input.length == 2) return AstralPractice.getMiniMessage().serialize(group.getPrefix());
                         break;
                     case "suffix":
-                        if (input.length == 2) return ZonePractice.getMiniMessage().serialize(group.getSuffix());
+                        if (input.length == 2) return AstralPractice.getMiniMessage().serialize(group.getSuffix());
                         break;
                     case "limit":
                         if (input.length == 2) return null;

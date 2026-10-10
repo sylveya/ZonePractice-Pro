@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.queue;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.event.ProfileStatusChangeEvent;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.backend.ConfigManager;
@@ -37,7 +37,7 @@ public class CustomKitQueueManager implements Listener {
     }
 
     private CustomKitQueueManager() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     @Getter

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util.actionbar;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.profile.Profile;
 import dev.lokspel.practice.util.StringUtil;
 import lombok.Getter;
@@ -57,7 +57,7 @@ public class ActionBar {
      */
     public void setMessage(String id, String text, int duration, ActionBarPriority priority) {
         if (!Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> setMessage(id, text, duration, priority));
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> setMessage(id, text, duration, priority));
             return;
         }
 
@@ -99,7 +99,7 @@ public class ActionBar {
 
     public void resetForReconnect() {
         if (!Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), this::resetForReconnect);
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), this::resetForReconnect);
             return;
         }
 
@@ -115,7 +115,7 @@ public class ActionBar {
      */
     public void removeMessage(String id) {
         if (!Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> removeMessage(id));
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> removeMessage(id));
             return;
         }
 
@@ -150,7 +150,7 @@ public class ActionBar {
                 try {
                     tick();
                 } catch (Throwable throwable) {
-                    ZonePractice.getInstance().getLogger().warning("ActionBar tick failed for "
+                    AstralPractice.getInstance().getLogger().warning("ActionBar tick failed for "
                             + profile.getUuid() + ": " + throwable.getMessage());
                     stopRunnable();
                 }
@@ -158,7 +158,7 @@ public class ActionBar {
         };
 
         // Start on next period because setMessage() already performs the immediate send path.
-        actionBarRunnable.runTaskTimer(ZonePractice.getInstance(), TICK_PERIOD, TICK_PERIOD);
+        actionBarRunnable.runTaskTimer(AstralPractice.getInstance(), TICK_PERIOD, TICK_PERIOD);
     }
 
     /**
@@ -249,7 +249,7 @@ public class ActionBar {
                 lastSentWasEmpty = false;
                 lastSendAtMillis = now;
             } catch (Throwable throwable) {
-                ZonePractice.getInstance().getLogger().warning("ActionBar send failed for " + profile.getUuid() + ": " + throwable.getMessage());
+                AstralPractice.getInstance().getLogger().warning("ActionBar send failed for " + profile.getUuid() + ": " + throwable.getMessage());
             }
         }
     }
@@ -303,7 +303,7 @@ public class ActionBar {
     private Component deserializeOrFallback(String text) {
         String safeText = text == null ? "" : text;
         try {
-            return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(safeText));
+            return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(safeText));
         } catch (Exception ignored) {
             return Component.text(Objects.toString(text, ""));
         }

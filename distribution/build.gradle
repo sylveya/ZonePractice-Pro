@@ -13,7 +13,7 @@ dependencies {
 }
 
 tasks.named('shadowJar', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
-    archiveBaseName = 'ZonePracticePro'
+    archiveBaseName = 'AstralPractice'
     archiveClassifier = ''
 
     // ServiceLoader must find relocated MariaDB authentication plugins and JDBC drivers.

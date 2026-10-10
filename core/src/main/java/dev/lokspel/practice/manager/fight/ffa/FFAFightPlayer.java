@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.ffa;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.ffa.game.FFA;
 import dev.lokspel.practice.manager.fight.match.enums.TeamEnum;
@@ -68,7 +68,7 @@ public class FFAFightPlayer extends FightPlayer {
      */
     private void scheduleDefaultKitFallback() {
         int seconds = ConfigManager.getInt("FFA.CUSTOM-KIT-SELECTION-TIME", 15);
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             // Only apply if the player is still in this FFA and hasn't chosen a kit.
             if (ffa.getPlayers().containsKey(player) && isWaitingForKitSelection()) {
                 selectKit(8); // slot 8 = default ladder kit

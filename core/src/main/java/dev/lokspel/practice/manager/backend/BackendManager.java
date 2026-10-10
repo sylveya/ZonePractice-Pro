@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.backend;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.util.Common;
 import dev.lokspel.practice.util.StringUtil;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public enum BackendManager {
     @Getter
     private static YamlConfiguration config;
 
-    public static void createFile(ZonePractice practice) {
+    public static void createFile(AstralPractice practice) {
         file = new File(practice.getDataFolder(), "backend.yml");
         config = new YamlConfiguration();
 

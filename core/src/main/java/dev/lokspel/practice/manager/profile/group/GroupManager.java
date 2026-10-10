@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.profile.group;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigFile;
 import dev.lokspel.practice.util.StringUtil;
 import dev.lokspel.practice.manager.backend.ConfigManager;
@@ -49,7 +49,7 @@ public class GroupManager extends ConfigFile {
             List<String> sidebarExtensionRaw = new ArrayList<>();
             if (SidebarManager.getInstance().isList("GROUP-EXTENSIONS." + groupName)) {
                 for (String line : SidebarManager.getInstance().getList("GROUP-EXTENSIONS." + groupName)) {
-                    sidebarExtension.add(ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(line)));
+                    sidebarExtension.add(AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(line)));
                     sidebarExtensionRaw.add(line);
                 }
             }

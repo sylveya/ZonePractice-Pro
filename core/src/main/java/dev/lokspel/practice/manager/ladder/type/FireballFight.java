@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.ladder.type;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.util.ArenaUtil;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.match.Match;
@@ -122,9 +122,9 @@ public class FireballFight extends BedFight implements CustomConfig, LadderHandl
         return false;
     }
 
-    private static final String FIREBALL_FIGHT_FIREBALL = "ZONEPRACTICE_PRO_MATCH_FIREBALL";
-    public static final String FIREBALL_FIGHT_TNT = "ZONEPRACTICE_PRO_MATCH_FIREBALL_TNT";
-    public static final String FIREBALL_FIGHT_TNT_SHOOTER = "ZONEPRACTICE_PRO_MATCH_FIREBALL_TNT_SHOOTER";
+    private static final String FIREBALL_FIGHT_FIREBALL = "ASTRALPRACTICE_MATCH_FIREBALL";
+    public static final String FIREBALL_FIGHT_TNT = "ASTRALPRACTICE_MATCH_FIREBALL_TNT";
+    public static final String FIREBALL_FIGHT_TNT_SHOOTER = "ASTRALPRACTICE_MATCH_FIREBALL_TNT_SHOOTER";
     private static final double FIREBALL_SPEED = ConfigManager.getDouble("MATCH-SETTINGS.FIREBALL-FIGHT.FIREBALL-SPEED");
 
     private static void onTntClick(final @NotNull PlayerInteractEvent e) {
@@ -186,7 +186,7 @@ public class FireballFight extends BedFight implements CustomConfig, LadderHandl
             }
         };
 
-        runnable.runTaskTimer(ZonePractice.getInstance(), 40L, 20L);
+        runnable.runTaskTimer(AstralPractice.getInstance(), 40L, 20L);
     }
 
     private static void onBlockPlace(final @NotNull BlockPlaceEvent e, final @NotNull Match match) {
@@ -352,7 +352,7 @@ public class FireballFight extends BedFight implements CustomConfig, LadderHandl
 
         final float yield = fireball.getYield() > 0 ? fireball.getYield() : 1.0f;
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             double dx = playerLoc.getX() - fireballLoc.getX();
             double dz = playerLoc.getZ() - fireballLoc.getZ();
 
@@ -415,7 +415,7 @@ public class FireballFight extends BedFight implements CustomConfig, LadderHandl
         final Location tntLoc = tnt.getLocation();
         final float yield = tnt.getYield();
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             double distance = playerLoc.distance(tntLoc);
 
             double impactRadius = (yield > 0 ? yield : 4.0) * 2.0;

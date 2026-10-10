@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.party.matchrequest;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
@@ -73,7 +73,7 @@ public class PartyRequest {
             public void run() {
                 requestManager.getRequests().get(target).remove(partyRequest);
             }
-        }.runTaskLaterAsynchronously(ZonePractice.getInstance(), 20L * ConfigManager.getInt("PARTY.REQUEST-EXPIRY"));
+        }.runTaskLaterAsynchronously(AstralPractice.getInstance(), 20L * ConfigManager.getInt("PARTY.REQUEST-EXPIRY"));
     }
 
     public void sendRequestMessage() {

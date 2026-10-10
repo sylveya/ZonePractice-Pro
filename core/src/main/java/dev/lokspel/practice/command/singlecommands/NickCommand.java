@@ -1,6 +1,6 @@
 package dev.lokspel.practice.command.singlecommands;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.inventory.InventoryUtil;
@@ -56,7 +56,7 @@ public class NickCommand implements CommandExecutor, TabCompleter {
 
     private static String renderNamePreview(Player target, String rawTemplate) {
         String normalizedTemplate = NameFormatUtil.normalizePlayerNameTemplate(rawTemplate);
-        return ZonePractice.getMiniMessage().serialize(
+        return AstralPractice.getMiniMessage().serialize(
                 NameFormatUtil.applyPlayerPlaceholders(
                         NameFormatUtil.parseConfiguredComponent(normalizedTemplate),
                         target.getName()

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.server;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.util.ArenaWorldUtil;
 import dev.lokspel.practice.manager.backend.BackendManager;
 import dev.lokspel.practice.manager.backend.ConfigManager;
@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class ServerManager implements Listener {
 
-    private final ZonePractice zonePractice;
+    private final AstralPractice astralPractice;
 
     private static ServerManager instance;
 
@@ -75,8 +75,8 @@ public class ServerManager implements Listener {
     private final ProfileLimitRunnable profileLimitRunnable = new ProfileLimitRunnable();
 
     private ServerManager() {
-        this.zonePractice = ZonePractice.getInstance();
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        this.astralPractice = AstralPractice.getInstance();
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
 
         this.goldenHead = new GoldenHead();
 
@@ -90,13 +90,13 @@ public class ServerManager implements Listener {
             BukkitRunnable runnable = new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (ZonePractice.getInstance().getStartUpProgress().get(StartUpTypes.PROFILE_LOADING)) {
+                    if (AstralPractice.getInstance().getStartUpProgress().get(StartUpTypes.PROFILE_LOADING)) {
                         getInactiveProfileRunnable().begin();
                         this.cancel();
                     }
                 }
             };
-            runnable.runTaskTimer(ZonePractice.getInstance(), 0, 20L * 5);
+            runnable.runTaskTimer(AstralPractice.getInstance(), 0, 20L * 5);
         }
         if (ConfigManager.getBoolean("RANKED.LIMIT.ENABLED"))
             profileLimitRunnable.begin();
@@ -107,7 +107,7 @@ public class ServerManager implements Listener {
     }
 
     public void loadOfflinePlayers() {
-        Bukkit.getScheduler().runTaskAsynchronously(zonePractice, () ->
+        Bukkit.getScheduler().runTaskAsynchronously(astralPractice, () ->
         {
             for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
                 offlinePlayers.put(offlinePlayer.getName(), offlinePlayer);
@@ -199,7 +199,7 @@ public class ServerManager implements Listener {
                 }
 
                 final Profile profile1 = profile;
-                Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+                Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                 {
                     PlayerUtil.setPlayerWorldTime(player);
 
@@ -278,7 +278,7 @@ public class ServerManager implements Listener {
     }
 
     public void alertPlayers(String permission, String message) {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             for (Player player : Bukkit.getOnlinePlayers())
                 if (player.hasPermission(permission))
@@ -305,7 +305,7 @@ public class ServerManager implements Listener {
     }
 
     public static void runConsoleCommand(String command) {
-        if (!ZonePractice.getInstance().isEnabled()) {
+        if (!AstralPractice.getInstance().isEnabled()) {
             return;
         }
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();

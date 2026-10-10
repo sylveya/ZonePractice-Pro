@@ -7,7 +7,7 @@ import com.github.retrooper.packetevents.protocol.particle.type.ParticleTypes;
 import com.github.retrooper.packetevents.util.Vector3d;
 import com.github.retrooper.packetevents.util.Vector3f;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerParticle;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.fight.util.EntityHiderListener;
 import lombok.Getter;
@@ -207,11 +207,11 @@ public enum DeathEffect {
             player.playSound(center, Sound.ENTITY_GENERIC_EXPLODE, 0.6f, 1.4f);
         });
 
-        if (!ZonePractice.getInstance().isEnabled()) {
+        if (!AstralPractice.getInstance().isEnabled()) {
             return;
         }
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             List<Player> liveViewers = filterViewers(baseLocation, recipients);
             if (liveViewers.isEmpty()) {
                 return;
@@ -225,7 +225,7 @@ public enum DeathEffect {
             liveViewers.forEach(player -> player.playSound(center, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.75f, 1.15f));
         }, 2L);
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             List<Player> liveViewers = filterViewers(baseLocation, recipients);
             if (liveViewers.isEmpty()) {
                 return;
@@ -371,10 +371,10 @@ public enum DeathEffect {
     }
 
     private static void runLater(long delay, Runnable runnable) {
-        if (!ZonePractice.getInstance().isEnabled()) {
+        if (!AstralPractice.getInstance().isEnabled()) {
             return;
         }
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), runnable, delay);
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), runnable, delay);
     }
 
     private void sendParticles(List<ParticleSpec> particles, List<Player> viewers) {
@@ -405,7 +405,7 @@ public enum DeathEffect {
                     PacketEvents.getAPI().getPlayerManager().sendPacket(viewer, packet);
                 }
             } catch (Exception ex) {
-                ZonePractice.getInstance().getLogger().warning("Skipped incompatible particle packet for death effect: " + this.name()
+                AstralPractice.getInstance().getLogger().warning("Skipped incompatible particle packet for death effect: " + this.name()
                         + " (particle=" + particleSpec.particle + ") due to: " + ex.getClass().getSimpleName());
             }
         }

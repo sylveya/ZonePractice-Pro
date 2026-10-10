@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.division;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.util.StringUtil;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
@@ -52,11 +52,11 @@ public class Division {
     }
 
     public Component getComponentFullName() {
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(fullName));
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(fullName));
     }
 
     public Component getComponentShortName() {
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(shortName));
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(shortName));
     }
 
 }

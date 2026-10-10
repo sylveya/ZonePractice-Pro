@@ -1,7 +1,7 @@
 package dev.lokspel.practice.util;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.inventory.InventoryUtil;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.profile.Profile;
 import dev.lokspel.practice.manager.profile.enums.ProfilePrefixVisibility;
 import dev.lokspel.practice.manager.profile.group.Group;
@@ -55,7 +55,7 @@ public final class NameFormatUtil {
     // Template / placeholder helpers
     public static Component parseConfiguredComponent(String raw) {
         if (raw == null || raw.isEmpty()) return Component.empty();
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(raw));
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(raw));
     }
 
     public static Component applyDivisionPlaceholders(Component template, Profile profile) {
@@ -88,9 +88,9 @@ public final class NameFormatUtil {
     public static Component applyPAPIPlaceholders(Component component, Player player) {
         if (component == null || player == null) return component;
         if (!SoftDependUtil.isPAPI_ENABLED) return component;
-        String serialized = ZonePractice.getMiniMessage().serialize(component);
+        String serialized = AstralPractice.getMiniMessage().serialize(component);
         String resolved   = PlaceholderAPI.setPlaceholders(player, serialized);
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(resolved));
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(resolved));
     }
 
     public static String normalizePlayerNameTemplate(String rawTemplate) {
@@ -98,7 +98,7 @@ public final class NameFormatUtil {
         rawTemplate = StringUtil.stripObfuscationTags(rawTemplate);
         boolean hasPlayerPlaceholder = rawTemplate.contains("%player%") || rawTemplate.contains("%%player%%");
         if (hasPlayerPlaceholder) return rawTemplate;
-        String plainText = PLAIN_TEXT_SERIALIZER.serialize(ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(rawTemplate))).trim();
+        String plainText = PLAIN_TEXT_SERIALIZER.serialize(AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(rawTemplate))).trim();
         if (!plainText.isEmpty()) return rawTemplate;
         return rawTemplate + "%player%";
     }
@@ -126,9 +126,9 @@ public final class NameFormatUtil {
         normalized = StringUtil.legacyToMiniMessage(normalized);
 
         String division = profile.getStats().getDivision() != null
-                ? ZonePractice.getMiniMessage().serialize(profile.getStats().getDivision().getComponentFullName()) : "";
+                ? AstralPractice.getMiniMessage().serialize(profile.getStats().getDivision().getComponentFullName()) : "";
         String divisionShort = profile.getStats().getDivision() != null
-                ? ZonePractice.getMiniMessage().serialize(profile.getStats().getDivision().getComponentShortName()) : "";
+                ? AstralPractice.getMiniMessage().serialize(profile.getStats().getDivision().getComponentShortName()) : "";
 
         normalized = normalized
                 .replace("%division%", division).replace("%%division%%", division)
@@ -138,7 +138,7 @@ public final class NameFormatUtil {
             normalized = normalized.replace("%%player%%", playerName).replace("%player%", playerName);
         }
 
-        return ZonePractice.getMiniMessage().deserialize(normalized);
+        return AstralPractice.getMiniMessage().deserialize(normalized);
     }
 
     // Public resolution API

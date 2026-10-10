@@ -3,7 +3,7 @@ package dev.lokspel.practice.manager.queue;
 import dev.lokspel.api.Event.Queue.QueueEndEvent;
 import dev.lokspel.practice.util.TimeUtil;
 import dev.lokspel.api.Event.Queue.QueueStartEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
@@ -240,7 +240,7 @@ public class Queue extends Runnable implements dev.lokspel.api.Interface.Queue {
         duel.setQueuedMatch(true);
 
         if (matchFoundAnimation)
-            Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+            Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
                 if (player.isOnline() && queue.getPlayer().isOnline()) duel.startMatch();
             }, ConfigManager.getInt("MATCH-SETTINGS.MATCH-FOUND.ICON-ANIMATION-DELAY", 40));
         else

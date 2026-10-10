@@ -18,7 +18,7 @@ LOBBY:
     - ""
     - "<white>Division: %division%"
     - ""
-    - "<gold>play.zonepractice.com"
+    - "<gold>play.astralpractice.com"
     - "<gray><st>---------------------"
   PARTY:
     - "<gray><st>---------------------"
@@ -26,7 +26,7 @@ LOBBY:
     - "<white>In Fights: <gold>%inFightPlayers%"
     - "<white>In Queue: <gold>%inQueuePlayer%"
     - ""
-    - "<gold>play.zonepractice.com"
+    - "<gold>play.astralpractice.com"
     - "<gray><st>---------------------"
     - "<gold>Party"
     - "<white>Leader: <gold>%partyLeaderNameOnly%"
@@ -41,7 +41,7 @@ LOBBY:
     - "%weightClass% %ladderDisplayName%"
     - "<white>Time: <gold>%elapsedTime%"
     - ""
-    - "<gold>play.zonepractice.com"
+    - "<gold>play.astralpractice.com"
     - "<gray><st>---------------------"
   DUEL-QUEUE-MULTI:
     - "<gray><st>---------------------"
@@ -53,7 +53,7 @@ LOBBY:
     - "%multiQueueCurrentLadder%"
     - "<white>Time: <gold>%elapsedTime%"
     - ""
-    - "<gold>play.zonepractice.com"
+    - "<gold>play.astralpractice.com"
     - "<gray><st>---------------------"
   CUSTOM-KIT-QUEUE:
     HOSTING:
@@ -66,7 +66,7 @@ LOBBY:
       - "<white>Kit: <gold>%ladderDisplayName%"
       - "<white>Time: <gold>%elapsedTime%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
     JOIN-SEARCH:
       - "<gray><st>---------------------"
@@ -78,7 +78,7 @@ LOBBY:
       - "<white>Searching: <gold>%ladderDisplayName%"
       - "<white>Time: <gold>%elapsedTime%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
   EVENT-QUEUE:
     IDLE:
@@ -88,7 +88,7 @@ LOBBY:
       - "<white>Event: <gold>%eventName%"
       - "<white>Players: <gold>%maxPlayer%<gray>/<yellow>%player%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
     STARTING:
       - "<gray><st>---------------------"
@@ -99,7 +99,7 @@ LOBBY:
       - ""
       - "<white>Starting in: <gold>%timeLeft%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
 
 ########################################################################
@@ -121,7 +121,7 @@ MATCH:
     - "  <white>Duration: <yellow>%roundDuration%"
     - "  <white>Ping: <green>%ping%<gray>ms | <red>%enemyPing%<gray>ms"
     - ""
-    - "<gold>play.zonepractice.com"
+    - "<gold>play.astralpractice.com"
     - "<gray><st>---------------------"
   PARTY_FFA:
     - "<gray><st>---------------------"
@@ -130,7 +130,7 @@ MATCH:
     - "  <white>Duration: <yellow>%roundDuration%"
     - "  <white>Ping: <green>%ping% ms"
     - ""
-    - "<gold>play.zonepractice.com"
+    - "<gold>play.astralpractice.com"
     - "<gray><st>---------------------"
   PARTY_SPLIT:
     - "<gray><st>---------------------"
@@ -141,7 +141,7 @@ MATCH:
     - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers%"
     - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers%"
     - ""
-    - "<gold>play.zonepractice.com"
+    - "<gold>play.astralpractice.com"
     - "<gray><st>---------------------"
   PARTY_VS_PARTY:
     - "<gray><st>---------------------"
@@ -152,7 +152,7 @@ MATCH:
     - " %partyTeamName%<gray>: %partyTeamColor%%partyTeamPlayers%<gray>/<green>%partyTeamAlivePlayers%"
     - " %enemyTeamName%<gray>: %enemyTeamColor%%enemyTeamPlayers%<gray>/<green>%enemyTeamAlivePlayers%"
     - ""
-    - "<gold>play.zonepractice.com"
+    - "<gold>play.astralpractice.com"
     - "<gray><st>---------------------"
   ###############################
   # Here you can set the sidebar for
@@ -170,7 +170,7 @@ MATCH:
         - " <green>Won: %playerTeamColor%%rounds%"
         - " <red>Lost: %enemyTeamColor%%enemyRounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
     PEARLFIGHT:
       DUEL:
@@ -183,7 +183,7 @@ MATCH:
         - " <green>Won: %playerTeamColor%%rounds%"
         - " <red>Lost: %enemyTeamColor%%enemyRounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_FFA:
         - "<gray><st>---------------------"
@@ -196,7 +196,7 @@ MATCH:
         - " <gray>2. <white>%player2% <yellow>%player2rounds%"
         - " <gray>3. <white>%player3% <yellow>%player3rounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_SPLIT:
         - "<gray><st>---------------------"
@@ -207,7 +207,7 @@ MATCH:
         - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
         - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_VS_PARTY:
         - "<gray><st>---------------------"
@@ -218,7 +218,7 @@ MATCH:
         - " %partyTeamName%<gray>: %partyTeamColor%%partyTeamPlayers%<gray>/<green>%partyTeamAlivePlayers% %partyTeamColor%%partyTeamRounds%"
         - " %enemyTeamName%<gray>: %enemyTeamColor%%enemyTeamPlayers%<gray>/<green>%enemyTeamAlivePlayers% %enemyTeamColor%%enemyTeamRounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
     BOXING:
       DUEL:
@@ -232,7 +232,7 @@ MATCH:
         - " %playerTeamColor%%player%: <white>%hits%"
         - " %enemyTeamColor%%enemyName%: <white>%enemyHits%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_FFA:
         - "<gray><st>---------------------"
@@ -245,7 +245,7 @@ MATCH:
         - " <gray>2. <white>%player2boxing%: <yellow>%player2boxingHits%"
         - " <gray>3. <white>%player3boxing%: <yellow>%player3boxingHits%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_SPLIT:
         - "<gray><st>---------------------"
@@ -256,7 +256,7 @@ MATCH:
         - " %team1name%: <white>%team1boxingHits%"
         - " %team2name%: <white>%team2boxingHits%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_VS_PARTY:
         - "<gray><st>---------------------"
@@ -267,7 +267,7 @@ MATCH:
         - " %partyTeamName%: <white>%partyTeamBoxingHits%"
         - " %enemyTeamName%: <white>%enemyTeamBoxingHits%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
     BEDWARS:
       DUEL:
@@ -280,7 +280,7 @@ MATCH:
         - " %playerTeamName%: %playerBedStatus% <gray>YOU"
         - " %enemyTeamName%: %enemyBedStatus%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_SPLIT:
         - "<gray><st>---------------------"
@@ -291,7 +291,7 @@ MATCH:
         - " %team1name%: %team1BedStatus%"
         - " %team2name%: %team2BedStatus%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_VS_PARTY:
         - "<gray><st>---------------------"
@@ -302,7 +302,7 @@ MATCH:
         - " %partyTeamName%: %partyTeamBedStatus%"
         - " %enemyTeamName%: %enemyTeamBedStatus%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
     FIREBALL:
       DUEL:
@@ -315,7 +315,7 @@ MATCH:
         - " %playerTeamName%: %playerBedStatus% <gray>YOU"
         - " %enemyTeamName%: %enemyBedStatus%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_SPLIT:
         - "<gray><st>---------------------"
@@ -326,7 +326,7 @@ MATCH:
         - " %team1name%: %team1BedStatus%"
         - " %team2name%: %team2BedStatus%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_VS_PARTY:
         - "<gray><st>---------------------"
@@ -337,7 +337,7 @@ MATCH:
         - " %partyTeamName%: %partyTeamBedStatus%"
         - " %enemyTeamName%: %enemyTeamBedStatus%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
     BRIDGES:
       DUEL:
@@ -350,7 +350,7 @@ MATCH:
         - " <green>Won: %playerTeamColor%%rounds%"
         - " <red>Lost: %enemyTeamColor%%enemyRounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_SPLIT:
         - "<gray><st>---------------------"
@@ -361,7 +361,7 @@ MATCH:
         - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
         - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_VS_PARTY:
         - "<gray><st>---------------------"
@@ -372,7 +372,7 @@ MATCH:
         - " %partyTeamName%<gray>: %partyTeamColor%%partyTeamPlayers%<gray>/<green>%partyTeamAlivePlayers% %partyTeamColor%%partyTeamRounds%"
         - " %enemyTeamName%<gray>: %enemyTeamColor%%enemyTeamPlayers%<gray>/<green>%enemyTeamAlivePlayers% %enemyTeamColor%%enemyTeamRounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
     MLGRUSH:
       DUEL:
@@ -385,7 +385,7 @@ MATCH:
         - " <green>Won: %playerTeamColor%%rounds%"
         - " <red>Lost: %enemyTeamColor%%enemyRounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_SPLIT:
         - "<gray><st>---------------------"
@@ -396,7 +396,7 @@ MATCH:
         - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
         - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_VS_PARTY:
         - "<gray><st>---------------------"
@@ -407,7 +407,7 @@ MATCH:
         - " %partyTeamName%<gray>: %partyTeamColor%%partyTeamPlayers%<gray>/<green>%partyTeamAlivePlayers% %partyTeamColor%%partyTeamRounds%"
         - " %enemyTeamName%<gray>: %enemyTeamColor%%enemyTeamPlayers%<gray>/<green>%enemyTeamAlivePlayers% %enemyTeamColor%%enemyTeamRounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
     BATTLERUSH:
       DUEL:
@@ -420,7 +420,7 @@ MATCH:
         - " <green>Won: %playerTeamColor%%rounds%"
         - " <red>Lost: %enemyTeamColor%%enemyRounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_SPLIT:
         - "<gray><st>---------------------"
@@ -431,7 +431,7 @@ MATCH:
         - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
         - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
       PARTY_VS_PARTY:
         - "<gray><st>---------------------"
@@ -442,7 +442,7 @@ MATCH:
         - " %partyTeamName%<gray>: %partyTeamColor%%partyTeamPlayers%<gray>/<green>%partyTeamAlivePlayers% %partyTeamColor%%partyTeamRounds%"
         - " %enemyTeamName%<gray>: %enemyTeamColor%%enemyTeamPlayers%<gray>/<green>%enemyTeamAlivePlayers% %enemyTeamColor%%enemyTeamRounds%"
         - ""
-        - "<gold>play.zonepractice.com"
+        - "<gold>play.astralpractice.com"
         - "<gray><st>---------------------"
 EVENT:
   LMS:
@@ -525,7 +525,7 @@ FFA:
       - "  <white>Ladder: <green>%ladder%"
       - "  <white>Arena: <green>%arena%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
     NON-BUILD:
       - "<gray><st>---------------------"
@@ -538,7 +538,7 @@ FFA:
       - "  <white>Ladder: <green>%ladder%"
       - "  <white>Arena: <green>%arena%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
   SPECTATE:
     BUILD:
@@ -550,7 +550,7 @@ FFA:
       - ""
       - "  <white>Arena: <green>%arena%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
     NON-BUILD:
       - "<gray><st>---------------------"
@@ -560,7 +560,7 @@ FFA:
       - ""
       - "  <white>Arena: <green>%arena%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
 
 SPECTATE:
@@ -572,7 +572,7 @@ SPECTATE:
       - "  <white>Arena: <yellow>%arena%"
       - "  <white>Duration: <yellow>%roundDuration%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
     PARTY_FFA:
       - "<gray><st>---------------------"
@@ -583,7 +583,7 @@ SPECTATE:
       - ""
       - "  <white>Players: <gold>%players%<gray>/<yellow>%alivePlayers%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
     PARTY_SPLIT:
       - "<gray><st>---------------------"
@@ -595,7 +595,7 @@ SPECTATE:
       - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers%"
       - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
     PARTY_VS_PARTY:
       - "<gray><st>---------------------"
@@ -607,7 +607,7 @@ SPECTATE:
       - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers%"
       - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers%"
       - ""
-      - "<gold>play.zonepractice.com"
+      - "<gold>play.astralpractice.com"
       - "<gray><st>---------------------"
     LADDER:
       SUMO:
@@ -620,7 +620,7 @@ SPECTATE:
           - ""
           - " %team1color%%player1rounds% <gray>| %team2color%%player2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
       PEARLFIGHT:
         DUEL:
@@ -632,7 +632,7 @@ SPECTATE:
           - ""
           - " %team1color%%player1rounds% <gray>| %team2color%%player2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_FFA:
           - "<gray><st>---------------------"
@@ -645,7 +645,7 @@ SPECTATE:
           - " <gray>2. <white>%player2% <yellow>%player2rounds%"
           - " <gray>3. <white>%player3% <yellow>%player3rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_SPLIT:
           - "<gray><st>---------------------"
@@ -657,7 +657,7 @@ SPECTATE:
           - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
           - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_VS_PARTY:
           - "<gray><st>---------------------"
@@ -669,7 +669,7 @@ SPECTATE:
           - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
           - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
       BOXING:
         DUEL:
@@ -682,7 +682,7 @@ SPECTATE:
           - " %team1color%%player1%: <white>%player1hits%"
           - " %team2color%%player2%: <white>%player2hits%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_FFA:
           - "<gray><st>---------------------"
@@ -695,7 +695,7 @@ SPECTATE:
           - " <gray>2. <white>%player2boxing%: <yellow>%player2boxingHits%"
           - " <gray>3. <white>%player3boxing%: <yellow>%player3boxingHits%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_SPLIT:
           - "<gray><st>---------------------"
@@ -707,7 +707,7 @@ SPECTATE:
           - " %team1name%: <white>%team1boxingHits%"
           - " %team2name%: <white>%team2boxingHits%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_VS_PARTY:
           - "<gray><st>---------------------"
@@ -719,7 +719,7 @@ SPECTATE:
           - " %team1name%: <white>%team1boxingHits%"
           - " %team2name%: <white>%team2boxingHits%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
       BEDWARS:
         DUEL:
@@ -732,7 +732,7 @@ SPECTATE:
           - " %player1NameOnly%: %player1BedStatus%"
           - " %player2NameOnly%: %player2BedStatus%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_SPLIT:
           - "<gray><st>---------------------"
@@ -744,7 +744,7 @@ SPECTATE:
           - " %team1name%: %team1BedStatus%"
           - " %team2name%: %team2BedStatus%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_VS_PARTY:
           - "<gray><st>---------------------"
@@ -756,7 +756,7 @@ SPECTATE:
           - " %team1name%: %team1BedStatus%"
           - " %team2name%: %team2BedStatus%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
       FIREBALL:
         DUEL:
@@ -769,7 +769,7 @@ SPECTATE:
           - " %player1NameOnly%: %player1BedStatus%"
           - " %player2NameOnly%: %player2BedStatus%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_SPLIT:
           - "<gray><st>---------------------"
@@ -781,7 +781,7 @@ SPECTATE:
           - " %team1name%: %team1BedStatus%"
           - " %team2name%: %team2BedStatus%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_VS_PARTY:
           - "<gray><st>---------------------"
@@ -793,7 +793,7 @@ SPECTATE:
           - " %team1name%: %team1BedStatus%"
           - " %team2name%: %team2BedStatus%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
       BRIDGES:
         DUEL:
@@ -805,7 +805,7 @@ SPECTATE:
           - ""
           - " %team1color%%player1rounds% <gray>| %team2color%%player2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_SPLIT:
           - "<gray><st>---------------------"
@@ -817,7 +817,7 @@ SPECTATE:
           - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
           - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_VS_PARTY:
           - "<gray><st>---------------------"
@@ -829,7 +829,7 @@ SPECTATE:
           - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
           - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
       MLGRUSH:
         DUEL:
@@ -841,7 +841,7 @@ SPECTATE:
           - ""
           - " %team1color%%player1rounds% <gray>| %team2color%%player2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_SPLIT:
           - "<gray><st>---------------------"
@@ -853,7 +853,7 @@ SPECTATE:
           - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
           - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_VS_PARTY:
           - "<gray><st>---------------------"
@@ -865,7 +865,7 @@ SPECTATE:
           - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
           - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
       BATTLERUSH:
         DUEL:
@@ -877,7 +877,7 @@ SPECTATE:
           - ""
           - " %team1color%%player1rounds% <gray>| %team2color%%player2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_SPLIT:
           - "<gray><st>---------------------"
@@ -889,7 +889,7 @@ SPECTATE:
           - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
           - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
         PARTY_VS_PARTY:
           - "<gray><st>---------------------"
@@ -901,7 +901,7 @@ SPECTATE:
           - " %team1name%<gray>: %team1color%%team1players%<gray>/<green>%team1alivePlayers% %team1color%%team1rounds%"
           - " %team2name%<gray>: %team2color%%team2players%<gray>/<green>%team2alivePlayers% %team2color%%team2rounds%"
           - ""
-          - "<gold>play.zonepractice.com"
+          - "<gold>play.astralpractice.com"
           - "<gray><st>---------------------"
   EVENT:
     LMS:
@@ -962,7 +962,7 @@ SPECTATE:
       - "<white>Duration: <gold>%duration%"
       - "<gray><st>---------------------"
 
-ADMIN-EXTENSION: # Permission: zonepractice.admin.scoreboard
+  ADMIN-EXTENSION: # Permission: astralpractice.admin.scoreboard
   - "<white>TPS: <gold>%tps%"
   - "<white>Arenas: <gold>%arenas%<gray>/<yellow>%enabledArenas%"
   - "<gray><st>---------------------"

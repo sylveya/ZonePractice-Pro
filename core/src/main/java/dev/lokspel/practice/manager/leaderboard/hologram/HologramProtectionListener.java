@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.leaderboard.hologram;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,7 +36,7 @@ public class HologramProtectionListener implements Listener {
         if (instance != null) return;
 
         instance = new HologramProtectionListener();
-        Bukkit.getPluginManager().registerEvents(instance, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(instance, AstralPractice.getInstance());
         instance.startHealthCheck();
     }
 
@@ -44,7 +44,7 @@ public class HologramProtectionListener implements Listener {
      * Starts a frequent health check to ensure all hologram displays are alive.
      */
     private void startHealthCheck() {
-        Bukkit.getScheduler().runTaskTimer(ZonePractice.getInstance(), this::checkAndRepairHolograms,
+        Bukkit.getScheduler().runTaskTimer(AstralPractice.getInstance(), this::checkAndRepairHolograms,
                 HEALTH_CHECK_DELAY, HEALTH_CHECK_INTERVAL);
     }
 
@@ -86,7 +86,7 @@ public class HologramProtectionListener implements Listener {
                 .anyMatch(TextDisplayFactory::isHologramTextDisplay);
 
         if (hasHologram) {
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
                 if (!event.getChunk().isLoaded()) {
                     event.getChunk().load(true);
                 }

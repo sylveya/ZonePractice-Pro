@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util.playerutil;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.ladder.abstraction.Ladder;
 import dev.lokspel.practice.manager.profile.Profile;
@@ -48,7 +48,7 @@ public final class PlayerUtil {
         player.setFlying(allowFlight);
         setEntityCollision(player, entityCollision);
 
-        if (ZonePractice.getInstance().isEnabled()) {
+        if (AstralPractice.getInstance().isEnabled()) {
             runLater(() -> player.setFireTicks(0));
         } else {
             player.setFireTicks(0);
@@ -66,7 +66,7 @@ public final class PlayerUtil {
     }
 
     public static void setFightPlayer(Player player, Ladder ladder) {
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
             applyFightHealth(player, ladder);
             runLater(() -> applyFightHealth(player, ladder));
             runLater(() -> player.setFireTicks(0));
@@ -183,7 +183,7 @@ public final class PlayerUtil {
 
     private static void runLater(Runnable task) {
         Bukkit.getScheduler().runTaskLater(
-                ZonePractice.getInstance(),
+                AstralPractice.getInstance(),
                 task,
                 RESET_DELAY_TICKS
         );

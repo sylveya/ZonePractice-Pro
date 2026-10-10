@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.spectator;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.ffa.FFAManager;
@@ -35,7 +35,7 @@ public class SpectatorManager {
     private final SpectatorMenuGui spectatorMenuGui;
 
     private SpectatorManager() {
-        Bukkit.getPluginManager().registerEvents(new SpectatorListener(), ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(new SpectatorListener(), AstralPractice.getInstance());
 
         this.spectatorMenuGui = (SpectatorMenuGui) GUIManager.getInstance().addGUI(new SpectatorMenuGui());
     }

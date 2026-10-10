@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.leaderboard.hologram;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.util.StringUtil;
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
@@ -68,7 +68,7 @@ public class TextDisplayFactory {
     }
 
     private Component deserializeText(@NotNull String text) {
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(text));
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(text));
     }
 
     /**

@@ -2,7 +2,7 @@ package dev.lokspel.practice.util;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.profile.Profile;
 import dev.lokspel.practice.manager.profile.ProfileManager;
@@ -32,7 +32,7 @@ import java.util.*;
 
 public class GoldenHead implements Listener {
 
-    private final NamespacedKey goldenHeadKey = new NamespacedKey(ZonePractice.getInstance(), "golden_head_item");
+    private final NamespacedKey goldenHeadKey = new NamespacedKey(AstralPractice.getInstance(), "golden_head_item");
     private ItemStack goldenHeadItem;
     private final List<PotionEffect> effects = new ArrayList<>();
     private int consumeCooldownSeconds;
@@ -41,7 +41,7 @@ public class GoldenHead implements Listener {
     private final Map<UUID, BukkitTask> cooldownActionBarTasks = new HashMap<>();
 
     public GoldenHead() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
         reload();
     }
 
@@ -169,7 +169,7 @@ public class GoldenHead implements Listener {
             existingTask.cancel();
         }
 
-        BukkitTask task = Bukkit.getScheduler().runTaskTimer(ZonePractice.getInstance(), () -> {
+        BukkitTask task = Bukkit.getScheduler().runTaskTimer(AstralPractice.getInstance(), () -> {
             Player onlinePlayer = profile.getPlayer().getPlayer();
 
             if (onlinePlayer == null ||

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 
 public final class StartUpUtil {
 
@@ -8,11 +8,11 @@ public final class StartUpUtil {
 
     public static void loadStartUpProgressMap() {
         for (StartUpTypes startUpType : StartUpTypes.values())
-            ZonePractice.getInstance().getStartUpProgress().put(startUpType, false);
+            AstralPractice.getInstance().getStartUpProgress().put(startUpType, false);
     }
 
     public static boolean isStartUpReady() {
-        for (boolean b : ZonePractice.getInstance().getStartUpProgress().values())
+        for (boolean b : AstralPractice.getInstance().getStartUpProgress().values())
             if (!b) return false;
 
         return true;

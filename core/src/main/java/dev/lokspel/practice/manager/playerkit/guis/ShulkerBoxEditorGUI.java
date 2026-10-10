@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.playerkit.guis;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUI;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
@@ -274,7 +274,7 @@ public class ShulkerBoxEditorGUI extends GUI {
     public void handleCloseEvent(InventoryCloseEvent e) {
         saveContents();
         Player player = (Player) e.getPlayer();
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (!GUIManager.getInstance().getOpenGUI().containsKey(player))
                 returnGui.open(player);
         }, 5L);

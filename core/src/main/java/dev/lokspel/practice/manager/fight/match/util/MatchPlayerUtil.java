@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.fight.match.util;
 
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.util.entityhider.PlayerHider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ public enum MatchPlayerUtil {
         dev.lokspel.practice.util.playerutil.PlayerUtil.setFightPlayer(hider);
 
         PlayerUtil.setCollidesWithEntities(hider, false);
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
         {
             hider.setAllowFlight(true);
             hider.setFlying(true);

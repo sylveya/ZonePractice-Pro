@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.ladder.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.FFAArena;
@@ -96,7 +96,7 @@ public enum LadderUtil {
         GUIManager.getInstance().searchGUI(GUIType.CustomLadder_Selector).update();
 
         if (!ConfigManager.getBoolean("SETUP.PRESERVE-CUSTOM-KITS-ON-LADDER-DISABLE")) {
-            Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+            Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
             {
                 for (Profile profile : ProfileManager.getInstance().getProfiles().values()) {
                     profile.getFile().deleteCustomKit(ladder);
@@ -144,7 +144,7 @@ public enum LadderUtil {
         GUIManager.getInstance().searchGUI(GUIType.Queue_Unranked).update(true);
         GUIManager.getInstance().searchGUI(GUIType.CustomLadder_Selector).update();
 
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             /*
             for (Arena arena : ArenaManager.getInstance().getNormalArenas()) {
@@ -299,7 +299,7 @@ public enum LadderUtil {
     }
 
     public static void placeTnt(BlockPlaceEvent e, Match match) {
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (e.isCancelled()) {
                 return;
             }

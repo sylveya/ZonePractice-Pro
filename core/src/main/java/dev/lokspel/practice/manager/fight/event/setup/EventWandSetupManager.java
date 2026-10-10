@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.event.setup;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.util.ArenaWorldUtil;
 import dev.lokspel.practice.manager.fight.event.interfaces.EventData;
 import dev.lokspel.practice.util.Common;
@@ -32,7 +32,7 @@ public class EventWandSetupManager {
 
     private EventWandSetupManager() {
         EventSetupListener eventSetupListener = new EventSetupListener(this);
-        Bukkit.getPluginManager().registerEvents(eventSetupListener, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(eventSetupListener, AstralPractice.getInstance());
     }
 
     @Getter

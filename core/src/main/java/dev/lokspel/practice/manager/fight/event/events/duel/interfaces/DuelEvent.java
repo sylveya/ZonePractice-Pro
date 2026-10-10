@@ -1,9 +1,9 @@
 package dev.lokspel.practice.manager.fight.event.events.duel.interfaces;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.api.Event.Event.EventEndEvent;
 import dev.lokspel.api.Event.Spectate.Start.EventSpectateStartEvent;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.event.EventManager;
 import dev.lokspel.practice.manager.fight.event.enums.EventStatus;
@@ -218,7 +218,7 @@ public abstract class DuelEvent extends Event {
         this.cancelAllRunnable();
         this.status = EventStatus.END;
 
-        if (ZonePractice.getInstance().isEnabled()) {
+        if (AstralPractice.getInstance().isEnabled()) {
             this.getEndRunnable().begin();
         } else {
             this.getEndRunnable().end();
@@ -268,7 +268,7 @@ public abstract class DuelEvent extends Event {
         duelList.clear();
         Collections.shuffle(players);
 
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             for (Player player : players) {
                 if (!isInFight(player)) {
@@ -279,7 +279,7 @@ public abstract class DuelEvent extends Event {
                     }
 
                     if (notInFight.isEmpty()) {
-                        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> callback.onNextFight(player));
+                        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> callback.onNextFight(player));
                         return;
                     }
 
@@ -296,7 +296,7 @@ public abstract class DuelEvent extends Event {
                 }
             }
 
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> callback.onNextFight(null));
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> callback.onNextFight(null));
         });
     }
 

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.arena.setup;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.FFAArena;
 import dev.lokspel.practice.manager.arena.arenas.interfaces.DisplayArena;
@@ -32,7 +32,7 @@ public class ArenaSetupManager {
 
     private ArenaSetupManager() {
         ArenaSetupListener arenaSetupListener = new ArenaSetupListener(this);
-        Bukkit.getPluginManager().registerEvents(arenaSetupListener, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(arenaSetupListener, AstralPractice.getInstance());
     }
 
     @Getter

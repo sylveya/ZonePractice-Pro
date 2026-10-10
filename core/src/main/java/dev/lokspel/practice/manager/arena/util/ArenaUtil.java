@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.arena.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.ArenaCopy;
@@ -274,7 +274,7 @@ public enum ArenaUtil {
         int minCZ = arena.getCuboid().getLowerZ() >> 4;
         int maxCZ = arena.getCuboid().getUpperZ() >> 4;
 
-        org.bukkit.plugin.Plugin plugin = ZonePractice.getInstance();
+        org.bukkit.plugin.Plugin plugin = AstralPractice.getInstance();
         for (int cx = minCX; cx <= maxCX; cx++) {
             for (int cz = minCZ; cz <= maxCZ; cz++) {
                 if (ArenaManager.LOAD_CHUNKS) {

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.arena;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.command.arena.arguments.CreateArg;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.FFAArena;
@@ -43,7 +43,7 @@ public class ArenaManager implements Listener {
     private final List<DisplayArena> arenaList = new CopyOnWriteArrayList<>();
     private final Map<Cuboid, BasicArena> arenaCuboids = new HashMap<>();
 
-    private final File folder = new File(ZonePractice.getInstance().getDataFolder() + "/arenas");
+    private final File folder = new File(AstralPractice.getInstance().getDataFolder() + "/arenas");
 
     private ArenaManager() {
     }
@@ -100,7 +100,7 @@ public class ArenaManager implements Listener {
     }
 
     public void loadArenas(final StartUpCallback boolCallback) {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             if (folder.isDirectory() && folder.listFiles() != null) {
                 for (File arenaFile : Objects.requireNonNull(folder.listFiles())) {
@@ -112,7 +112,7 @@ public class ArenaManager implements Listener {
                             try {
                                 ArenaType type = ArenaType.valueOf(config.getString("type"));
 
-                                Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+                                Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
                                     if (type == ArenaType.FFA) {
                                         arenaList.add(new FFAArena(name));
                                     } else {
@@ -127,7 +127,7 @@ public class ArenaManager implements Listener {
                 }
             }
 
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), boolCallback::onLoadingDone);
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), boolCallback::onLoadingDone);
         });
     }
 

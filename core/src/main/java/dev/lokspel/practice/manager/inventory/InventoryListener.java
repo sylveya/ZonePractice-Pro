@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.inventory;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
 import dev.lokspel.practice.manager.inventory.inventories.StaffInventory;
@@ -485,7 +485,7 @@ public class InventoryListener implements Listener {
             return;
         }
 
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> InventoryManager.getInstance().applyLobbyCosmetics(player));
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> InventoryManager.getInstance().applyLobbyCosmetics(player));
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -553,7 +553,7 @@ public class InventoryListener implements Listener {
         player.startRiptideAttack(20, 2.5f, item);
         player.setCooldown(Material.TRIDENT, 12);
 
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () ->
             InventoryManager.getInstance().applyLobbyCosmetics(player));
     }
 

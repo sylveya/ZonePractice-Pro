@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.sidebar.adapter;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
@@ -289,7 +289,7 @@ public class PracticeAdapter implements SidebarAdapter {
                     int overAllHits = playerHits - enemyHits;
 
                     component = component
-                            .replaceText(TextReplacementConfig.builder().matchLiteral("%overAllHits%").replacement(ZonePractice.getMiniMessage().deserialize((overAllHits < 0 ? "<red>" : "<green>")).append(Component.text(overAllHits))).build())
+                            .replaceText(TextReplacementConfig.builder().matchLiteral("%overAllHits%").replacement(AstralPractice.getMiniMessage().deserialize((overAllHits < 0 ? "<red>" : "<green>")).append(Component.text(overAllHits))).build())
                             .replaceText(TextReplacementConfig.builder().matchLiteral("%hits%").replacement(String.valueOf(playerHits)).build())
                             .replaceText(TextReplacementConfig.builder().matchLiteral("%enemyHits%").replacement(String.valueOf(enemyHits)).build());
                     break;
@@ -297,8 +297,8 @@ public class PracticeAdapter implements SidebarAdapter {
                 case FIREBALL_FIGHT:
                 case MLG_RUSH:
                     component = component
-                            .replaceText(TextReplacementConfig.builder().matchLiteral("%playerBedStatus%").replacement(ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(Objects.requireNonNull(round != null && round.getBedStatus().get(duel.getTeam(player)) ? config.getString("MATCH.BED-STATUS.NOT-DESTROYED") : config.getString("MATCH.BED-STATUS.DESTROYED"))))).build())
-                            .replaceText(TextReplacementConfig.builder().matchLiteral("%enemyBedStatus%").replacement(ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(Objects.requireNonNull(round != null && round.getBedStatus().get(duel.getTeam(enemy)) ? config.getString("MATCH.BED-STATUS.NOT-DESTROYED") : config.getString("MATCH.BED-STATUS.DESTROYED"))))).build());
+                            .replaceText(TextReplacementConfig.builder().matchLiteral("%playerBedStatus%").replacement(AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(Objects.requireNonNull(round != null && round.getBedStatus().get(duel.getTeam(player)) ? config.getString("MATCH.BED-STATUS.NOT-DESTROYED") : config.getString("MATCH.BED-STATUS.DESTROYED"))))).build())
+                            .replaceText(TextReplacementConfig.builder().matchLiteral("%enemyBedStatus%").replacement(AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(Objects.requireNonNull(round != null && round.getBedStatus().get(duel.getTeam(enemy)) ? config.getString("MATCH.BED-STATUS.NOT-DESTROYED") : config.getString("MATCH.BED-STATUS.DESTROYED"))))).build());
                     break;
             }
 
@@ -317,8 +317,8 @@ public class PracticeAdapter implements SidebarAdapter {
                     Player topPlayer = MatchUtil.getBoxingTopPlayer(partyFFA, i);
                     Component playerName = topPlayer != null
                             ? displayName(topPlayer)
-                            : ZonePractice.getMiniMessage().deserialize("<red>N/A");
-                    Component playerHits = topPlayer != null && match.getCurrentStat(topPlayer) != null ? Component.text(match.getCurrentStat(topPlayer).getHit()) : ZonePractice.getMiniMessage().deserialize("<red>N/A");
+                            : AstralPractice.getMiniMessage().deserialize("<red>N/A");
+                    Component playerHits = topPlayer != null && match.getCurrentStat(topPlayer) != null ? Component.text(match.getCurrentStat(topPlayer).getHit()) : AstralPractice.getMiniMessage().deserialize("<red>N/A");
 
                     component = component
                             .replaceText(TextReplacementConfig.builder().matchLiteral("%player" + i + "boxing%").replacement(playerName).build())
@@ -342,8 +342,8 @@ public class PracticeAdapter implements SidebarAdapter {
                         .replaceText(TextReplacementConfig.builder().matchLiteral("%team1boxingHits%").replacement(String.valueOf(Boxing.getTeamBoxingStrokes(match, partySplit.getTeamPlayers(TeamEnum.TEAM1)))).build())
                         .replaceText(TextReplacementConfig.builder().matchLiteral("%team2boxingHits%").replacement(String.valueOf(Boxing.getTeamBoxingStrokes(match, partySplit.getTeamPlayers(TeamEnum.TEAM2)))).build());
                 case BEDWARS, FIREBALL_FIGHT, MLG_RUSH -> component
-                        .replaceText(TextReplacementConfig.builder().matchLiteral("%team1BedStatus%").replacement(ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(Objects.requireNonNull(round != null && round.getBedStatus().get(TeamEnum.TEAM1) ? config.getString("MATCH.BED-STATUS.NOT-DESTROYED") : config.getString("MATCH.BED-STATUS.DESTROYED"))))).build())
-                        .replaceText(TextReplacementConfig.builder().matchLiteral("%team2BedStatus%").replacement(ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(Objects.requireNonNull(round != null && round.getBedStatus().get(TeamEnum.TEAM2) ? config.getString("MATCH.BED-STATUS.NOT-DESTROYED") : config.getString("MATCH.BED-STATUS.DESTROYED"))))).build());
+                        .replaceText(TextReplacementConfig.builder().matchLiteral("%team1BedStatus%").replacement(AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(Objects.requireNonNull(round != null && round.getBedStatus().get(TeamEnum.TEAM1) ? config.getString("MATCH.BED-STATUS.NOT-DESTROYED") : config.getString("MATCH.BED-STATUS.DESTROYED"))))).build())
+                        .replaceText(TextReplacementConfig.builder().matchLiteral("%team2BedStatus%").replacement(AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(Objects.requireNonNull(round != null && round.getBedStatus().get(TeamEnum.TEAM2) ? config.getString("MATCH.BED-STATUS.NOT-DESTROYED") : config.getString("MATCH.BED-STATUS.DESTROYED"))))).build());
                 default -> component;
             };
 
@@ -407,7 +407,7 @@ public class PracticeAdapter implements SidebarAdapter {
             case OITC -> {
                 OITC oitc = (OITC) event;
                 Player highestPointPlayer = oitc.getHighestPointPlayer();
-                Component topPlayerName = highestPointPlayer != null ? displayName(highestPointPlayer) : ZonePractice.getMiniMessage().deserialize("<red>N/A");
+                Component topPlayerName = highestPointPlayer != null ? displayName(highestPointPlayer) : AstralPractice.getMiniMessage().deserialize("<red>N/A");
                 String topPlayerScore = highestPointPlayer != null ? String.valueOf(oitc.getPlayerPoints().get(highestPointPlayer)) : "0";
 
                 for (String line : config.getStringList(path)) {
@@ -536,7 +536,7 @@ public class PracticeAdapter implements SidebarAdapter {
                             Player player1 = MatchUtil.getBoxingTopPlayer(partyFFA, 1);
                             if (player1 != null) {
                                 line = line
-                                        .replace("%player1boxing%", ZonePractice.getMiniMessage().serialize(displayName(player1)))
+                                        .replace("%player1boxing%", AstralPractice.getMiniMessage().serialize(displayName(player1)))
                                         .replace("%player1boxingHits%", String.valueOf(match.getCurrentStat(player1).getHit()));
                             } else {
                                 line = line
@@ -547,7 +547,7 @@ public class PracticeAdapter implements SidebarAdapter {
                             Player player2 = MatchUtil.getBoxingTopPlayer(partyFFA, 2);
                             if (player2 != null) {
                                 line = line
-                                        .replace("%player2boxing%", ZonePractice.getMiniMessage().serialize(displayName(player2)))
+                                        .replace("%player2boxing%", AstralPractice.getMiniMessage().serialize(displayName(player2)))
                                         .replace("%player2boxingHits%", String.valueOf(match.getCurrentStat(player2).getHit()));
                             } else {
                                 line = line
@@ -558,7 +558,7 @@ public class PracticeAdapter implements SidebarAdapter {
                             Player player3 = MatchUtil.getBoxingTopPlayer(partyFFA, 3);
                             if (player3 != null) {
                                 line = line
-                                        .replace("%player3boxing%", ZonePractice.getMiniMessage().serialize(displayName(player3)))
+                                        .replace("%player3boxing%", AstralPractice.getMiniMessage().serialize(displayName(player3)))
                                         .replace("%player3boxingHits%", String.valueOf(match.getCurrentStat(player3).getHit()));
                             } else {
                                 line = line
@@ -640,7 +640,7 @@ public class PracticeAdapter implements SidebarAdapter {
                 OITC oitc = (OITC) event;
                 Player highestPointPlayer = oitc.getHighestPointPlayer();
                 String topPlayerName = highestPointPlayer != null
-                        ? ZonePractice.getMiniMessage().serialize(displayName(highestPointPlayer))
+                        ? AstralPractice.getMiniMessage().serialize(displayName(highestPointPlayer))
                         : "<red>N/A";
                 String topPlayerScore = highestPointPlayer != null
                         ? String.valueOf(oitc.getPlayerPoints().get(highestPointPlayer))

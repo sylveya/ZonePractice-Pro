@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.profile.ProfileManager;
 import dev.lokspel.practice.util.actionbar.ActionBarPriority;
@@ -110,7 +110,7 @@ public class CombatLogUtil {
         if (actionBarTasks.containsKey(playerId))
             return;
 
-        BukkitTask task = Bukkit.getScheduler().runTaskTimer(ZonePractice.getInstance(), () -> {
+        BukkitTask task = Bukkit.getScheduler().runTaskTimer(AstralPractice.getInstance(), () -> {
             Player online = Bukkit.getPlayer(playerId);
             if (online == null || !online.isOnline() || !isInCombat(online)) {
                 if (online != null)

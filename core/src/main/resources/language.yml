@@ -3,15 +3,15 @@ VERSION: 52
 CONSOLE-NAME: "<red>Console"
 CANT-USE-CONSOLE: "<red>You can't use this command from the console."
 RELOAD-DISABLED: "<red>Reload is disabled. Please completely restart the server."
-STARTUP-NOT-READY: "<red>ZonePractice has not yet loaded all the necessary data."
+STARTUP-NOT-READY: "<red>AstralPractice has not yet loaded all the necessary data."
 PLUGIN-LOADING-MESSAGE: "<red>The server is still loading, please wait..."
 DUPLICATE-USERNAME-KICK: "<red>A player with your username is already logged in on this server!"
 CANT-READ-DATABASE-FILE: "<red>Could not read database setup file"
 CANT-USE-COMMAND: "<red>You can't use this command right now."
 WAIT-FOR-COOLDOWN: "<red>You have to wait <yellow>%seconds% %secondName% <red>before using this again."
 AUTO-SAVE:
-  STARTED: "<gold>ZonePractice auto save has <green>started<yellow>."
-  ENDED: "<gold>ZonePractice auto save has <green>ended<yellow>."
+  STARTED: "<gold>AstralPractice auto save has <green>started<yellow>."
+  ENDED: "<gold>AstralPractice auto save has <green>ended<yellow>."
 GAMES-RESET: "%unranked% <yellow>and %ranked% <yellow>have been reset."
 SET-SERVER-LOBBY: "<red>You should set the server lobby. Until you do, most of the plugin features won't work."
 SECOND-NAME:

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.backend;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.util.Common;
 import lombok.Getter;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -21,7 +21,7 @@ public enum LanguageManager {
     @Getter
     private static FileConfiguration config;
 
-    public static void createFile(ZonePractice practice) {
+    public static void createFile(AstralPractice practice) {
         file = new File(practice.getDataFolder(), "language.yml");
 
         config = new YamlConfiguration();

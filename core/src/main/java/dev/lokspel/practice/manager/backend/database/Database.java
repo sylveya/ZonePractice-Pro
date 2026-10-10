@@ -44,7 +44,7 @@ public class Database {
                 + "?useSsl=false&characterEncoding=utf8");
         config.setUsername(user);
         config.setPassword(password);
-        config.setPoolName("ZonePractice-Mariadb");
+        config.setPoolName("AstralPractice-Mariadb");
         config.setMaximumPoolSize(poolSize);
         config.setMinimumIdle(1);
         config.setConnectionTimeout(10000L);

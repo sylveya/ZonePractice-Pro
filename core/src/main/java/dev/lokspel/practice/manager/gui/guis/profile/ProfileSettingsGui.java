@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.gui.guis.profile;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.inventory.InventoryUtil;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.backend.LanguageManager;
@@ -41,7 +41,7 @@ public class ProfileSettingsGui extends GUI {
 
     @Override
     public void build() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             Inventory inventory = gui.get(1);
             ItemStack fillerItem = GUIFile.getGuiItem("GUIS.PLAYER-SETTINGS.ICONS.FILLER-ITEM").get();

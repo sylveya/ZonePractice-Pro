@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.backend;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUIItem;
 import dev.lokspel.practice.util.Common;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.util.Set;
 public enum ConfigManager {
     ;
 
-    private static final ZonePractice practice = ZonePractice.getInstance();
+    private static final AstralPractice practice = AstralPractice.getInstance();
     private static File file;
     @Getter
     private static YamlConfiguration config;

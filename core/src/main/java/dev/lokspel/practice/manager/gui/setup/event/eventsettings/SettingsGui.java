@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.event.eventsettings;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.event.interfaces.EventData;
@@ -46,7 +46,7 @@ public class SettingsGui extends GUI {
 
     @Override
     public void update() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             gui.get(1).setItem(10, EventSetupUtil.getBroadcastIntervalItem(eventData.getBroadcastInterval()));
             gui.get(1).setItem(11, EventSetupUtil.getWaitBeforeStartItem(eventData.getWaitBeforeStart()));

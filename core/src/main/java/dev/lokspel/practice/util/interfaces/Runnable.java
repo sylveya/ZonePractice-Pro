@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util.interfaces;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.util.TimeUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,9 +34,9 @@ public abstract class Runnable extends BukkitRunnable {
         this.hasRun = true;
 
         if (async)
-            this.runTaskTimerAsynchronously(ZonePractice.getInstance(), delay, period);
+            this.runTaskTimerAsynchronously(AstralPractice.getInstance(), delay, period);
         else
-            this.runTaskTimer(ZonePractice.getInstance(), delay, period);
+            this.runTaskTimer(AstralPractice.getInstance(), delay, period);
 
         return true;
     }

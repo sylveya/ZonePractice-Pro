@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -39,11 +39,11 @@ public final class Common {
             line = PlaceholderAPI.setPlaceholders(player, line);
         }
 
-        send(player, ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(line)));
+        send(player, AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(line)));
     }
 
     public static void sendConsoleMMMessage(String string) {
-        send(ZonePractice.getInstance().getServer().getConsoleSender(), ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(string)));
+        send(AstralPractice.getInstance().getServer().getConsoleSender(), AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(string)));
     }
 
     public static void playDeathEffect(Profile killerProfile, org.bukkit.Location location, java.util.List<Player> viewers) {
@@ -68,7 +68,7 @@ public final class Common {
 
     public static Component deserializeMiniMessage(String line) {
         if (line == null || line.isEmpty()) return Component.empty();
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(line));
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(line));
     }
 
     public static String serializeComponentToLegacyString(Component component) {
@@ -91,14 +91,14 @@ public final class Common {
         if (message == null) {
             return Component.empty();
         }
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(message));
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(message));
     }
 
     public static String stripLegacyColor(String message) {
         if (message == null || message.isEmpty()) {
             return "";
         }
-        Component component = ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(message));
+        Component component = AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(message));
         return PlainTextComponentSerializer.plainText().serialize(component);
     }
 
@@ -121,7 +121,7 @@ public final class Common {
         if (itemMeta == null || !itemMeta.hasDisplayName() || itemMeta.displayName() == null) {
             return "";
         }
-        return ZonePractice.getMiniMessage().serialize(itemMeta.displayName());
+        return AstralPractice.getMiniMessage().serialize(itemMeta.displayName());
     }
 
     public static String getItemDisplayName(ItemStack itemStack) {

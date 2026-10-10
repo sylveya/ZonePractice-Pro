@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.duel;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -72,7 +72,7 @@ public class DuelManager {
                     request.handleExpiry();
                 }
             }
-        }.runTaskLater(ZonePractice.getInstance(), 20L * ConfigManager.getInt("MATCH-SETTINGS.DUEL.INVITATION-EXPIRY"));
+        }.runTaskLater(AstralPractice.getInstance(), 20L * ConfigManager.getInt("MATCH-SETTINGS.DUEL.INVITATION-EXPIRY"));
     }
 
 }
