@@ -1,0 +1,30 @@
+package dev.lokspel.practice.command.ffa.arguments;
+
+import dev.lokspel.practice.manager.backend.LanguageManager;
+import dev.lokspel.practice.manager.fight.ffa.FFAManager;
+import dev.lokspel.practice.manager.fight.ffa.game.FFA;
+import dev.lokspel.practice.util.Common;
+import org.bukkit.entity.Player;
+
+public final class KitArg {
+
+    private KitArg() {}
+
+    public static void run(Player player) {
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.COMMAND.KIT.NOT-IN-FFA"));
+            return;
+        }
+
+        if (ffa.isFfaKitBlocked() && ffa.isFfaInCombat(player)) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.COMMAND.KIT.IN-COMBAT"));
+            return;
+        }
+
+        ffa.getLadderSelectorGui().update();
+        ffa.getLadderSelectorGui().open(player);
+    }
+
+}
+

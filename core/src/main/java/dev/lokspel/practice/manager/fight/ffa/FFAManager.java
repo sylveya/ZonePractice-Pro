@@ -1,0 +1,73 @@
+package dev.lokspel.practice.manager.fight.ffa;
+
+import dev.lokspel.practice.manager.arena.ArenaManager;
+import dev.lokspel.practice.manager.arena.arenas.FFAArena;
+import dev.lokspel.practice.manager.fight.ffa.game.FFA;
+import dev.lokspel.practice.manager.fight.ffa.game.FFAArenaSelectorGui;
+import dev.lokspel.practice.manager.gui.GUIManager;
+import dev.lokspel.practice.manager.spectator.SpectatorManager;
+import dev.lokspel.practice.util.interfaces.Spectatable;
+import lombok.Getter;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Getter
+public class FFAManager {
+
+    private static FFAManager instance;
+
+    public static FFAManager getInstance() {
+        if (instance == null)
+            instance = new FFAManager();
+        return instance;
+    }
+
+    private final FFAArenaSelectorGui arenaSelectorGui;
+
+    private FFAManager() {
+        this.arenaSelectorGui = new FFAArenaSelectorGui();
+        GUIManager.getInstance().addGUI(this.arenaSelectorGui);
+    }
+
+    public List<FFA> getOpenFFAs() {
+        List<FFA> ffas = new ArrayList<>();
+        for (FFAArena ffaArena : ArenaManager.getInstance().getFFAArenas())
+            if (ffaArena.getFfa().isOpen())
+                ffas.add(ffaArena.getFfa());
+        return ffas;
+    }
+
+    public void endFFAs() {
+        for (FFAArena ffaArena : ArenaManager.getInstance().getFFAArenas())
+            ffaArena.getFfa().close("");
+    }
+
+    public FFA getFFAByPlayer(Player player) {
+        for (FFAArena ffaArena : ArenaManager.getInstance().getFFAArenas()) {
+            FFA ffa = ffaArena.getFfa();
+            if (ffa.getPlayers().containsKey(player)) {
+                return ffa;
+            }
+
+            // Fallback for stale Player-object map keys.
+            for (Player ffaPlayer : ffa.getPlayers().keySet()) {
+                if (player.getUniqueId().equals(ffaPlayer.getUniqueId())) {
+                    return ffa;
+                }
+            }
+        }
+        return null;
+    }
+
+    public FFA getFFABySpectator(Player player) {
+        Spectatable spectatable = SpectatorManager.getInstance().getSpectators().get(player);
+        if (spectatable instanceof FFA)
+            return (FFA) spectatable;
+        else
+            return null;
+    }
+
+}

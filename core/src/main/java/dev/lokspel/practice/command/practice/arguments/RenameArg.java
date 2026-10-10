@@ -1,0 +1,51 @@
+package dev.lokspel.practice.command.practice.arguments;
+
+import dev.lokspel.practice.manager.backend.LanguageManager;
+import dev.lokspel.practice.util.Common;
+import dev.lokspel.practice.util.StringUtil;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
+
+public final class RenameArg {
+
+    private RenameArg() {}
+
+    public static void run(Player player, String label, String[] args) {
+        if (!player.hasPermission("zpp.practice.rename")) {
+            Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
+            return;
+        }
+
+        if (args.length <= 1) {
+            Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.ARGUMENTS.RENAME.COMMAND-HELP").replace("%label%", label));
+            return;
+        }
+
+        ItemStack handItem = player.getInventory().getItemInMainHand();
+        if (handItem.getType().equals(Material.AIR)) {
+            Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.ARGUMENTS.RENAME.ITEM-IN-HAND"));
+            return;
+        }
+
+        List<String> name = Arrays.asList(args);
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 1; i < name.size(); i++) {
+            builder.append(name.get(i));
+            if (name.size() - 1 != i)
+                builder.append(" ");
+        }
+
+        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.displayName(Common.legacyToComponent(StringUtil.CC(builder.toString())));
+        item.setItemMeta(itemMeta);
+        player.getInventory().setItemInMainHand(item);
+    }
+
+}

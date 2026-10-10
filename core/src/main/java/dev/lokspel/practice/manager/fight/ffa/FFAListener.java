@@ -1,0 +1,587 @@
+package dev.lokspel.practice.manager.fight.ffa;
+
+import dev.lokspel.practice.manager.fight.listener.BuildListener;
+import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.manager.arena.arenas.FFAArena;
+import dev.lokspel.practice.manager.arena.util.ArenaUtil;
+import dev.lokspel.practice.manager.backend.ConfigManager;
+import dev.lokspel.practice.manager.backend.LanguageManager;
+import dev.lokspel.practice.manager.fight.ffa.game.FFA;
+import dev.lokspel.practice.manager.fight.util.*;
+import dev.lokspel.practice.manager.ladder.abstraction.normal.NormalLadder;
+import dev.lokspel.practice.manager.profile.Profile;
+import dev.lokspel.practice.manager.profile.ProfileManager;
+import dev.lokspel.practice.manager.spectator.SpectatorCrystalPlacementUtil;
+import dev.lokspel.practice.util.Common;
+import dev.lokspel.practice.util.Cuboid;
+import dev.lokspel.practice.util.NumberUtil;
+import dev.lokspel.practice.util.fightmapchange.FightChangeOptimized;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.player.*;
+
+import static dev.lokspel.practice.util.PermanentConfig.FIGHT_ENTITY;
+
+/**
+ * FFA-specific event listener.
+ *
+ * <p>Block tracking / rollback events (break, place, piston, liquid, explosion, etc.)
+ * are handled by the unified {@link BuildListener}.
+ * This listener only handles player-specific FFA game logic (damage, movement, crafting, etc.)
+ * and the build validation gates (cancel the event before MONITOR fires for BuildListener).</p>
+ */
+public class FFAListener implements Listener {
+
+    @EventHandler
+    public void onRegen(EntityRegainHealthEvent e) {
+        if (!(e.getEntity() instanceof Player player)) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        if (ffa.getPlayers().get(player).isRegen()) return;
+        if (e.getRegainReason() != EntityRegainHealthEvent.RegainReason.SATIATED) return;
+
+        e.setCancelled(true);
+    }
+
+
+    @EventHandler
+    public void onHunger(FoodLevelChangeEvent e) {
+        if (!(e.getEntity() instanceof Player player)) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        if (!ffa.getPlayers().get(player).isHunger()) {
+            e.setFoodLevel(20);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        Player player = e.getPlayer();
+        Action action = e.getAction();
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        // Prevent interaction while waiting for kit selection
+        if (ffa.isPlayerWaitingForKitSelection(player)) {
+            ffa.playerSelectKit(player, player.getInventory().getHeldItemSlot());
+            e.setCancelled(true);
+            return;
+        }
+
+        if (!action.equals(Action.RIGHT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
+
+        Block clickedBlock = e.getClickedBlock();
+        if (action.equals(Action.RIGHT_CLICK_BLOCK) && clickedBlock != null) {
+            if (ffa.isBuild()) {
+                SpectatorCrystalPlacementUtil.clearSpectatorsBlockingCrystalPlacement(e, ffa.getArena().getCuboid());
+            }
+
+            boolean isCrystalPlacement = e.getItem() != null && e.getItem().getType() == Material.END_CRYSTAL;
+            boolean isAnchor = clickedBlock.getType() == Material.RESPAWN_ANCHOR;
+
+            if (isCrystalPlacement || isAnchor) {
+                BlockUtil.setMetadata(clickedBlock, "FFA_COMBAT_OWNER", player);
+            }
+
+            // The anchor block is destroyed on explosion, so its owner is also kept
+            // in memory (by block coords) to attribute the blast to whoever set it off.
+            if (isAnchor) {
+                ExplosiveOwnerTracker.recordAnchorOwner(clickedBlock.getLocation(), player);
+            }
+
+            if (clickedBlock.getType().equals(Material.TNT)) {
+                if (!ffa.isBuild() || !ffa.isMapBlowable()) {
+                    e.setCancelled(true);
+                    return;
+                }
+            }
+            if (clickedBlock.getType().equals(Material.CHEST) || clickedBlock.getType().equals(Material.TRAPPED_CHEST)) {
+                if (!ffa.isBuild()) return;
+                ffa.getFightChange().addBlockChange(new ChangedBlock(clickedBlock));
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
+        Player player = e.getPlayer();
+
+        if (!(e.getRightClicked() instanceof Minecart minecart)
+                || minecart.getMinecartMaterial() != Material.TNT) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null || ffa.isPlayerWaitingForKitSelection(player)) return;
+
+        // Attribute the minecart blast to whoever ignited it.
+        ExplosiveOwnerTracker.recordMinecartOwner(minecart, player);
+    }
+
+    @EventHandler
+    public void onInventoryClick(org.bukkit.event.inventory.InventoryClickEvent e) {
+        if (!(e.getWhoClicked() instanceof Player player)) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        // Only handle clicks while waiting for kit selection
+        if (!ffa.isPlayerWaitingForKitSelection(player)) return;
+
+        e.setCancelled(true);
+
+        // Check if the clicked item is an enchanted book (kit selection)
+        if (e.getCurrentItem() != null && (e.getCurrentItem().getType() == Material.ENCHANTED_BOOK || e.getCurrentItem().getType() == Material.BOOK)) {
+            int slot = e.getSlot();
+            ffa.playerSelectKit(player, slot);
+        }
+    }
+
+    @EventHandler
+    public void onProjectileLaunch(ProjectileLaunchEvent e) {
+        if (!(e.getEntity().getShooter() instanceof Player player)) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        // Prevent projectile launch while waiting for kit selection
+        if (ffa.isPlayerWaitingForKitSelection(player)) {
+            e.setCancelled(true);
+            return;
+        }
+
+        if (ffa.isBuild()) {
+            // Build FFAs: track all projectiles for entity rollback cleanup
+            FightChangeOptimized fightChange = ffa.getFightChange();
+            if (fightChange != null) fightChange.addEntityChange(e.getEntity());
+        }
+
+        // For arrow-like projectiles (arrow/spectral/trident) in any FFA: tag with
+        // FIGHT_ENTITY so they are preserved and isolated per-arena.
+        if (e.getEntity() instanceof AbstractArrow projectile) {
+            BlockUtil.setMetadata(projectile, FIGHT_ENTITY, ffa);
+
+            // Hide from every online player NOT in this FFA
+            for (org.bukkit.entity.Player online : ZonePractice.getInstance().getServer().getOnlinePlayers()) {
+                if (!ffa.getPlayers().containsKey(online) && !ffa.getSpectators().contains(online)) {
+                    ZonePractice.getEntityHider().hideEntity(online, projectile);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerTeleport(PlayerTeleportEvent e) {
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(e.getPlayer());
+        if (ffa == null) return;
+
+        if (!ffa.getArena().getCuboid().contains(e.getTo()))
+            e.setCancelled(true);
+    }
+
+    @EventHandler ( priority = EventPriority.HIGHEST )
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        Player player = e.getPlayer();
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        ffa.handleFfaCombatLogQuit(player);
+        ffa.removePlayer(player);
+    }
+
+    private static final boolean DISPLAY_ARROW_HIT = ConfigManager.getBoolean("FFA.DISPLAY-ARROW-HIT-HEALTH");
+
+    protected static void arrowDisplayHearth(Player shooter, Player target, double finalDamage, EntityDamageByEntityEvent event) {
+        if (!DISPLAY_ARROW_HIT) return;
+        if (shooter == null || target == null) return;
+        if (event.isCancelled()) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(shooter);
+        if (ffa == null) return;
+
+        double health = NumberUtil.roundDouble((target.getHealth() - finalDamage) / 2);
+        if (health <= 0) return;
+
+        Common.sendMMMessage(shooter, LanguageManager.getString("FFA.GAME.ARROW-HIT-PLAYER")
+                .replace("%player%", target.getName())
+                .replace("%health%", String.valueOf(health)));
+    }
+
+    private static final boolean ALLOW_DESTROYABLE_BLOCK = ConfigManager.getBoolean("FFA.ALLOW-DESTROYABLE-BLOCK");
+
+    /**
+     * Validates FFA build rules (build enabled, build limits).
+     * Actual block tracking is done by {@link BuildListener}.
+     */
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        Player player = e.getPlayer();
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        if (!ffa.isBuild()) {
+            e.setCancelled(true);
+            return;
+        }
+
+        Block block = e.getBlock();
+
+        if (ListenerUtil.handlePlacedInFightBlock(block, e)) return;
+
+        // For natural arena blocks or destroyable blocks, check build limits
+        if (ffa.getArena().isBuildMax() && e.getBlock().getLocation().getY() >= ListenerUtil.getCalculatedBuildLimit(ffa.getArena())) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.GAME.CANT-BUILD-OVER-LIMIT"));
+            e.setCancelled(true);
+            return;
+        }
+
+        // Handle destroyable blocks
+        if (ALLOW_DESTROYABLE_BLOCK) {
+            NormalLadder ladder = ffa.getPlayers().get(player);
+            if (ladder != null) {
+                if (ArenaUtil.containsDestroyableBlock(ladder, block)) {
+                    BlockUtil.breakBlock(ffa, block);
+                }
+            }
+        }
+
+        // When break-all-blocks is enabled on the player's current ladder, track the
+        // natural arena block for rollback and allow the break.
+        NormalLadder currentLadder = ffa.getPlayers().get(player);
+        if (currentLadder != null && currentLadder.isBreakAllBlocks()) {
+            ffa.getFightChange().addArenaBlockChange(new ChangedBlock(block));
+            return; // do NOT cancel — let the break happen
+        }
+
+        e.setCancelled(true);
+    }
+
+    /**
+     * Validates FFA build rules (build enabled, arena boundary, build limits) and tags block.
+     * Actual tracking is done by {@link BuildListener}.
+     */
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent e) {
+        Player player = e.getPlayer();
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        if (!ffa.isBuild()) {
+            e.setCancelled(true);
+            return;
+        }
+
+        Block block = e.getBlockPlaced();
+        FFAArena arena = ffa.getArena();
+
+        if (!arena.getCuboid().contains(block.getLocation())) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.GAME.CANT-BUILD-OUTSIDE-ARENA"));
+            e.setCancelled(true);
+            return;
+        }
+
+        if (arena.isBuildMax() && block.getLocation().getY() >= ListenerUtil.getCalculatedBuildLimit(arena)) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.GAME.CANT-BUILD-OVER-LIMIT"));
+            e.setCancelled(true);
+            return;
+        }
+
+        if (block.getType() == Material.RESPAWN_ANCHOR) {
+            BlockUtil.setMetadata(block, "FFA_COMBAT_OWNER", player);
+        }
+        // Tagging and tracking handled by BuildListener at MONITOR priority
+    }
+
+    /**
+     * Validates FFA bucket rules and tags the target block.
+     * Actual tracking is done by {@link BuildListener}.
+     */
+    @EventHandler
+    public void onBucketEmpty(PlayerBucketEmptyEvent e) {
+        Player player = e.getPlayer();
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        if (!ffa.isBuild()) {
+            e.setCancelled(true);
+            return;
+        }
+
+        Block block = e.getBlockClicked();
+        if (!ffa.getArena().getCuboid().contains(block.getLocation())) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.GAME.CANT-BUILD-OUTSIDE-ARENA"));
+            e.setCancelled(true);
+            return;
+        }
+
+        if (ffa.getArena().isBuildMax() && block.getRelative(e.getBlockFace()).getLocation().getY() >= ListenerUtil.getCalculatedBuildLimit(ffa.getArena())) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.GAME.CANT-BUILD-OVER-LIMIT"));
+            e.setCancelled(true);
+        }
+        // Liquid source block captured for rollback at MONITOR priority by AbstractBuildListener.onBucketEmpty
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent e) {
+        Player player = e.getPlayer();
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        Cuboid cuboid = ffa.getArena().getCuboid();
+        if (!cuboid.contains(e.getTo())) {
+            ffa.killPlayer(player, null, DeathCause.VOID.getMessage());
+        }
+    }
+
+    @EventHandler
+    public void onCraft(CraftItemEvent e) {
+        Player player = (Player) e.getWhoClicked();
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        if (!ffa.isBuild()) {
+            e.setCancelled(true);
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.GAME.CANT-CRAFT"));
+        }
+    }
+
+    @EventHandler
+    public void onItemDrop(PlayerDropItemEvent e) {
+        Player player = e.getPlayer();
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        if (ffa.getArena().isAllowDropItems()) {
+            return;
+        }
+
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onItemPickup(EntityPickupItemEvent e) {
+        if (!(e.getEntity() instanceof Player player)) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        // Prevent picking up items (e.g. arrows) that have been hidden from this player
+        if (!ZonePractice.getEntityHider().canSee(player, e.getItem())) {
+            e.setCancelled(true);
+            return;
+        }
+
+        e.setCancelled(false);
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent e) {
+        Player player = e.getPlayer();
+
+        Profile profile = ProfileManager.getInstance().getProfile(player);
+        if (profile == null) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(player);
+        if (ffa == null) return;
+
+        // FFA deaths are custom-managed; avoid vanilla duplicate drops/exp.
+        e.getDrops().clear();
+        e.setDroppedExp(0);
+        e.setKeepInventory(true);
+        e.setKeepLevel(true);
+        e.setCancelled(true);
+
+        DamageSource damageSource = e.getDamageSource();
+
+        // Void deaths are already handled by onPlayerMove in the core FFAListener.
+        // Skip here to avoid sending the death message twice.
+        if (damageSource.getDamageType().equals(DamageType.OUT_OF_WORLD)) {
+            return;
+        }
+
+        Player killer = resolveKiller(player, ffa, damageSource);
+
+        DeathCause cause = FightUtil.convert(damageSource.getDamageType());
+        if (cause == DeathCause.EXPLOSION && killer != null && !killer.equals(player)) {
+            cause = DeathCause.EXPLOSION_BY_PLAYER;
+        }
+        ffa.killPlayer(player, killer, cause.getMessage().replace("%killer%", killer != null ? killer.getName() : "Unknown"));
+
+        if (killer != null && !killer.equals(player)) {
+            ffa.increaseFfaSessionKills(killer);
+        }
+    }
+
+    private Player resolveKiller(Player victim, FFA ffa, DamageSource damageSource) {
+        Player killer = null;
+
+        if (damageSource.getDamageType().equals(DamageType.BAD_RESPAWN_POINT)) {
+            killer = ExplosiveOwnerTracker.getAnchorOwner(damageSource.getSourceLocation());
+        }
+
+        if (killer == null && damageSource.getCausingEntity() instanceof Entity damageEntity) {
+            killer = FightUtil.getKiller(damageEntity);
+        }
+
+        // Bukkit keeps killer attribution for recent direct/projectile PvP.
+        if (killer == null) {
+            killer = victim.getKiller();
+        }
+
+        // Fallback for delayed environmental deaths (e.g. fatal fall after knockback).
+        if (killer == null) {
+            killer = ffa.getLastAttacker(victim);
+        }
+
+        if (killer == null && FightUtil.convert(damageSource.getDamageType()) == DeathCause.EXPLOSION) {
+            killer = ExplosiveOwnerTracker.getAnchorOwner(damageSource.getSourceLocation());
+        }
+
+        if (killer != null && !ffa.getPlayers().containsKey(killer)) {
+            return null;
+        }
+
+        return killer;
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if (!(e.getEntity() instanceof Player target)) {
+            return;
+        }
+
+        Profile profile = ProfileManager.getInstance().getProfile(target);
+        if (profile == null) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(target);
+        if (ffa == null) return;
+
+        // Prevent damage to players waiting for kit selection
+        if (ffa.isPlayerWaitingForKitSelection(target)) {
+            e.setCancelled(true);
+            return;
+        }
+
+        Player attacker;
+        Entity damager = e.getDamager();
+
+        // Resolve the owner of ANY damaging entity (melee, arrows, fireballs,
+        // wind charges, snowballs, TNT, etc.) to a player.
+        attacker = FightUtil.getKiller(damager);
+
+        // Fallback for damage without a resolvable owner (end crystals, creepers,
+        // environmental knockback, etc.): prefer Bukkit's killer attribution, then
+        // the last player that damaged the victim so the tag stays on the opponent.
+        if (attacker == null) {
+            attacker = target.getKiller();
+        }
+        if (attacker == null) {
+            attacker = ffa.getLastAttacker(target);
+        }
+
+        if (attacker != null && ffa.isPlayerWaitingForKitSelection(attacker)) {
+            e.setCancelled(true);
+            return;
+        }
+
+        if (attacker != null && damager instanceof Arrow) {
+            arrowDisplayHearth(attacker, target, e.getFinalDamage(), e);
+        }
+
+        // Skip combat tag (anti-relog) if the damage was canceled, e.g. by a
+        // WorldGuard-protected region, so players aren't tagged when no damage landed.
+        if (e.isCancelled()) {
+            return;
+        }
+
+        // Record the attacker for void-kill attribution
+        if (attacker != null) {
+            ffa.recordAttack(target, attacker);
+            ffa.tagFfaCombat(target, attacker);
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (!(e.getEntity() instanceof Player target)) {
+            return;
+        }
+
+        Profile profile = ProfileManager.getInstance().getProfile(target);
+        if (profile == null) return;
+
+        FFA ffa = FFAManager.getInstance().getFFAByPlayer(target);
+        if (ffa == null) return;
+
+        if (ffa.isPlayerWaitingForKitSelection(target)) {
+            e.setCancelled(true);
+            return;
+        }
+
+        if (e.getCause() != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION
+                && e.getCause() != EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
+            return;
+        }
+
+        Player attacker = null;
+
+        // The crystal owner is saved on the block it's placed on.
+        if (e instanceof EntityDamageByEntityEvent entityDamage
+                && entityDamage.getDamager() instanceof EnderCrystal crystal) {
+            attacker = BlockUtil.getMetadata(
+                    crystal.getLocation().getBlock().getRelative(BlockFace.DOWN),
+                    "FFA_COMBAT_OWNER", Player.class);
+        }
+
+        // Attribute TNT-minecart blasts to whoever ignited them.
+        if (attacker == null) {
+            attacker = FightUtil.getKiller(e.getDamageSource().getCausingEntity());
+        }
+
+        // Respawn anchors destroy their block on explosion, so getDamager() is null
+        // and the owner can't be read from the event. Resolve it from the owner
+        // recorded at the anchor's location when it was set off.
+        if (attacker == null) {
+            attacker = ExplosiveOwnerTracker.getAnchorOwner(e.getDamageSource().getSourceLocation());
+        }
+
+        // Respawn anchors destroy their block on explosion, so getDamager() is null
+        // and the owner can't be read from the event. Fall back to the last recorded
+        // attacker so the tag still applies.
+        if (attacker == null) {
+            attacker = ffa.getLastAttacker(target);
+        }
+
+        // Tag the victim (and attacker if known) so neither can relog mid-fight.
+        ffa.tagFfaCombat(target, attacker);
+
+        // Record the attacker so an anchor (or TNT) blast that kills the target
+        // registers as a kill by them at death time.
+        if (attacker != null && !attacker.equals(target)) {
+            ffa.recordAttack(target, attacker);
+        }
+    }
+
+}

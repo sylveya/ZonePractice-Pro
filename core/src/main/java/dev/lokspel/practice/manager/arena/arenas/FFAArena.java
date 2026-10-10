@@ -1,0 +1,216 @@
+package dev.lokspel.practice.manager.arena.arenas;
+
+import dev.lokspel.practice.manager.arena.ArenaManager;
+import dev.lokspel.practice.manager.arena.ArenaType;
+import dev.lokspel.practice.manager.arena.arenas.interfaces.DisplayArena;
+import dev.lokspel.practice.manager.arena.util.ArenaUtil;
+import dev.lokspel.practice.manager.backend.ConfigManager;
+import dev.lokspel.practice.manager.fight.ffa.game.FFA;
+import dev.lokspel.practice.manager.gui.GUI;
+import dev.lokspel.practice.manager.gui.GUIType;
+import dev.lokspel.practice.manager.gui.setup.arena.ArenaGUISetupManager;
+import dev.lokspel.practice.manager.ladder.LadderManager;
+import dev.lokspel.practice.manager.ladder.abstraction.normal.NormalLadder;
+import dev.lokspel.practice.manager.ladder.enums.LadderType;
+import lombok.Getter;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+@Getter
+public class FFAArena extends DisplayArena {
+
+    private static final boolean DEFAULT_HEALTH_RESET_ON_KILL = ConfigManager.getBoolean("FFA.HEALTH-RESET-ON-KILL");
+    private static final boolean DEFAULT_HEALTH_BELOW_NAME = ConfigManager.getBoolean("FFA.HEALTH-BELOW-NAME");
+    private static final boolean DEFAULT_ALLOW_DROP_ITEMS = ConfigManager.getBoolean("FFA.ALLOW-DROP-ITEMS");
+
+    private final FFA ffa;
+    private boolean reKitAfterKill;
+    private boolean lobbyAfterDeath;
+    private boolean healthResetOnKill;
+    private boolean healthBelowName;
+    private boolean mapBlowable;
+    private boolean allowDropItems;
+
+    public FFAArena(String name) {
+        super(name, ArenaType.FFA);
+
+        this.bedLoc1 = null;
+        this.bedLoc2 = null;
+        this.portalLoc1 = null;
+        this.portalLoc2 = null;
+        this.portalProtection = false;
+        this.healthResetOnKill = DEFAULT_HEALTH_RESET_ON_KILL;
+        this.healthBelowName = DEFAULT_HEALTH_BELOW_NAME;
+        this.allowDropItems = DEFAULT_ALLOW_DROP_ITEMS;
+
+        this.getData();
+
+        this.ffa = new FFA(this);
+        this.ffa.open();
+    }
+
+    @Override
+    public void setData() {
+        YamlConfiguration config = arenaFile.getConfig();
+
+        config.set("name", this.name);
+        config.set("type", this.type.toString());
+        config.set("enabled", this.enabled);
+
+        if (this.getIcon() != null)
+            config.set("icon", this.getIcon());
+
+        config.set("build", this.build);
+        config.set("reKitAfterKill", this.reKitAfterKill);
+        config.set("lobbyAfterDeath", this.lobbyAfterDeath);
+        config.set("healthResetOnKill", this.healthResetOnKill);
+        config.set("healthBelowName", this.healthBelowName);
+        config.set("mapBlowable", this.mapBlowable);
+        config.set("allowDropItems", this.allowDropItems);
+
+        config.set("ladders", ArenaUtil.getLadderNames(this));
+
+        super.setBasicData(config, "");
+
+        arenaFile.saveFile();
+    }
+
+    @Override
+    public void getData() {
+        YamlConfiguration config = arenaFile.getConfig();
+
+        if (config.isItemStack("icon"))
+            this.setIcon(config.getItemStack("icon"));
+
+        if (config.isBoolean("build"))
+            this.setBuild(config.getBoolean("build"));
+
+        if (config.isBoolean("reKitAfterKill"))
+            this.setReKitAfterKill(config.getBoolean("reKitAfterKill"));
+
+        if (config.isBoolean("lobbyAfterDeath"))
+            this.setLobbyAfterDeath(config.getBoolean("lobbyAfterDeath"));
+
+        if (config.isBoolean("healthResetOnKill"))
+            this.setHealthResetOnKill(config.getBoolean("healthResetOnKill"));
+
+        if (config.isBoolean("healthBelowName"))
+            this.setHealthBelowName(config.getBoolean("healthBelowName"));
+
+        if (config.isBoolean("mapBlowable"))
+            this.setMapBlowable(config.getBoolean("mapBlowable"));
+
+        if (config.isBoolean("allowDropItems"))
+            this.setAllowDropItems(config.getBoolean("allowDropItems"));
+
+        if (config.isList("ladders")) {
+            for (String ladderName : config.getStringList("ladders")) {
+                NormalLadder ladder = LadderManager.getInstance().getLadder(ladderName);
+
+                if (ladder != null && ladder.isEnabled())
+                    assignedLadders.add(ladder);
+            }
+        }
+
+        super.getBasicData(config, "");
+
+        if (config.isBoolean("enabled"))
+            this.setEnabled(config.getBoolean("enabled"));
+
+        if (this.isEnabled() && !this.isReadyToEnable())
+            this.setEnabled(false);
+    }
+
+    @Override
+    public boolean isReadyToEnable() {
+        return this.getIcon() != null && cuboid != null && !ffaPositions.isEmpty() && !assignedLadders.isEmpty();
+    }
+
+    @Override
+    public Set<NormalLadder> getAssignableLadders() {
+        Set<NormalLadder> list = new HashSet<>();
+
+        for (NormalLadder ladder : LadderManager.getInstance().getLadders()) {
+            if (this.build && ladder.getType().equals(LadderType.BUILD) && ladder.getLadderKnockback().isDefault())
+                list.add(ladder);
+            else if (!this.build && ladder.getType().equals(LadderType.BASIC) && ladder.getLadderKnockback().isDefault())
+                list.add(ladder);
+        }
+
+        return list;
+    }
+
+    @Override
+    public boolean deleteData() {
+        ArenaManager.getInstance().getArenaCuboids().remove(cuboid);
+        return arenaFile.getFile().delete();
+    }
+
+    public void setReKitAfterKill(boolean reKitAfterKill) throws IllegalStateException {
+        if (this.enabled) {
+            throw new IllegalStateException("Cannot edit while arena is enabled.");
+        }
+
+        this.reKitAfterKill = reKitAfterKill;
+    }
+
+    public void setLobbyAfterDeath(boolean lobbyAfterDeath) throws IllegalStateException {
+        if (this.enabled) {
+            throw new IllegalStateException("Cannot edit while arena is enabled.");
+        }
+
+        this.lobbyAfterDeath = lobbyAfterDeath;
+    }
+
+    public void setHealthResetOnKill(boolean healthResetOnKill) throws IllegalStateException {
+        if (this.enabled) {
+            throw new IllegalStateException("Cannot edit while arena is enabled.");
+        }
+
+        this.healthResetOnKill = healthResetOnKill;
+    }
+
+    public void setHealthBelowName(boolean healthBelowName) throws IllegalStateException {
+        if (this.enabled) {
+            throw new IllegalStateException("Cannot edit while arena is enabled.");
+        }
+
+        this.healthBelowName = healthBelowName;
+    }
+
+    public void setMapBlowable(boolean mapBlowable) {
+        if (this.enabled) {
+            throw new IllegalStateException("Cannot edit while arena is enabled.");
+        }
+
+        this.mapBlowable = mapBlowable;
+    }
+
+    public void setAllowDropItems(boolean allowDropItems) {
+        if (this.enabled) {
+            throw new IllegalStateException("Cannot edit while arena is enabled.");
+        }
+
+        this.allowDropItems = allowDropItems;
+    }
+
+    public void setBuild(boolean build) {
+        if (this.enabled) {
+            throw new IllegalStateException("Cannot edit while arena is enabled.");
+        }
+
+        this.build = build;
+
+        Set<NormalLadder> assignableLadders = this.getAssignableLadders();
+        this.assignedLadders.removeIf(ladder -> !assignableLadders.contains(ladder));
+
+        GUI ladderGUI = ArenaGUISetupManager.getInstance().getArenaSetupGUIs().getOrDefault(this, new HashMap<>()).get(GUIType.Arena_Ladders_Single);
+        if (ladderGUI != null) {
+            ladderGUI.update();
+        }
+    }
+
+}

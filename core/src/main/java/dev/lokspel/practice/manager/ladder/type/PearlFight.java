@@ -1,0 +1,62 @@
+package dev.lokspel.practice.manager.ladder.type;
+
+import dev.lokspel.practice.manager.fight.match.Match;
+import dev.lokspel.practice.manager.fight.match.enums.RoundStatus;
+import dev.lokspel.practice.manager.ladder.abstraction.interfaces.LadderHandle;
+import dev.lokspel.practice.manager.ladder.abstraction.interfaces.TempBuild;
+import dev.lokspel.practice.manager.ladder.abstraction.interfaces.TempBuildReturnDelay;
+import dev.lokspel.practice.manager.ladder.abstraction.normal.NormalLadder;
+import dev.lokspel.practice.manager.ladder.enums.LadderType;
+import dev.lokspel.practice.util.playerutil.PlayerUtil;
+import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.jetbrains.annotations.NotNull;
+
+public class PearlFight extends NormalLadder implements LadderHandle, TempBuild, TempBuildReturnDelay {
+
+    // Saved by using interface and LadderFile.java
+    @Getter
+    @Setter
+    protected int tempBuildReturnDelaySeconds;
+
+    public PearlFight(String name, LadderType type) {
+        super(name, type);
+        this.setMultiRoundStartCountdown(false);
+        this.hunger = false;
+    }
+
+    @Override
+    public boolean handleEvents(Event e, Match match) {
+        if (e instanceof PlayerBucketEmptyEvent) {
+            TempBuild.onBucketEmpty((PlayerBucketEmptyEvent) e, match, tempBuildReturnDelaySeconds);
+            return true;
+        } else if (e instanceof BlockBreakEvent) {
+            TempBuild.onBlockBreak((BlockBreakEvent) e, match);
+            return true;
+        } else if (e instanceof BlockPlaceEvent) {
+            TempBuild.onBlockPlace((BlockPlaceEvent) e, match, tempBuildReturnDelaySeconds);
+            return true;
+        } else if (e instanceof EntityDamageEvent) {
+            onPlayerDamage((EntityDamageEvent) e, match);
+            return true;
+        }
+        return false;
+    }
+
+    private static void onPlayerDamage(final @NotNull EntityDamageEvent e, final @NotNull Match match) {
+        if (!(e.getEntity() instanceof Player player)) return;
+
+        if (match.getCurrentRound().getRoundStatus().equals(RoundStatus.LIVE)) {
+            e.setDamage(0);
+            PlayerUtil.healToMaxHealth(player);
+        }
+    }
+
+
+}

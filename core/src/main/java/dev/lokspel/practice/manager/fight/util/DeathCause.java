@@ -1,0 +1,30 @@
+package dev.lokspel.practice.manager.fight.util;
+
+import dev.lokspel.practice.manager.backend.LanguageManager;
+import lombok.Getter;
+
+@Getter
+public enum DeathCause {
+
+    VOID(LanguageManager.getString("FIGHT.DEATH-MESSAGES.VOID")),
+    VOID_BY_PLAYER(LanguageManager.getString("FIGHT.DEATH-MESSAGES.VOID-BY-PLAYER")),
+    WATER(LanguageManager.getString("FIGHT.DEATH-MESSAGES.WATER")),
+    LAVA(LanguageManager.getString("FIGHT.DEATH-MESSAGES.LAVA")),
+    FIRE(LanguageManager.getString("FIGHT.DEATH-MESSAGES.FIRE")),
+    FALL(LanguageManager.getString("FIGHT.DEATH-MESSAGES.FALL")),
+    EXPLOSION(LanguageManager.getString("FIGHT.DEATH-MESSAGES.EXPLOSION")),
+    EXPLOSION_BY_PLAYER(LanguageManager.getString("FIGHT.DEATH-MESSAGES.EXPLOSION-BY-PLAYER")),
+    PLAYER_ATTACK(LanguageManager.getString("FIGHT.DEATH-MESSAGES.PLAYER")),
+    PLAYER_PROJECTILE(LanguageManager.getString("FIGHT.DEATH-MESSAGES.PROJECTILE")),
+    SUMO(LanguageManager.getString("FIGHT.DEATH-MESSAGES.SUMO-FALL")),
+    SPLEEF(LanguageManager.getString("FIGHT.DEATH-MESSAGES.SPLEEF-FALL")),
+    PORTAL_OWN_JUMP(LanguageManager.getString("FIGHT.DEATH-MESSAGES.OWN-PORTAL-JUMP")),
+    DEFAULT(LanguageManager.getString("FIGHT.DEATH-MESSAGES.DEFAULT"));
+
+    private final String message;
+
+    DeathCause(final String message) {
+        this.message = message;
+    }
+
+}
