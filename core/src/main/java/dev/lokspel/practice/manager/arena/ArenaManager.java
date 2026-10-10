@@ -150,7 +150,7 @@ public class ArenaManager implements Listener {
             if (arena instanceof FFAArena) {
                 FFA ffa = ((FFAArena) arena).getFfa();
 
-                for (Map.Entry<Player, NormalLadder> ffaPlayer : ffa.getPlayers().entrySet()) {
+                for (Map.Entry<Player, NormalLadder> ffaPlayer : new ArrayList<>(ffa.getPlayers().entrySet())) {
                     if (ffaPlayer.getValue() == ladder) {
                         ffa.removePlayer(ffaPlayer.getKey());
                         Common.sendMMMessage(ffaPlayer.getKey(), LanguageManager.getString("FFA.LADDER-DISABLED-REMOVED"));
