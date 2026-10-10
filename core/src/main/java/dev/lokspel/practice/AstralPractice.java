@@ -118,7 +118,7 @@ public final class AstralPractice extends JavaPlugin {
         arenaCopyUtilListener = new ArenaCopyUtilListener();
 
         PacketEvents.getAPI().init();
-        metrics = new Metrics(this, 34393);
+        metrics = new Metrics(this, 34622);
         faststats_metrics.ready();
 
         if (VersionChecker.getBukkitVersion() == null) {

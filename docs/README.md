@@ -1,4 +1,4 @@
-<img width="2000" height="1000" alt="image(6)" src="https://i.imgur.com/5NX2JVG.png" />
+<img width="2000" height="1000" alt="image(6)" src="https://i.imgur.com/ydTpj5d.png" />
 
 ---
 
