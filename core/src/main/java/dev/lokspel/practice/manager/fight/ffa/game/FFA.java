@@ -201,6 +201,9 @@ public class FFA implements Spectatable, dev.lokspel.api.Interface.FFA {
      */
     public void playerSelectKit(Player player, int slot) {
         FFAFightPlayer ffaFightPlayer = fightPlayers.get(player);
+        if (ffaFightPlayer == null) {
+            return;
+        }
         ffaFightPlayer.selectKit(slot);
     }
 
@@ -213,6 +216,9 @@ public class FFA implements Spectatable, dev.lokspel.api.Interface.FFA {
      */
     public boolean isPlayerWaitingForKitSelection(Player player) {
         FFAFightPlayer ffaFightPlayer = fightPlayers.get(player);
+        if (ffaFightPlayer == null) {
+            return false;
+        }
         return ffaFightPlayer.isWaitingForKitSelection();
     }
 

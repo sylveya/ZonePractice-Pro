@@ -108,7 +108,8 @@ public abstract class Inventory {
 
     protected InvItem getInvItem(final int slot, final Material material) {
         return invItems.stream().filter(invItem ->
-                invItem.getSlot() == slot &&
+                invItem.getItem() != null &&
+                        invItem.getSlot() == slot &&
                         invItem.getItem().getType().equals(material) &&
                         invItem.getSlot() != -1
         ).findFirst().orElse(null);
@@ -116,7 +117,8 @@ public abstract class Inventory {
 
     protected InvItem getInvItem(final String name, final Material material) {
         return invItems.stream().filter(invItem ->
-                Common.getItemDisplayName(invItem.getItem()).equalsIgnoreCase(name) &&
+                invItem.getItem() != null &&
+                        Common.getItemDisplayName(invItem.getItem()).equalsIgnoreCase(name) &&
                         invItem.getItem().getType().equals(material) &&
                         invItem.getSlot() != -1
         ).findFirst().orElse(null);
