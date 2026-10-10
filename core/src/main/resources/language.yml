@@ -1731,7 +1731,7 @@ FFA:
   FFA-CLOSED: "<red>FFA has been closed."
   COMMAND:
     JOIN:
-      HELP: "<red>/ffa join <arena>"
+      HELP: "<red>/%label% join [arena]"
       ARENA-NOT-FOUND: "<red>Couldn't find the arena you specified."
       ARENA-CLOSED: "<red>The arena you specified is closed."
       CANT-JOIN-FFA: "<red>You can't join the FFA right now."
@@ -1751,7 +1751,7 @@ FFA:
       - "<gray><st>----------------------------------------"
       - "<dark_aqua><bold>FFA Commands"
       - ""
-      - " <yellow>» <white>/%label% join <gray>- <white>Join a FFA."
+      - " <yellow>» <white>/%label% join [arena] <gray>- <white>Join a FFA or choose an arena."
       - " <yellow>» <white>/%label% leave <gray>- <white>Leave a FFA."
       - " <yellow>» <white>/%label% kit <gray>- <white>Open FFA kit selector."
       - " <yellow>» <white>/%label% spectate <arena> <gray>- <white>Spectate FFA."

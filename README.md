@@ -51,6 +51,8 @@
 
 Use the `/setup` command to create and manage arenas and kits through intuitive in-game menus.
 
+Use `/ffa` or `/ffa join` to choose an FFA arena, or `/ffa join <arena>` to select one by name. If the arena has one ladder, you join directly; otherwise, its ladder selector opens.
+
 [View the documentation](./docs/README.md).
 
 ---

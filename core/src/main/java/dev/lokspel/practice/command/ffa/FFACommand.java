@@ -2,10 +2,6 @@ package dev.lokspel.practice.command.ffa;
 
 import dev.lokspel.practice.command.ffa.arguments.*;
 import dev.lokspel.practice.manager.backend.LanguageManager;
-import dev.lokspel.practice.manager.fight.ffa.FFAManager;
-import dev.lokspel.practice.manager.profile.Profile;
-import dev.lokspel.practice.manager.profile.ProfileManager;
-import dev.lokspel.practice.manager.profile.enums.ProfileStatus;
 import dev.lokspel.practice.util.Common;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,7 +26,7 @@ public class FFACommand implements CommandExecutor, TabCompleter {
         if (args.length > 0) {
             switch (args[0]) {
                 case "join":
-                    openArenaSelectorGui(player);
+                    JoinArg.run(player, label, args);
                     break;
                 case "leave":
                     LeaveArg.run(player);
@@ -50,21 +46,10 @@ public class FFACommand implements CommandExecutor, TabCompleter {
                     break;
             }
         } else {
-            openArenaSelectorGui(player);
+            JoinArg.run(player, label, args);
         }
 
         return true;
-    }
-
-    private static void openArenaSelectorGui(Player player) {
-        Profile profile = ProfileManager.getInstance().getProfile(player);
-        if (!profile.getStatus().equals(ProfileStatus.LOBBY)) {
-            Common.sendMMMessage(player, LanguageManager.getString("FFA.COMMAND.JOIN.CANT-JOIN-FFA"));
-            return;
-        }
-
-        FFAManager.getInstance().getArenaSelectorGui().update();
-        FFAManager.getInstance().getArenaSelectorGui().open(player);
     }
 
     @Override
@@ -81,7 +66,9 @@ public class FFACommand implements CommandExecutor, TabCompleter {
 
             StringUtil.copyPartialMatches(args[0], arguments, completion);
         } else {
-            if (args[0].equalsIgnoreCase("spectate")) {
+            if (args[0].equalsIgnoreCase("join")) {
+                completion = JoinArg.tabComplete(player, args);
+            } else if (args[0].equalsIgnoreCase("spectate")) {
                 completion = SpectateArg.tabComplete(player, args);
             }
         }
