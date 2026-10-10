@@ -9,10 +9,10 @@ public final class HelpArg {
     private HelpArg() {}
 
     public static void run(Player player, String label) {
-        if (player.hasPermission("zpp.admin")) {
+        if (player.hasPermission("ap.admin")) {
             for (String line : LanguageManager.getList("COMMAND.PRACTICE.ARGUMENTS.HELP.ADMIN"))
                 Common.sendMMMessage(player, line.replace("%label%", label));
-        } else if (player.hasPermission("zpp.staff")) {
+        } else if (player.hasPermission("ap.staff")) {
             for (String line : LanguageManager.getList("COMMAND.PRACTICE.ARGUMENTS.HELP.STAFF"))
                 Common.sendMMMessage(player, line.replace("%label%", label));
         } else

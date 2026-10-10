@@ -22,7 +22,7 @@ public class CosmeticsCommand implements CommandExecutor {
             return false;
         }
 
-        if (!player.hasPermission("zpp.cosmetics.main")) {
+        if (!player.hasPermission("ap.cosmetics.main")) {
             Common.sendMMMessage(player, "<red>You don't have permission to use cosmetics!");
             return false;
         }

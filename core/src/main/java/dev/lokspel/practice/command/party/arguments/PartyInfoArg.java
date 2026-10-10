@@ -25,7 +25,7 @@ public final class PartyInfoArg {
                 return;
             }
         } else {
-            if (!player.hasPermission("zpp.party.info.others")) {
+            if (!player.hasPermission("ap.party.info.others")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PARTY.ARGUMENTS.INFO.NO-PERMISSION"));
             }
 

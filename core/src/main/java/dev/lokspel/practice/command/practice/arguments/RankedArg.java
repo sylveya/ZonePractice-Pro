@@ -20,7 +20,7 @@ public final class RankedArg {
 
     public static void run(Player player, String label, String[] args) {
         if (args.length == 3 && args[1].equalsIgnoreCase("reset")) {
-            if (!player.hasPermission("zpp.practice.ranked.default")) {
+            if (!player.hasPermission("ap.practice.ranked.default")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -47,7 +47,7 @@ public final class RankedArg {
             } else
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.ARGUMENTS.RANKED.NO-GROUP").replace("%target%", target.getPlayer().getName()));
         } else if (args.length == 4 && args[1].equalsIgnoreCase("add")) {
-            if (!player.hasPermission("zpp.practice.ranked.add")) {
+            if (!player.hasPermission("ap.practice.ranked.add")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -77,7 +77,7 @@ public final class RankedArg {
                     .replace("%newRanked%", String.valueOf(target.getRankedLeft()))
             );
         } else if (args.length >= 3 && args[1].equalsIgnoreCase("ban")) {
-            if (!player.hasPermission("zpp.practice.ranked.ban")) {
+            if (!player.hasPermission("ap.practice.ranked.ban")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -118,7 +118,7 @@ public final class RankedArg {
             } else
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.ARGUMENTS.BAN.PLAYER-ALREADY-BANNED").replace("%target%", target.getPlayer().getName()));
         } else if (args.length == 3 && args[1].equalsIgnoreCase("unban")) {
-            if (!player.hasPermission("zpp.practice.ranked.unban")) {
+            if (!player.hasPermission("ap.practice.ranked.unban")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -138,7 +138,7 @@ public final class RankedArg {
             } else
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.ARGUMENTS.UNBAN.PLAYER-NOT-BANNED").replace("%target%", target.getPlayer().getName()));
         } else {
-            if (player.hasPermission("zpp.practice.ranked.default") || player.hasPermission("zpp.practice.ranked.add")) {
+            if (player.hasPermission("ap.practice.ranked.default") || player.hasPermission("ap.practice.ranked.add")) {
                 for (String line : LanguageManager.getList("COMMAND.PRACTICE.ARGUMENTS.RANKED.COMMAND-HELP"))
                     Common.sendMMMessage(player, line.replace("%label%", label));
             }
@@ -191,17 +191,17 @@ public final class RankedArg {
         List<String> arguments = new ArrayList<>();
 
         if (args.length == 2) {
-            if (player.hasPermission("zpp.practice.ranked.default")) arguments.add("reset");
-            if (player.hasPermission("zpp.practice.ranked.add")) arguments.add("add");
-            if (player.hasPermission("zpp.practice.ranked.ban")) arguments.add("ban");
-            if (player.hasPermission("zpp.practice.ranked.unban")) arguments.add("unban");
+            if (player.hasPermission("ap.practice.ranked.default")) arguments.add("reset");
+            if (player.hasPermission("ap.practice.ranked.add")) arguments.add("add");
+            if (player.hasPermission("ap.practice.ranked.ban")) arguments.add("ban");
+            if (player.hasPermission("ap.practice.ranked.unban")) arguments.add("unban");
 
             return StringUtil.copyPartialMatches(args[1], arguments, new ArrayList<>());
         } else if (args.length == 3) {
-            if (player.hasPermission("zpp.practice.ranked.default") ||
-                    player.hasPermission("zpp.practice.ranked.add") ||
-                    player.hasPermission("zpp.practice.ranked.ban") ||
-                    player.hasPermission("zpp.practice.ranked.unban")) {
+            if (player.hasPermission("ap.practice.ranked.default") ||
+                    player.hasPermission("ap.practice.ranked.add") ||
+                    player.hasPermission("ap.practice.ranked.ban") ||
+                    player.hasPermission("ap.practice.ranked.unban")) {
                 for (Player online : Bukkit.getOnlinePlayers())
                     arguments.add(online.getName());
             }

@@ -89,7 +89,7 @@ public class ArenaCopyUtilListener implements Listener {
         Location reference = sourceCuboid.getLowerNE();
 
         for (Player player : Bukkit.getOnlinePlayers())
-            if (player.hasPermission("zpp.setup"))
+            if (player.hasPermission("ap.setup"))
                 Common.sendMMMessage(player, LanguageManager.getString("ARENA.GENERATE-COPY").replace("%arena%", Common.serializeNormalToMMString(arena.getDisplayName())));
 
         if (newLocation != null) {
@@ -270,7 +270,7 @@ public class ArenaCopyUtilListener implements Listener {
                     cancelTask(this, arenaCopy, actionBar, ACTION_BAR_ID);
 
                     for (Player player : Bukkit.getOnlinePlayers()) {
-                        if (player.hasPermission("zpp.setup"))
+                        if (player.hasPermission("ap.setup"))
                             Common.sendMMMessage(player, LanguageManager.getString("ARENA.ERROR-DURING-COPY-GENERATE").replace("%arena%", Common.serializeNormalToMMString(arenaCopy.getMainArena().getDisplayName())));
                     }
 
@@ -285,7 +285,7 @@ public class ArenaCopyUtilListener implements Listener {
                     completeCopy(arenaCopy);
 
                     for (Player player : Bukkit.getOnlinePlayers()) {
-                        if (player.hasPermission("zpp.setup"))
+                        if (player.hasPermission("ap.setup"))
                             Common.sendMMMessage(player, LanguageManager.getString("ARENA.COPY-GENERATED").replace("%arena%", arenaCopy.getMainArena().getDisplayName()));
                     }
                 }
@@ -344,7 +344,7 @@ public class ArenaCopyUtilListener implements Listener {
                     ArenaManager.getInstance().getArenaCuboids().remove(cuboid);
 
                     for (Player player : Bukkit.getOnlinePlayers()) {
-                        if (player.hasPermission("zpp.setup"))
+                        if (player.hasPermission("ap.setup"))
                             Common.sendMMMessage(player, LanguageManager.getString("ARENA.LAST-COPY-DELETED").replace("%arena%", arena));
                     }
                 }
@@ -430,7 +430,7 @@ public class ArenaCopyUtilListener implements Listener {
 
             if (!success) {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (player.hasPermission("zpp.setup")) {
+                    if (player.hasPermission("ap.setup")) {
                         Common.sendMMMessage(player, LanguageManager.getString("ARENA.ERROR-DURING-COPY-GENERATE")
                                 .replace("%arena%", Common.serializeNormalToMMString(arenaCopy.getMainArena().getDisplayName())));
                     }
@@ -441,7 +441,7 @@ public class ArenaCopyUtilListener implements Listener {
             completeCopy(arenaCopy);
 
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.hasPermission("zpp.setup")) {
+                if (player.hasPermission("ap.setup")) {
                     Common.sendMMMessage(player, LanguageManager.getString("ARENA.COPY-GENERATED")
                             .replace("%arena%", arenaCopy.getMainArena().getDisplayName()));
                 }

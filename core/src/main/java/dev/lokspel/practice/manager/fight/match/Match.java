@@ -421,7 +421,7 @@ public abstract class Match extends BukkitRunnable implements Spectatable, dev.l
             return;
         }
 
-        if (!isAllowSpectators() && !player.hasPermission("zpp.bypass.spectate")) {
+        if (!isAllowSpectators() && !player.hasPermission("ap.bypass.spectate")) {
             Common.sendMMMessage(player, LanguageManager.getString("SPECTATE.MATCH.CANT-SPECTATE"));
             return;
         }

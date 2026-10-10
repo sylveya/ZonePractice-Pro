@@ -34,7 +34,7 @@ public class UnrankedCommand implements CommandExecutor {
             return true;
         }
 
-        if (!player.hasPermission("zpp.bypass.unranked.limit") && profile.getUnrankedLeft() <= 0) {
+        if (!player.hasPermission("ap.bypass.unranked.limit") && profile.getUnrankedLeft() <= 0) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.UNRANKED.NO-UNRANKED-LEFT"));
             return false;
         }

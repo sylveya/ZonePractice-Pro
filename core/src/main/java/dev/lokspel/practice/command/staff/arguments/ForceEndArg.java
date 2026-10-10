@@ -22,7 +22,7 @@ public final class ForceEndArg {
     }
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.staffmode.forceend")) {
+        if (!player.hasPermission("ap.staffmode.forceend")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STAFF.NO-PERMISSION"));
             return;
         }
@@ -55,7 +55,7 @@ public final class ForceEndArg {
             }
 
             for (Player matchPlayer : match.getPlayers()) {
-                if (player != matchPlayer && matchPlayer.hasPermission("zpp.bypass.forceend")) {
+                if (player != matchPlayer && matchPlayer.hasPermission("ap.bypass.forceend")) {
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STAFF.ARGUMENTS.FORCE-END.MATCH.CANT-END"));
                     return;
                 }
@@ -73,7 +73,7 @@ public final class ForceEndArg {
             }
 
             for (Player matchPlayer : event.getPlayers()) {
-                if (player != matchPlayer && matchPlayer.hasPermission("zpp.bypass.forceend")) {
+                if (player != matchPlayer && matchPlayer.hasPermission("ap.bypass.forceend")) {
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STAFF.ARGUMENTS.FORCE-END.EVENT.CANT-END"));
                     return;
                 }
@@ -129,7 +129,7 @@ public final class ForceEndArg {
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
 
-        if (!player.hasPermission("zpp.staffmode.forceend")) return arguments;
+        if (!player.hasPermission("ap.staffmode.forceend")) return arguments;
 
         if (args.length == 2) {
             for (Player online : Bukkit.getOnlinePlayers())

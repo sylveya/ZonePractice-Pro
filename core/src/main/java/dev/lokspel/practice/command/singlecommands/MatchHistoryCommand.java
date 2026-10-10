@@ -27,7 +27,7 @@ public class MatchHistoryCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        if (!player.hasPermission("zpp.matchhistory")) {
+        if (!player.hasPermission("ap.matchhistory")) {
             Common.sendMMMessage(player, LanguageManager.getString("NO-PERMISSION"));
             return true;
         }

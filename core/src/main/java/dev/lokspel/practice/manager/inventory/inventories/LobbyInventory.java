@@ -50,18 +50,18 @@ public class LobbyInventory extends Inventory {
                         continue;
                 }
                 case SetupInvItem setupInvItem -> {
-                    if (!player.hasPermission("zpp.setup"))
+                    if (!player.hasPermission("ap.setup"))
                         continue;
                     setupItemSet = true;
                 }
                 case StaffMode staffMode -> {
-                    if (!player.hasPermission("zpp.staffmode"))
+                    if (!player.hasPermission("ap.staffmode"))
                         continue;
                     if (setupItemSet)
                         continue;
                 }
                 case PartyJoinInvItem partyJoinInvItem -> {
-                    if (!player.hasPermission("zpp.party.joinpublic")) {
+                    if (!player.hasPermission("ap.party.joinpublic")) {
                         continue;
                     }
                 }
@@ -69,7 +69,7 @@ public class LobbyInventory extends Inventory {
                     continue;
                 }
                 case CosmeticsInvItem cosmeticsInvItem -> {
-                    if (!player.hasPermission("zpp.cosmetics.main")) {
+                    if (!player.hasPermission("ap.cosmetics.main")) {
                         continue;
                     }
                 }

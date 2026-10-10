@@ -97,7 +97,7 @@ public class InventoryListener implements Listener {
 
         InvItem invItem;
         String itemDisplayName = Common.getItemDisplayName(item);
-        if (isInLobbyWorld(player) && !player.hasPermission("zpp.admin")) {
+        if (isInLobbyWorld(player) && !player.hasPermission("ap.admin")) {
             invItem = inventory.getHoldItem(itemDisplayName, item.getType(), e.getPlayer().getInventory().getHeldItemSlot());
         } else {
             int slot = -1;
@@ -123,7 +123,7 @@ public class InventoryListener implements Listener {
 
         if (isLobbyStatus(profileStatus)) {
             if (!isLobbyProtectionAllowed("allow-lobby-interact")
-                    && !player.hasPermission("zpp.admin")) {
+                    && !player.hasPermission("ap.admin")) {
 
                 Block clickedBlock = e.getClickedBlock();
                 if (clickedBlock == null) return;
@@ -152,7 +152,7 @@ public class InventoryListener implements Listener {
             return;
         }
 
-        if (!isInLobbyWorld(player) || player.hasPermission("zpp.admin")) {
+        if (!isInLobbyWorld(player) || player.hasPermission("ap.admin")) {
             return;
         }
 
@@ -211,7 +211,7 @@ public class InventoryListener implements Listener {
         if (ConfigManager.getBoolean("MATCH-SETTINGS.DUEL.SWORD-TO-DUEL")
                 && profile.getStatus().equals(ProfileStatus.LOBBY)
                 && !profile.isParty()
-                && player.hasPermission("zpp.duel")) {
+                && player.hasPermission("ap.duel")) {
 
             Profile targetProfile = ProfileManager.getInstance().getProfile(target);
             if (targetProfile == null) {
@@ -242,7 +242,7 @@ public class InventoryListener implements Listener {
         ProfileStatus profileStatus = profile.getStatus();
 
         if (isLobbyStatus(profileStatus)) {
-            if (!isLobbyProtectionAllowed("allow-block-break") && !player.hasPermission("zpp.admin")) {
+            if (!isLobbyProtectionAllowed("allow-block-break") && !player.hasPermission("ap.admin")) {
                 e.setCancelled(true);
             }
             return;
@@ -265,7 +265,7 @@ public class InventoryListener implements Listener {
         ProfileStatus profileStatus = profile.getStatus();
 
         if (isLobbyStatus(profileStatus)) {
-            if (!isLobbyProtectionAllowed("allow-block-place") && !player.hasPermission("zpp.admin")) {
+            if (!isLobbyProtectionAllowed("allow-block-place") && !player.hasPermission("ap.admin")) {
                 e.setCancelled(true);
             }
             return;
@@ -295,7 +295,7 @@ public class InventoryListener implements Listener {
         }
 
         if (isLobbyStatus(profileStatus)) {
-            if (!isLobbyProtectionAllowed("allow-inventory-interact") && !player.hasPermission("zpp.admin")) {
+            if (!isLobbyProtectionAllowed("allow-inventory-interact") && !player.hasPermission("ap.admin")) {
                 e.setCancelled(true);
             }
             return;
@@ -326,12 +326,12 @@ public class InventoryListener implements Listener {
         switch (profileStatus) {
             case LOBBY:
                 if (!isLobbyProtectionAllowed("allow-item-drop")) {
-                    e.setCancelled(!player.hasPermission("zpp.admin"));
+                    e.setCancelled(!player.hasPermission("ap.admin"));
                 }
                 break;
             case QUEUE:
             case STAFF_MODE:
-                e.setCancelled(!player.hasPermission("zpp.admin"));
+                e.setCancelled(!player.hasPermission("ap.admin"));
                 break;
             case CUSTOM_EDITOR:
                 e.setCancelled(true);
@@ -352,7 +352,7 @@ public class InventoryListener implements Listener {
         }
 
         if (isLobbyStatus(profileStatus)) {
-            if (!isLobbyProtectionAllowed("allow-item-pickup") && !player.hasPermission("zpp.admin")) {
+            if (!isLobbyProtectionAllowed("allow-item-pickup") && !player.hasPermission("ap.admin")) {
                 e.setCancelled(true);
             }
             return;

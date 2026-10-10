@@ -36,7 +36,7 @@ public class RankedCommand implements CommandExecutor {
             return true;
         }
 
-        if (!player.hasPermission("zpp.bypass.ranked.requirements")) {
+        if (!player.hasPermission("ap.bypass.ranked.requirements")) {
             Division requirement = DivisionManager.getInstance().getMinimumForRanked();
             if (requirement != null && !DivisionManager.getInstance().meetsMinimumForRanked(profile)) {
                 // Show progress towards requirement
@@ -46,7 +46,7 @@ public class RankedCommand implements CommandExecutor {
             }
         }
 
-        if (profile.getRankedLeft() <= 0 && !player.hasPermission("zpp.bypass.ranked.limit")) {
+        if (profile.getRankedLeft() <= 0 && !player.hasPermission("ap.bypass.ranked.limit")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.RANKED.NO-RANKED-LEFT"));
             return false;
         }

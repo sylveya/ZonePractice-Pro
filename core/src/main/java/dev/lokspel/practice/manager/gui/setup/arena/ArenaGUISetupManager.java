@@ -98,7 +98,7 @@ public class ArenaGUISetupManager implements Listener {
                 return;
         }
 
-        if (!player.hasPermission("zpp.setup")) return;
+        if (!player.hasPermission("ap.setup")) return;
         if (!action.equals(Action.LEFT_CLICK_BLOCK) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
         if (item == null) return;
 

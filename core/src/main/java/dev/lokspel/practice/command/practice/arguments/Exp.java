@@ -30,7 +30,7 @@ public final class Exp {
                 return;
             }
 
-            if (!player.hasPermission("zpp.practice.exp.reset")) {
+            if (!player.hasPermission("ap.practice.exp.reset")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -52,7 +52,7 @@ public final class Exp {
                 return;
             }
 
-            if (!player.hasPermission("zpp.practice.exp.add")) {
+            if (!player.hasPermission("ap.practice.exp.add")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -89,7 +89,7 @@ public final class Exp {
                 return;
             }
 
-            if (!player.hasPermission("zpp.practice.exp.set")) {
+            if (!player.hasPermission("ap.practice.exp.set")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -238,7 +238,7 @@ public final class Exp {
     }
 
     private static void sendHelp(Player player, String label) {
-        if (player.hasPermission("zpp.practice.exp.reset") || player.hasPermission("zpp.practice.exp.set") || player.hasPermission("zpp.practice.exp.add")) {
+        if (player.hasPermission("ap.practice.exp.reset") || player.hasPermission("ap.practice.exp.set") || player.hasPermission("ap.practice.exp.add")) {
             for (String line : LanguageManager.getList("COMMAND.PRACTICE.ARGUMENTS.EXPERIENCE.COMMAND-HELP"))
                 Common.sendMMMessage(player, line.replace("%label%", label));
         }
@@ -253,15 +253,15 @@ public final class Exp {
         List<String> arguments = new ArrayList<>();
 
         if (args.length == 2) {
-            if (player.hasPermission("zpp.practice.exp.reset")) arguments.add("reset");
-            if (player.hasPermission("zpp.practice.exp.add")) arguments.add("add");
-            if (player.hasPermission("zpp.practice.exp.set")) arguments.add("set");
+            if (player.hasPermission("ap.practice.exp.reset")) arguments.add("reset");
+            if (player.hasPermission("ap.practice.exp.add")) arguments.add("add");
+            if (player.hasPermission("ap.practice.exp.set")) arguments.add("set");
 
             return StringUtil.copyPartialMatches(args[1], arguments, new ArrayList<>());
         } else if (args.length == 3) {
-            if (player.hasPermission("zpp.practice.exp.reset") ||
-                    player.hasPermission("zpp.practice.exp.add") ||
-                    player.hasPermission("zpp.practice.exp.set")) {
+            if (player.hasPermission("ap.practice.exp.reset") ||
+                    player.hasPermission("ap.practice.exp.add") ||
+                    player.hasPermission("ap.practice.exp.set")) {
                 for (Player online : Bukkit.getOnlinePlayers())
                     arguments.add(online.getName());
             }

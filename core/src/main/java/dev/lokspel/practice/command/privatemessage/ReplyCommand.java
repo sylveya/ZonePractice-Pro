@@ -45,7 +45,7 @@ public class ReplyCommand extends PrivateMessageCommand {
         }
 
         Profile targetProfile = ProfileManager.getInstance().getProfile(target);
-        if (!targetProfile.isPrivateMessages() && !player.hasPermission("zpp.bypass.privatemessage")) {
+        if (!targetProfile.isPrivateMessages() && !player.hasPermission("ap.bypass.privatemessage")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRIVATE-MESSAGE.REPLY.CANT-REPLY2").replace("%target%", target.getName()));
             return;
         }

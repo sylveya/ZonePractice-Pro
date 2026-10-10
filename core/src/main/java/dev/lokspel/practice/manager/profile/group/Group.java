@@ -46,7 +46,7 @@ public class Group {
         this.displayName = displayName;
 
         this.weight = weight;
-        this.permission = "zpp.group." + name.toLowerCase();
+        this.permission = "ap.group." + name.toLowerCase();
         this.registerPermission();
 
         this.unrankedLimit = unrankedLimit;

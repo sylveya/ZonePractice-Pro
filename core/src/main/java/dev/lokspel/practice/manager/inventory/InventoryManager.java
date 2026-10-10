@@ -39,8 +39,8 @@ public class InventoryManager extends ConfigFile {
 
     private final Map<Inventory.InventoryType, Inventory> inventories = new HashMap<>();
     private final List<Player> setupModePlayers = new ArrayList<>();
-    private final NamespacedKey lobbyCosmeticItemKey = new NamespacedKey(AstralPractice.getInstance(), "zpp-cosmetic-item");
-    private final NamespacedKey lobbyCosmeticTypeKey = new NamespacedKey(AstralPractice.getInstance(), "zpp-cosmetic-type");
+    private final NamespacedKey lobbyCosmeticItemKey = new NamespacedKey(AstralPractice.getInstance(), "ap-cosmetic-item");
+    private final NamespacedKey lobbyCosmeticTypeKey = new NamespacedKey(AstralPractice.getInstance(), "ap-cosmetic-type");
     private final InventoryCosmeticService cosmeticService = new InventoryCosmeticService();
     private final InventoryTransitionService transitionService = new InventoryTransitionService(this);
 

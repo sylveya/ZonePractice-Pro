@@ -48,12 +48,12 @@ public class MessageCommand extends PrivateMessageCommand {
         }
 
         Profile targetProfile = ProfileManager.getInstance().getProfile(target);
-        if (player != target && targetProfile.isHideFromPlayers() && !player.hasPermission("zpp.staffmode.see")) {
+        if (player != target && targetProfile.isHideFromPlayers() && !player.hasPermission("ap.staffmode.see")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRIVATE-MESSAGE.MESSAGE.TARGET-HIDE").replace("%target%", target.getName()));
             return;
         }
 
-        if (!targetProfile.isPrivateMessages() && !player.hasPermission("zpp.bypass.privatemessage")) {
+        if (!targetProfile.isPrivateMessages() && !player.hasPermission("ap.bypass.privatemessage")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRIVATE-MESSAGE.MESSAGE.CANT-SEND2").replace("%target%", target.getName()));
             return;
         }
@@ -87,7 +87,7 @@ public class MessageCommand extends PrivateMessageCommand {
 
             for (Player online : Bukkit.getOnlinePlayers()) {
                 Profile onlineProfile = ProfileManager.getInstance().getProfile(online);
-                if (player != online && (!onlineProfile.isHideFromPlayers() || player.hasPermission("zpp.staffmode.see")) && (onlineProfile.isPrivateMessages() || player.hasPermission("zpp.bypass.privatemessage")))
+                if (player != online && (!onlineProfile.isHideFromPlayers() || player.hasPermission("ap.staffmode.see")) && (onlineProfile.isPrivateMessages() || player.hasPermission("ap.bypass.privatemessage")))
                     onlineNames.add(online.getName());
             }
 

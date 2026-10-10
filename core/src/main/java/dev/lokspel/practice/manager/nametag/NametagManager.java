@@ -52,9 +52,9 @@ public class NametagManager {
     private boolean ffaTextShadow;
     private int ffaBackground;
 
-    private static final String BELOW_NAME_OBJECTIVE = "ZPP_BELOW";
+    private static final String BELOW_NAME_OBJECTIVE = "AP_BELOW";
 
-    private static final String HIDE_TEAM_NAME = "zpp_hidden_nametag";
+    private static final String HIDE_TEAM_NAME = "ap_hidden_nametag";
     private static final double VIEW_DISTANCE_SQUARED = 96.0D * 96.0D;
     private static final long REFRESH_INTERVAL_TICKS = 20L;
     private static final long BELOW_NAME_REFRESH_INTERVAL_TICKS = 5L;

@@ -23,7 +23,7 @@ public final class StopArg {
     }
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.staffmode.stop")) {
+        if (!player.hasPermission("ap.staffmode.stop")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STAFF.NO-PERMISSION"));
             return;
         }
@@ -40,7 +40,7 @@ public final class StopArg {
             return;
         }
 
-        if (player != target && target.hasPermission("zpp.bypass.stop")) {
+        if (player != target && target.hasPermission("ap.bypass.stop")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STAFF.ARGUMENTS.STOP.TARGET-BYPASS").replace("%target%", target.getName()));
             return;
         }
@@ -129,7 +129,7 @@ public final class StopArg {
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
 
-        if (!player.hasPermission("zpp.staffmode.stop")) return arguments;
+        if (!player.hasPermission("ap.staffmode.stop")) return arguments;
 
         if (args.length == 2) {
             for (Player online : Bukkit.getOnlinePlayers())

@@ -468,7 +468,7 @@ public class LadderTypeListener implements Listener {
     }
 
 
-    private static final String HIDDEN_ITEM = "ZPP_HIDDEN_ITEM";
+    private static final String HIDDEN_ITEM = "AP_HIDDEN_ITEM";
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent e) {

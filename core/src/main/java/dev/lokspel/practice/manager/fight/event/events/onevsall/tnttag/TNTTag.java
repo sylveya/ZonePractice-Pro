@@ -323,7 +323,7 @@ public class TNTTag extends Event {
         player.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 10000 * 20, 125));
     }
 
-    public static final String TNT_TAG_TNT_METADATA = "ZPP_TNT_TAG_TNT";
+    public static final String TNT_TAG_TNT_METADATA = "AP_TNT_TAG_TNT";
 
     private void sendExplosion(Location location) {
         TNTPrimed tnt = (TNTPrimed) location.getWorld().spawnEntity(location.subtract(-0.5, 0, -0.5), EntityType.TNT);

@@ -130,7 +130,7 @@ public class ArmorTrimMainGui extends GUI {
         }
 
         if (slot == APPLY_ALL_SLOT) {
-            if (!player.hasPermission("zpp.cosmetics.armortrim.apply-global")) {
+            if (!player.hasPermission("ap.cosmetics.armortrim.apply-global")) {
                 Common.sendMMMessage(player, GUIFile.getString("GUIS.COSMETICS.APPLY-ALL-TIERS-ERROR-MESSAGE"));
                 return;
             }
@@ -213,13 +213,13 @@ public class ArmorTrimMainGui extends GUI {
 
         if (player != null) {
             for (TrimPattern pattern : CosmeticsPermissionManager.getRegisteredPatterns()) {
-                if (player.hasPermission("zpp.cosmetics.armortrim.pattern." + getPermissionId(pattern))) {
+                if (player.hasPermission("ap.cosmetics.armortrim.pattern." + getPermissionId(pattern))) {
                     playerPatternPermissions++;
                 }
             }
 
             for (TrimMaterial material : CosmeticsPermissionManager.getRegisteredMaterials()) {
-                if (player.hasPermission("zpp.cosmetics.armortrim.material." + getPermissionId(material))) {
+                if (player.hasPermission("ap.cosmetics.armortrim.material." + getPermissionId(material))) {
                     playerMaterialPermissions++;
                 }
             }

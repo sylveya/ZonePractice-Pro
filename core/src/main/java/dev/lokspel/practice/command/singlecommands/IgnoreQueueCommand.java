@@ -25,7 +25,7 @@ public class IgnoreQueueCommand implements CommandExecutor, TabExecutor {
             return false;
         }
 
-        if (!player.hasPermission("zpp.ignorequeue")) {
+        if (!player.hasPermission("ap.ignorequeue")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.IGNORE-QUEUE.NO-PERM"));
             return false;
         }
@@ -68,7 +68,7 @@ public class IgnoreQueueCommand implements CommandExecutor, TabExecutor {
             return arguments;
         }
 
-        if (!player.hasPermission("zpp.ignorequeue")) {
+        if (!player.hasPermission("ap.ignorequeue")) {
             return arguments;
         }
 

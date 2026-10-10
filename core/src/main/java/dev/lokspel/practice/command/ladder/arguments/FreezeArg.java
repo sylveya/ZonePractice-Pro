@@ -16,7 +16,7 @@ public final class FreezeArg {
     private FreezeArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.ladder.freeze")) {
+        if (!player.hasPermission("ap.ladder.freeze")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.LADDER.NO-PERMISSION"));
             return;
         }
@@ -47,7 +47,7 @@ public final class FreezeArg {
 
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
-        if (!player.hasPermission("zpp.arena.freeze")) return arguments;
+        if (!player.hasPermission("ap.arena.freeze")) return arguments;
 
         if (args.length == 2) {
             for (Ladder ladder : LadderManager.getInstance().getLadders()) {

@@ -158,7 +158,7 @@ public class PublicPartiesGui extends GUI {
     private boolean joinParty(Player player, Party party) {
         Profile profile = ProfileManager.getInstance().getProfile(player);
 
-        if (!player.hasPermission("zpp.party.joinpublic")) {
+        if (!player.hasPermission("ap.party.joinpublic")) {
             Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-PERMISSION"));
             return false;
         }

@@ -13,7 +13,7 @@ public final class EnableArg {
     private EnableArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.staff")) {
+        if (!player.hasPermission("ap.staff")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STAFF.NO-PERMISSION"));
             return;
         }

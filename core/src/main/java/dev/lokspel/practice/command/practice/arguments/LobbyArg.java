@@ -17,7 +17,7 @@ public final class LobbyArg {
     private LobbyArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.practice.lobby")) {
+        if (!player.hasPermission("ap.practice.lobby")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
             return;
         }
@@ -50,7 +50,7 @@ public final class LobbyArg {
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
 
-        if (!player.hasPermission("zpp.practice.lobby")) return arguments;
+        if (!player.hasPermission("ap.practice.lobby")) return arguments;
 
         if (args.length == 2) {
             arguments.add("set");

@@ -41,7 +41,7 @@ public class SpectatorManager {
     }
 
     public void spectateMenuUse(Player player) {
-        if (!player.hasPermission("zpp.spectate.menu")) {
+        if (!player.hasPermission("ap.spectate.menu")) {
             Common.sendMMMessage(player, LanguageManager.getString("SPECTATE.NO-PERMISSIONS"));
             return;
         }
@@ -50,12 +50,12 @@ public class SpectatorManager {
     }
 
     public static void spectateRandomMatchItemUse(Player player) {
-        if (!player.hasPermission("zpp.spectate.random")) {
+        if (!player.hasPermission("ap.spectate.random")) {
             Common.sendMMMessage(player, LanguageManager.getString("SPECTATE.NO-PERMISSIONS"));
             return;
         }
 
-        if (!player.hasPermission("zpp.bypass.cooldown") && PlayerCooldown.isActive(player, CooldownObject.RANDOM_MATCH)) {
+        if (!player.hasPermission("ap.bypass.cooldown") && PlayerCooldown.isActive(player, CooldownObject.RANDOM_MATCH)) {
             Common.sendMMMessage(player, StringUtil.replaceSecondString(LanguageManager.getString("SPECTATE.RANDOM-MATCH-COOLDOWN"), PlayerCooldown.getLeftInDouble(player, CooldownObject.RANDOM_MATCH)));
             return;
         }

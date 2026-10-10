@@ -18,7 +18,7 @@ public final class PartyFfaCenterArg {
     private PartyFfaCenterArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.ARENA.NO-PERMISSION"));
             return;
         }
@@ -63,7 +63,7 @@ public final class PartyFfaCenterArg {
 
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
-        if (!player.hasPermission("zpp.setup")) return arguments;
+        if (!player.hasPermission("ap.setup")) return arguments;
 
         if (args.length == 3) {
             for (Arena arena : ArenaManager.getInstance().getNormalArenas())

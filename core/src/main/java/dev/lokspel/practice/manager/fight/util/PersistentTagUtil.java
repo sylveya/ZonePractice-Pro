@@ -24,7 +24,7 @@ public enum PersistentTagUtil {
     private static final Map<String, String> BLOCK_TAGS = new ConcurrentHashMap<>();
 
     private static NamespacedKey key(String tag) {
-        return new NamespacedKey(AstralPractice.getInstance(), "zpp_" + tag.toLowerCase());
+        return new NamespacedKey(AstralPractice.getInstance(), "ap_" + tag.toLowerCase());
     }
 
     private static String register(Object value) {
@@ -81,7 +81,7 @@ public enum PersistentTagUtil {
             if (!namespace.equals(namespacedKey.getNamespace())) {
                 continue;
             }
-            if (!namespacedKey.getKey().startsWith("zpp_")) {
+            if (!namespacedKey.getKey().startsWith("ap_")) {
                 continue;
             }
 

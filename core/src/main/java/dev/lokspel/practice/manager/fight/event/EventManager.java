@@ -159,8 +159,8 @@ public class EventManager {
         }
 
         if (starter != null) {
-            if (!starter.hasPermission("zpp.event.host") ||
-                    (!starter.hasPermission("zpp.event.host." + eventType.name().toLowerCase()) && !starter.hasPermission("zpp.event.host.all"))) {
+            if (!starter.hasPermission("ap.event.host") ||
+                    (!starter.hasPermission("ap.event.host." + eventType.name().toLowerCase()) && !starter.hasPermission("ap.event.host.all"))) {
                 Common.sendMMMessage(starter, LanguageManager.getString("EVENT.CANT-HOST-EVENT").replace("%event%", eventType.getName()));
                 return;
             }

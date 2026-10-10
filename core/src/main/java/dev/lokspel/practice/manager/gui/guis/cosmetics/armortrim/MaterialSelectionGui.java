@@ -113,7 +113,7 @@ public class MaterialSelectionGui extends GUI {
             return;
         }
 
-        String permissionNode = "zpp.cosmetics.armortrim.material." + CosmeticsPermissionManager.getTrimId(material);
+        String permissionNode = "ap.cosmetics.armortrim.material." + CosmeticsPermissionManager.getTrimId(material);
         if (!player.hasPermission(permissionNode)) {
             String permDeniedMessage = GUIFile.getConfig().getString("GUIS.COSMETICS.MATERIAL-PERMISSION-DENIED-MESSAGE", "<red>You do not have permission to use this trim material.");
             Common.sendMMMessage(player, permDeniedMessage);
@@ -127,7 +127,7 @@ public class MaterialSelectionGui extends GUI {
 
     private ItemStack buildMaterialItem(Player player, ArmorTrimTier tier, TrimMaterial material) {
         String materialId = CosmeticsPermissionManager.getTrimId(material);
-        String permissionNode = "zpp.cosmetics.armortrim.material." + materialId;
+        String permissionNode = "ap.cosmetics.armortrim.material." + materialId;
         boolean hasPermission = player != null && player.hasPermission(permissionNode);
 
         TrimMaterial activeMaterial = profile.getCosmeticsData().getMaterial(tier, armorSlot);

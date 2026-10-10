@@ -20,7 +20,7 @@ public final class ResetArg {
     private ResetArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.practice.reset")) {
+        if (!player.hasPermission("ap.practice.reset")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
             return;
         }
@@ -82,7 +82,7 @@ public final class ResetArg {
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
 
-        if (!player.hasPermission("zpp.practice.reset")) return arguments;
+        if (!player.hasPermission("ap.practice.reset")) return arguments;
 
         if (args.length == 2) {
             for (Player online : Bukkit.getOnlinePlayers())

@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class PlayerUtil {
 
-    private static final NamespacedKey ATTACK_COOLDOWN_MODIFIER_KEY = NamespacedKey.minecraft("zpp_attack_cooldown_modifier");
+    private static final NamespacedKey ATTACK_COOLDOWN_MODIFIER_KEY = NamespacedKey.minecraft("ap_attack_cooldown_modifier");
 
     private static boolean hasPersonalCraftingGridOpen(Player player) {
         InventoryType type = player.getOpenInventory().getType();

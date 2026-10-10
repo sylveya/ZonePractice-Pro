@@ -12,7 +12,7 @@ public final class PartyPublicArg {
     private PartyPublicArg() {}
 
     public static void PublicCommand(Player player) {
-        if (!player.hasPermission("zpp.party.view")) {
+        if (!player.hasPermission("ap.party.view")) {
             Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-PERMISSION"));
             return;
         }

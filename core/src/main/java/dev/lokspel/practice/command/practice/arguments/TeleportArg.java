@@ -15,7 +15,7 @@ public final class TeleportArg {
     private TeleportArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
             return;
         }
@@ -39,7 +39,7 @@ public final class TeleportArg {
         List<String> arguments = new ArrayList<>();
 
         if (args.length == 2) {
-            if (player.hasPermission("zpp.setup")) {
+            if (player.hasPermission("ap.setup")) {
                 for (World world : Bukkit.getWorlds())
                     arguments.add(world.getName());
             }

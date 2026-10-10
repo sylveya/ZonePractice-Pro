@@ -99,29 +99,29 @@ public class ProfileSettingsGui extends GUI {
 
             switch (slot) {
                 case 10:
-                    if (player.hasPermission("zpp.settings.duelrequest")) {
+                    if (player.hasPermission("ap.settings.duelrequest")) {
                         profile.setDuelRequest(!profile.isDuelRequest());
 
                         update();
-                        if (!player.hasPermission("zpp.bypass.cooldown"))
+                        if (!player.hasPermission("ap.bypass.cooldown"))
                             PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                     } else
                         Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
 
                     break;
                 case 20:
-                    if (player.hasPermission("zpp.settings.autoqueue")) {
+                    if (player.hasPermission("ap.settings.autoqueue")) {
                         profile.setAutoQueue(!profile.isAutoQueue());
 
                         update();
-                        if (!player.hasPermission("zpp.bypass.cooldown"))
+                        if (!player.hasPermission("ap.bypass.cooldown"))
                             PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                     } else
                         Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
 
                     break;
                 case 11:
-                    if (player.hasPermission("zpp.settings.scoreboard")) {
+                    if (player.hasPermission("ap.settings.scoreboard")) {
                         if (!SidebarManager.getInstance().isSidebarGloballyEnabled()) {
                             Common.sendMMMessage(player, LanguageManager.getString("PROFILE.SIDEBAR-GLOBALLY-DISABLED"));
                             return;
@@ -136,30 +136,30 @@ public class ProfileSettingsGui extends GUI {
 
                         profile.getFile().saveSidebarSetting();
                         update();
-                        if (!player.hasPermission("zpp.bypass.cooldown"))
+                        if (!player.hasPermission("ap.bypass.cooldown"))
                             PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                     } else
                         Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
 
                     break;
                 case 12:
-                    if (player.hasPermission("zpp.settings.partyinvite")) {
+                    if (player.hasPermission("ap.settings.partyinvite")) {
                         profile.setPartyInvites(!profile.isPartyInvites());
 
                         update();
-                        if (!player.hasPermission("zpp.bypass.cooldown"))
+                        if (!player.hasPermission("ap.bypass.cooldown"))
                             PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                     } else
                         Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
 
                     break;
                 case 13:
-                    if (player.hasPermission("zpp.settings.privatemessage")) {
-                        if (player.hasPermission("zpp.settings.privatemessage")) {
+                    if (player.hasPermission("ap.settings.privatemessage")) {
+                        if (player.hasPermission("ap.settings.privatemessage")) {
                             profile.setPrivateMessages(!profile.isPrivateMessages());
 
                             update();
-                            if (!player.hasPermission("zpp.bypass.cooldown"))
+                            if (!player.hasPermission("ap.bypass.cooldown"))
                                 PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                         } else
                             Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
@@ -168,43 +168,43 @@ public class ProfileSettingsGui extends GUI {
 
                     break;
                 case 14:
-                    if (player.hasPermission("zpp.settings.playerhide")) {
+                    if (player.hasPermission("ap.settings.playerhide")) {
                         profile.setHidePlayers(!profile.isHidePlayers());
                         PlayerHider.getInstance().toggleLobbyVisibility(player);
 
                         update();
-                        if (!player.hasPermission("zpp.bypass.cooldown"))
+                        if (!player.hasPermission("ap.bypass.cooldown"))
                             PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                     } else
                         Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
 
                     break;
                 case 15:
-                    if (player.hasPermission("zpp.settings.allowspectate")) {
+                    if (player.hasPermission("ap.settings.allowspectate")) {
                         profile.setAllowSpectate(!profile.isAllowSpectate());
 
                         update();
-                        if (!player.hasPermission("zpp.bypass.cooldown"))
+                        if (!player.hasPermission("ap.bypass.cooldown"))
                             PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                     } else
                         Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
 
                     break;
                 case 16:
-                    if (player.hasPermission("zpp.settings.worldtime")) {
+                    if (player.hasPermission("ap.settings.worldtime")) {
                         ProfileWorldTime newTime = ProfileWorldTime.getNextWorldTime(profile.getWorldTime());
                         profile.setWorldTime(newTime);
                         PlayerUtil.setPlayerWorldTime(player);
 
                         update();
-                        if (!player.hasPermission("zpp.bypass.cooldown"))
+                        if (!player.hasPermission("ap.bypass.cooldown"))
                             PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                     } else
                         Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
 
                     break;
                 case 23:
-                    if (player.hasPermission("zpp.settings.fly")) {
+                    if (player.hasPermission("ap.settings.fly")) {
                         profile.setFlying(!profile.isFlying());
 
                         if (profile.isFlying()) {
@@ -216,19 +216,19 @@ public class ProfileSettingsGui extends GUI {
                         }
 
                         update();
-                        if (!player.hasPermission("zpp.bypass.cooldown"))
+                        if (!player.hasPermission("ap.bypass.cooldown"))
                             PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                     } else
                         Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                     break;
                 case 21:
-                    if (player.hasPermission("zpp.settings.prefixvisibility")) {
+                    if (player.hasPermission("ap.settings.prefixvisibility")) {
                         ProfilePrefixVisibility newVisibility = ProfilePrefixVisibility.getNext(profile.getPrefixVisibility());
                         profile.setPrefixVisibility(newVisibility);
                         InventoryUtil.setLobbyNametag(player, profile);
 
                         update();
-                        if (!player.hasPermission("zpp.bypass.cooldown"))
+                        if (!player.hasPermission("ap.bypass.cooldown"))
                             PlayerCooldown.addCooldown(player, CooldownObject.PLAYER_SETTINGS, ConfigManager.getInt("PLAYER.SETTINGS-DELAY"));
                     } else
                         Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));

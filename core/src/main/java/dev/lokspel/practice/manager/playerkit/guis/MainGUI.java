@@ -151,7 +151,7 @@ public class MainGUI extends GUI {
                     openConfirmGUI(player, ConfirmGuiType.RESET_CUSTOM_KIT, this, this);
                     break;
                 case 7:
-                    if (!player.hasPermission("zpp.playerkit.share")) {
+                    if (!player.hasPermission("ap.playerkit.share")) {
                         Common.sendMMMessage(player, LanguageManager.getString("CUSTOM-PLAYER-KIT.NO-PERMISSION"));
                         return;
                     }

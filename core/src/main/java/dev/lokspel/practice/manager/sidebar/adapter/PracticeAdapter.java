@@ -708,7 +708,7 @@ public class PracticeAdapter implements SidebarAdapter {
             }
         }
 
-        if (player.hasPermission("zpp.admin.scoreboard")) {
+        if (player.hasPermission("ap.admin.scoreboard")) {
             for (String line : config.getStringList("ADMIN-EXTENSION")) {
                 line = line
                         .replace("%tps%", String.valueOf(TPSUtil.get1MinTPS()))

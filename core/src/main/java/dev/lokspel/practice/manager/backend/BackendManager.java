@@ -15,7 +15,7 @@ public enum BackendManager {
     ;
 
     private static final String PRACTICE_STATS_SERVER_HASH_PATH = "TELEMETRY.PRACTICE_STATS.SERVER_HASH";
-    private static final String PRACTICE_STATS_SERVER_HASH_PREFIX = "ZPPV1_";
+    private static final String PRACTICE_STATS_SERVER_HASH_PREFIX = "APV1_";
 
     private static File file;
     @Getter

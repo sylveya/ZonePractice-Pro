@@ -14,7 +14,7 @@ public class SettingsInvItem extends InvItem {
 
     @Override
     public void handleClickEvent(Player player) {
-        if (player.hasPermission("zpp.settings.open"))
+        if (player.hasPermission("ap.settings.open"))
             ProfileManager.getInstance().getProfile(player).getSettingsGui().open(player);
         else
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETTINGS.NO-PERMISSION"));

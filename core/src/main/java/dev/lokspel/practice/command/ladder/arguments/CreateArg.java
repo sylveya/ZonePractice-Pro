@@ -16,7 +16,7 @@ public final class CreateArg {
     private static final int MAX_LADDERS = ConfigManager.getInt("SETUP.MAX-LADDERS");
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.LADDER.NO-PERMISSION"));
             return;
         }

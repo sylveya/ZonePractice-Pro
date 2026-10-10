@@ -83,7 +83,7 @@ public final class InventoryTransitionService {
         profile.setStatus(ProfileStatus.STAFF_MODE);
         profile.setStaffMode(true);
 
-        dev.lokspel.practice.util.playerutil.PlayerUtil.clearPlayer(player, false, player.hasPermission("zpp.staffmode.fly"), false);
+        dev.lokspel.practice.util.playerutil.PlayerUtil.clearPlayer(player, false, player.hasPermission("ap.staffmode.fly"), false);
         inventoryManager.setInventory(player, Inventory.InventoryType.STAFF_MODE);
     }
 }

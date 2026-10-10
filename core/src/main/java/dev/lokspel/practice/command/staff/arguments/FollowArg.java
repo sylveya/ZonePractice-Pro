@@ -8,7 +8,7 @@ public final class FollowArg {
     private FollowArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.staffmode.follow")) {
+        if (!player.hasPermission("ap.staffmode.follow")) {
             Common.sendMMMessage(player, "<red>You don't have permission.");
             return;
         }

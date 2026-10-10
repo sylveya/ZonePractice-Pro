@@ -81,7 +81,7 @@ public final class ChatFormatUtil {
         List<Player> staff = new ArrayList<>();
 
         for (Player online : Bukkit.getOnlinePlayers()) {
-            if (online.hasPermission("zpp.staffmode.chat")) {
+            if (online.hasPermission("ap.staffmode.chat")) {
                 staff.add(online);
             }
         }

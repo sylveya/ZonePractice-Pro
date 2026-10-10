@@ -29,7 +29,7 @@ public class StatisticsCommand implements CommandExecutor, TabCompleter {
 
         Profile profile = ProfileManager.getInstance().getProfile(player);
 
-        if (!player.hasPermission("zpp.admin")) {
+        if (!player.hasPermission("ap.admin")) {
             switch (profile.getStatus()) {
                 case MATCH:
                 case FFA:
@@ -40,14 +40,14 @@ public class StatisticsCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 0) {
-            if (!player.hasPermission("zpp.statistics")) {
+            if (!player.hasPermission("ap.statistics")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STATISTICS.NO-PERMISSION"));
                 return false;
             }
 
             new LbSelectorGui(player, profile).open(player);
         } else if (args.length == 1) {
-            if (!player.hasPermission("zpp.statistics.other")) {
+            if (!player.hasPermission("ap.statistics.other")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STATISTICS.NO-PERMISSION"));
                 return false;
             }
@@ -74,7 +74,7 @@ public class StatisticsCommand implements CommandExecutor, TabCompleter {
 
         if (!(sender instanceof Player player)) return arguments;
 
-        if (!player.hasPermission("zpp.statistics.other")) return arguments;
+        if (!player.hasPermission("ap.statistics.other")) return arguments;
 
         if (args.length == 1) {
             for (Player online : Bukkit.getOnlinePlayers()) {

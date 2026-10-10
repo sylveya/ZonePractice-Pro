@@ -44,7 +44,7 @@ public class InactiveProfileRunnable extends BukkitRunnable {
         }
 
         if (count > 0)
-            ServerManager.getInstance().alertPlayers("zpp.admin", LanguageManager.getString("PROFILE.INACTIVITY-REMOVED").replace("%count%", String.valueOf(count)));
+            ServerManager.getInstance().alertPlayers("ap.admin", LanguageManager.getString("PROFILE.INACTIVITY-REMOVED").replace("%count%", String.valueOf(count)));
     }
 
     private void deleteStatsFromMariadb(Profile profile) {

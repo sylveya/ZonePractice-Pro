@@ -112,7 +112,7 @@ public class PartyManager implements Listener {
     public void createParty(Player player) {
         Profile profile = ProfileManager.getInstance().getProfile(player);
 
-        if (!player.hasPermission("zpp.party.create")) {
+        if (!player.hasPermission("ap.party.create")) {
             Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-PERMISSION"));
             return;
         }

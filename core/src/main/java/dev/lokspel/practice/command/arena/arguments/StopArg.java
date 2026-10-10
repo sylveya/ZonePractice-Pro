@@ -17,7 +17,7 @@ public final class StopArg {
     private StopArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.arena.stop")) {
+        if (!player.hasPermission("ap.arena.stop")) {
             Common.sendMMMessage(player, LanguageManager.getString("command.arena.no-permission"));
             return;
         }
@@ -53,7 +53,7 @@ public final class StopArg {
 
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
-        if (!player.hasPermission("zpp.setup")) return arguments;
+        if (!player.hasPermission("ap.setup")) return arguments;
 
         if (args.length == 2) {
             for (DisplayArena arena : ArenaManager.getInstance().getArenaList())

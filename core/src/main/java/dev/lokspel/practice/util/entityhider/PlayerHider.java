@@ -75,7 +75,7 @@ public class PlayerHider implements Listener {
                     }
                 } else if (!onlineStatus.equals(ProfileStatus.SPECTATE) && onlineProfile.isHidePlayers()) {
                     hidePlayer(online, player);
-                } else if (profile.isHideFromPlayers() && !online.hasPermission("zpp.staffmode.see")) {
+                } else if (profile.isHideFromPlayers() && !online.hasPermission("ap.staffmode.see")) {
                     hidePlayer(online, player);
                 }
 
@@ -83,7 +83,7 @@ public class PlayerHider implements Listener {
                 /*
                  * Hide the online from the player.
                  */
-                if (onlineProfile.isHideFromPlayers() && !player.hasPermission("zpp.staffmode.see")) {
+                if (onlineProfile.isHideFromPlayers() && !player.hasPermission("ap.staffmode.see")) {
                     hidePlayer(player, online);
                 } else if (profile.isHidePlayers() && ServerManager.getInstance().getInWorld().get(online) == WorldEnum.LOBBY) {
                     hidePlayer(player, online);
@@ -114,7 +114,7 @@ public class PlayerHider implements Listener {
                 // Handle the teleported player
                 if (profile.isHidePlayers() && ServerManager.getInstance().getInWorld().get(online) == WorldEnum.LOBBY) {
                     hidePlayer(player, online);
-                } else if (!onlineProfile.isHideFromPlayers() || player.hasPermission("zpp.staffmode.see")) {
+                } else if (!onlineProfile.isHideFromPlayers() || player.hasPermission("ap.staffmode.see")) {
                     showPlayer(player, online);
                 } else {
                     hidePlayer(player, online);
@@ -124,10 +124,10 @@ public class PlayerHider implements Listener {
                 if (!(onlineProfile.getStatus().equals(ProfileStatus.MATCH) || onlineProfile.getStatus().equals(ProfileStatus.EVENT) || onlineProfile.getStatus().equals(ProfileStatus.FFA))) {
                     if (onlineProfile.isHidePlayers() && ServerManager.getInstance().getInWorld().get(online) == WorldEnum.LOBBY) {
                         hidePlayer(online, player);
-                    } else if (!profile.isHideFromPlayers() || online.hasPermission("zpp.staffmode.see")) {
+                    } else if (!profile.isHideFromPlayers() || online.hasPermission("ap.staffmode.see")) {
                         showPlayer(online, player);
                         showTabEntry(online, player);
-                    } else if (profile.isHideFromPlayers() || !online.hasPermission("zpp.staffmode.see")) {
+                    } else if (profile.isHideFromPlayers() || !online.hasPermission("ap.staffmode.see")) {
                         hidePlayer(online, player);
                     }
                 } else if (!ConfigManager.isShowPlayersInTab()) {
@@ -249,7 +249,7 @@ public class PlayerHider implements Listener {
             } else {
                 Profile onlineProfile = ProfileManager.getInstance().getProfile(online);
 
-                if (!onlineProfile.isHideFromPlayers() || player.hasPermission("zpp.staffmode.see")) {
+                if (!onlineProfile.isHideFromPlayers() || player.hasPermission("ap.staffmode.see")) {
                     showPlayer(player, online);
                 }
             }
@@ -276,7 +276,7 @@ public class PlayerHider implements Listener {
                     if (profile.isHideSpectators()) {
                         hidePlayer(player, online);
                     } else {
-                        if (!onlineProfile.isHideFromPlayers() || player.hasPermission("zpp.staffmode.see")) {
+                        if (!onlineProfile.isHideFromPlayers() || player.hasPermission("ap.staffmode.see")) {
                             showPlayer(player, online);
                         }
                     }
@@ -303,7 +303,7 @@ public class PlayerHider implements Listener {
             if (player.equals(online)) continue;
 
             if (profile.isHideFromPlayers()) {
-                if (online.hasPermission("zpp.staffmode.see")) continue;
+                if (online.hasPermission("ap.staffmode.see")) continue;
 
                 hidePlayer(online, player);
             } else {

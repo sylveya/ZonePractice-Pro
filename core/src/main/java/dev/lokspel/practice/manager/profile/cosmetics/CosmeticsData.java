@@ -25,7 +25,7 @@ public class CosmeticsData {
         SPEAR;
 
         public String getPermissionNode() {
-            return "zpp.cosmetics.lobby." + name().toLowerCase();
+            return "ap.cosmetics.lobby." + name().toLowerCase();
         }
     }
 

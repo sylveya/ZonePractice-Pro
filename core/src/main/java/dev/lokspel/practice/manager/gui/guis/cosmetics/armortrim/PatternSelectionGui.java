@@ -110,7 +110,7 @@ public class PatternSelectionGui extends GUI {
             return;
         }
 
-        String permissionNode = "zpp.cosmetics.armortrim.pattern." + CosmeticsPermissionManager.getTrimId(pattern);
+        String permissionNode = "ap.cosmetics.armortrim.pattern." + CosmeticsPermissionManager.getTrimId(pattern);
         if (!player.hasPermission(permissionNode)) {
             String permDeniedMessage = GUIFile.getConfig().getString("GUIS.COSMETICS.PATTERN-PERMISSION-DENIED-MESSAGE", "<red>You do not have permission to use this trim pattern.");
             Common.sendMMMessage(player, permDeniedMessage);
@@ -124,7 +124,7 @@ public class PatternSelectionGui extends GUI {
 
     private ItemStack buildPatternItem(Player player, ArmorTrimTier tier, TrimPattern pattern) {
         String patternId = CosmeticsPermissionManager.getTrimId(pattern);
-        String permissionNode = "zpp.cosmetics.armortrim.pattern." + patternId;
+        String permissionNode = "ap.cosmetics.armortrim.pattern." + patternId;
         boolean hasPermission = player != null && player.hasPermission(permissionNode);
 
         TrimPattern activePattern = profile.getCosmeticsData().getPattern(tier, armorSlot);

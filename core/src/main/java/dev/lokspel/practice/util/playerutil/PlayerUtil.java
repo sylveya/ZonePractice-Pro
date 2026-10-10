@@ -118,7 +118,7 @@ public final class PlayerUtil {
                 : LanguageManager.getString("CONSOLE-NAME");
 
         for (Player online : Bukkit.getOnlinePlayers()) {
-            if (!online.hasPermission("zpp.staffmode.chat")) {
+            if (!online.hasPermission("ap.staffmode.chat")) {
                 continue;
             }
 
@@ -134,7 +134,7 @@ public final class PlayerUtil {
         List<Player> staff = new ArrayList<>();
 
         for (Player online : Bukkit.getOnlinePlayers()) {
-            if (online.hasPermission("zpp.staff")) {
+            if (online.hasPermission("ap.staff")) {
                 staff.add(online);
             }
         }

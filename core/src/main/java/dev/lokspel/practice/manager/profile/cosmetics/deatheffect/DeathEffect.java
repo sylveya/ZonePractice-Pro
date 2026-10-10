@@ -127,7 +127,7 @@ public enum DeathEffect {
     }
 
     public static String getPermissionNode(String id) {
-        return "zpp.cosmetics.deatheffect." + id;
+        return "ap.cosmetics.deatheffect." + id;
     }
 
     /**

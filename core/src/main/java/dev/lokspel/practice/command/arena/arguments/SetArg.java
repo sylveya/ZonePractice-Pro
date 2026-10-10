@@ -38,7 +38,7 @@ public final class SetArg {
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
         List<String> completion = new ArrayList<>();
-        if (!player.hasPermission("zpp.setup")) return arguments;
+        if (!player.hasPermission("ap.setup")) return arguments;
 
         if (args.length == 2) {
             arguments.add("icon");

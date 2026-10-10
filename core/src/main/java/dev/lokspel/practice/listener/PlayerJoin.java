@@ -61,7 +61,7 @@ public class PlayerJoin implements Listener {
             {
                 PlayerUtil.setPlayerWorldTime(player);
 
-                if (ConfigManager.getBoolean("STAFF-MODE.JOIN-HIDE-FROM-PLAYERS") && player.hasPermission("zpp.staffmode"))
+                if (ConfigManager.getBoolean("STAFF-MODE.JOIN-HIDE-FROM-PLAYERS") && player.hasPermission("ap.staffmode"))
                     profile1.setHideFromPlayers(true);
             }, 10L);
 

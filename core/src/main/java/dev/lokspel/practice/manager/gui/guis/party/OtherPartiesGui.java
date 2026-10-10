@@ -101,7 +101,7 @@ public class OtherPartiesGui extends GUI {
             return;
         }
 
-        if (!PartyManager.getInstance().getRequestManager().isRequested(party, targetParty) || party.getLeader().hasPermission("zpp.party.infiniteinvite")) {
+        if (!PartyManager.getInstance().getRequestManager().isRequested(party, targetParty) || party.getLeader().hasPermission("ap.party.infiniteinvite")) {
             PartyManager.getInstance().getRequestManager().getPendingRequestTarget().put(party, targetParty);
             new LadderSelectorGui(profile, MatchType.PARTY_VS_PARTY).open(player);
         } else

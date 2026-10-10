@@ -20,7 +20,7 @@ public final class JoinArg {
             return;
         }
 
-        if (!player.hasPermission("zpp.event.join")) {
+        if (!player.hasPermission("ap.event.join")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.EVENT.ARGUMENTS.JOIN.NO-PERMISSION"));
             return;
         }

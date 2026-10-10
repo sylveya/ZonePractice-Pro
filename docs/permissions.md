@@ -10,28 +10,28 @@ The full list is in [`plugin.yml`](../core/src/main/resources/plugin.yml). Below
 
 | Permission                           | Usage             |
 |--------------------------------------|-------------------|
-| `zpp.cosmetics.deatheffect.none`      | No death effect   |
-| `zpp.cosmetics.deatheffect.flame`     | Flame effect      |
-| `zpp.cosmetics.deatheffect.lightning` | Lightning effect  |
-| `zpp.cosmetics.deatheffect.firework`  | Firework effect   |
-| `zpp.cosmetics.deatheffect.explosion` | Explosion effect  |
-| `zpp.cosmetics.deatheffect.blood`     | Blood effect      |
-| `zpp.cosmetics.deatheffect.enchant`   | Enchant effect    |
-| `zpp.cosmetics.deatheffect.ender`     | Ender effect      |
-| `zpp.cosmetics.deatheffect.hearts`    | Hearts effect     |
-| `zpp.cosmetics.deatheffect.ice`       | Ice effect        |
-| `zpp.cosmetics.deatheffect.supernova` | Supernova effect  |
-| `zpp.cosmetics.deatheffect.voidstorm` | Voidstorm effect  |
-| `zpp.cosmetics.deatheffect.phoenix`   | Phoenix effect    |
-| `zpp.cosmetics.deatheffect.comet`     | Comet effect      |
-| `zpp.cosmetics.deatheffect.*`         | All death effects |
+| `ap.cosmetics.deatheffect.none`      | No death effect   |
+| `ap.cosmetics.deatheffect.flame`     | Flame effect      |
+| `ap.cosmetics.deatheffect.lightning` | Lightning effect  |
+| `ap.cosmetics.deatheffect.firework`  | Firework effect   |
+| `ap.cosmetics.deatheffect.explosion` | Explosion effect  |
+| `ap.cosmetics.deatheffect.blood`     | Blood effect      |
+| `ap.cosmetics.deatheffect.enchant`   | Enchant effect    |
+| `ap.cosmetics.deatheffect.ender`     | Ender effect      |
+| `ap.cosmetics.deatheffect.hearts`    | Hearts effect     |
+| `ap.cosmetics.deatheffect.ice`       | Ice effect        |
+| `ap.cosmetics.deatheffect.supernova` | Supernova effect  |
+| `ap.cosmetics.deatheffect.voidstorm` | Voidstorm effect  |
+| `ap.cosmetics.deatheffect.phoenix`   | Phoenix effect    |
+| `ap.cosmetics.deatheffect.comet`     | Comet effect      |
+| `ap.cosmetics.deatheffect.*`         | All death effects |
 
 ## Armor trims
 
 | Permission                            | Usage                   |
 |---------------------------------------|-------------------------|
-| `zpp.cosmetics.armortrim.pattern.<id>`  | Use an armor trim pattern  |
-| `zpp.cosmetics.armortrim.material.<id>` | Use an armor trim material |
+| `ap.cosmetics.armortrim.pattern.<id>`  | Use an armor trim pattern  |
+| `ap.cosmetics.armortrim.material.<id>` | Use an armor trim material |
 
 `<id>` is the trim name from your Minecraft version, for example `sentry`, `vex`, `amethyst` or `netherite`.
 
@@ -39,18 +39,18 @@ The full list is in [`plugin.yml`](../core/src/main/resources/plugin.yml). Below
 
 | Permission                               | Usage                              |
 |------------------------------------------|------------------------------------|
-| `zpp.cosmetics.shield.use`               | Open the shield cosmetics          |
-| `zpp.cosmetics.shield.layouts.<1-21>`    | Use up to that many shield layouts |
-| `zpp.cosmetics.shield.layouts.unlimited` | Use unlimited shield layouts       |
+| `ap.cosmetics.shield.use`               | Open the shield cosmetics          |
+| `ap.cosmetics.shield.layouts.<1-21>`    | Use up to that many shield layouts |
+| `ap.cosmetics.shield.layouts.unlimited` | Use unlimited shield layouts       |
 
 ## Groups
 
 | Permission        | Usage                                          |
 |-------------------|------------------------------------------------|
-| `zpp.group.<name>` | Player group — see [`groups.yml`](../core/src/main/resources/groups.yml) |
+| `ap.group.<name>` | Player group — see [`groups.yml`](../core/src/main/resources/groups.yml) |
 
 ## Staff mode
 
 | Permission             | Usage                                       |
 |------------------------|---------------------------------------------|
-| `zpp.staffmode.follow` | Follow other staff members (not registered) |
+| `ap.staffmode.follow` | Follow other staff members (not registered) |

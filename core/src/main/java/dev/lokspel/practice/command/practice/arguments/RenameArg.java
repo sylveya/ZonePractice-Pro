@@ -16,7 +16,7 @@ public final class RenameArg {
     private RenameArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.practice.rename")) {
+        if (!player.hasPermission("ap.practice.rename")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
             return;
         }

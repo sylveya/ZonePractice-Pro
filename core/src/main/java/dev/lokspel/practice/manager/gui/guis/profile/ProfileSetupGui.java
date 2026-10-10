@@ -96,14 +96,14 @@ public class ProfileSetupGui extends GUI {
                             if (match == null) return;
 
                             if (click.isLeftClick()) {
-                                if (!player.hasPermission("zpp.practice.info.teleport")) {
+                                if (!player.hasPermission("ap.practice.info.teleport")) {
                                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                                     return;
                                 }
 
                                 match.addSpectator(player, target, true, false);
                             } else if (click.isRightClick()) {
-                                if (!player.hasPermission("zpp.practice.info.cancel")) {
+                                if (!player.hasPermission("ap.practice.info.cancel")) {
                                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                                     return;
                                 }
@@ -119,14 +119,14 @@ public class ProfileSetupGui extends GUI {
                             if (ffa == null) return;
 
                             if (click.isLeftClick()) {
-                                if (!player.hasPermission("zpp.practice.info.teleport")) {
+                                if (!player.hasPermission("ap.practice.info.teleport")) {
                                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                                     return;
                                 }
 
                                 ffa.addSpectator(player, target, true, false);
                             } else if (click.isRightClick()) {
-                                if (!player.hasPermission("zpp.practice.info.cancel")) {
+                                if (!player.hasPermission("ap.practice.info.cancel")) {
                                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                                     return;
                                 }
@@ -139,14 +139,14 @@ public class ProfileSetupGui extends GUI {
                             if (event == null) return;
 
                             if (click.isLeftClick()) {
-                                if (!player.hasPermission("zpp.practice.info.teleport")) {
+                                if (!player.hasPermission("ap.practice.info.teleport")) {
                                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                                     return;
                                 }
 
                                 event.addSpectator(player, target, true, false);
                             } else if (click.isRightClick()) {
-                                if (!player.hasPermission("zpp.practice.info.cancel")) {
+                                if (!player.hasPermission("ap.practice.info.cancel")) {
                                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                                     return;
                                 }
@@ -161,7 +161,7 @@ public class ProfileSetupGui extends GUI {
                             Spectatable spectatable = SpectatorManager.getInstance().getSpectators().get(target);
 
                             if (click.isLeftClick()) {
-                                if (!player.hasPermission("zpp.practice.info.teleport")) {
+                                if (!player.hasPermission("ap.practice.info.teleport")) {
                                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                                     return;
                                 }
@@ -170,7 +170,7 @@ public class ProfileSetupGui extends GUI {
                                     spectatable.addSpectator(player, target, true, false);
                                 }
                             } else if (click.isRightClick()) {
-                                if (!player.hasPermission("zpp.practice.info.cancel")) {
+                                if (!player.hasPermission("ap.practice.info.cancel")) {
                                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                                     return;
                                 }

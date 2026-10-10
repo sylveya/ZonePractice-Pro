@@ -34,7 +34,7 @@ public final class NametagArg {
         }
 
         if (args.length >= 4 && (args[1].equalsIgnoreCase("prefix") || args[1].equalsIgnoreCase("suffix") || args[1].equalsIgnoreCase("name"))) {
-            if (!player.hasPermission("zpp.practice.nametag.set")) {
+            if (!player.hasPermission("ap.practice.nametag.set")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -45,7 +45,7 @@ public final class NametagArg {
                 return;
             }
 
-            if (player != target && target.hasPermission("zpp.bypass.nametag")) {
+            if (player != target && target.hasPermission("ap.bypass.nametag")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.ARGUMENTS.NAMETAG.TARGET-BYPASS").replace("%target%", target.getName()));
                 return;
             }
@@ -80,7 +80,7 @@ public final class NametagArg {
             } else if (args[1].equalsIgnoreCase("name")) {
                 String nameTemplate = joinArgs(args, 3);
 
-                if (player != target && !player.hasPermission("zpp.practice.nametag.name.others")) {
+                if (player != target && !player.hasPermission("ap.practice.nametag.name.others")) {
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                     return;
                 }
@@ -97,7 +97,7 @@ public final class NametagArg {
                         .replace("%name%", Common.mmToNormal(nameTemplate)));
             }
         } else if (args.length == 3 && args[1].equalsIgnoreCase("reset")) {
-            if (!player.hasPermission("zpp.practice.nametag.reset")) {
+            if (!player.hasPermission("ap.practice.nametag.reset")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -109,7 +109,7 @@ public final class NametagArg {
             }
             Profile targetProfile = ProfileManager.getInstance().getProfile(target);
 
-            if (player != target && target.hasPermission("zpp.bypass.nametag")) {
+            if (player != target && target.hasPermission("ap.bypass.nametag")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.ARGUMENTS.NAMETAG.TARGET-BYPASS").replace("%target%", target.getName()));
                 return;
             }
@@ -122,7 +122,7 @@ public final class NametagArg {
 
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.ARGUMENTS.NAMETAG.RELOADED").replace("%target%", target.getName()));
         } else {
-            if (player.hasPermission("zpp.practice.nametag.set") || player.hasPermission("zpp.practice.nametag.reset"))
+            if (player.hasPermission("ap.practice.nametag.set") || player.hasPermission("ap.practice.nametag.reset"))
                 for (String line : LanguageManager.getList("COMMAND.PRACTICE.ARGUMENTS.NAMETAG.COMMAND-HELP"))
                     Common.sendMMMessage(player, line.replace("%label%", label));
             else
@@ -209,9 +209,9 @@ public final class NametagArg {
         List<String> arguments = new ArrayList<>();
 
         if (args.length == 2) {
-            if (player.hasPermission("zpp.practice.nametag.reset"))
+            if (player.hasPermission("ap.practice.nametag.reset"))
                 arguments.add("reset");
-            if (player.hasPermission("zpp.practice.nametag.set")) {
+            if (player.hasPermission("ap.practice.nametag.set")) {
                 arguments.add("prefix");
                 arguments.add("suffix");
                 arguments.add("name");
@@ -219,14 +219,14 @@ public final class NametagArg {
 
             return StringUtil.copyPartialMatches(args[1], arguments, new ArrayList<>());
         } else if (args.length == 3) {
-            if ((args[1].equalsIgnoreCase("prefix") || args[1].equalsIgnoreCase("suffix") || args[1].equalsIgnoreCase("name")) && player.hasPermission("zpp.practice.nametag.set")) {
-                if (args[1].equalsIgnoreCase("name") && !player.hasPermission("zpp.practice.nametag.name.others")) {
+            if ((args[1].equalsIgnoreCase("prefix") || args[1].equalsIgnoreCase("suffix") || args[1].equalsIgnoreCase("name")) && player.hasPermission("ap.practice.nametag.set")) {
+                if (args[1].equalsIgnoreCase("name") && !player.hasPermission("ap.practice.nametag.name.others")) {
                     arguments.add(player.getName());
                 } else {
                     for (Player online : Bukkit.getOnlinePlayers())
                         arguments.add(online.getName());
                 }
-            } else if (args[1].equalsIgnoreCase("reset") && player.hasPermission("zpp.practice.nametag.reset")) {
+            } else if (args[1].equalsIgnoreCase("reset") && player.hasPermission("ap.practice.nametag.reset")) {
                 for (Player online : Bukkit.getOnlinePlayers())
                     arguments.add(online.getName());
             }

@@ -32,7 +32,7 @@ import java.util.Set;
 
 public class PlayerChatListener implements Listener {
 
-    private static final String MESSAGE_PLACEHOLDER = "<zpp-message>";
+    private static final String MESSAGE_PLACEHOLDER = "<ap-message>";
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerChat(AsyncChatEvent e) {
@@ -96,7 +96,7 @@ public class PlayerChatListener implements Listener {
 
 
         // Staff shortcut
-        if (player.hasPermission("zpp.staff")
+        if (player.hasPermission("ap.staff")
                 && ConfigManager.getBoolean("CHAT.STAFF-CHAT.SHORTCUT")
                 && rawMessage.startsWith("#")) {
 

@@ -47,7 +47,7 @@ QUEUE:
     SWITCH-ENABLED: false
   MULTI:
     ENABLED: true
-    PERMISSION: "zpp.queue.multi"
+    PERMISSION: "ap.queue.multi"
     MAX-LADDERS: 3 # Set to -1 or 0 for unlimited.
     SIDEBAR:
       MULTIPLE-LABEL: "Multiple Ladders"

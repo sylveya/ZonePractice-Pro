@@ -30,10 +30,10 @@ public class AutoSaveRunnable extends BukkitRunnable {
     @Override
     public void run() {
         if (alert) {
-            ServerManager.getInstance().alertPlayers("zpp.autosave.alert", LanguageManager.getString("AUTO-SAVE.STARTED"));
+            ServerManager.getInstance().alertPlayers("ap.autosave.alert", LanguageManager.getString("AUTO-SAVE.STARTED"));
 
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstralPractice.getInstance(), () ->
-                    ServerManager.getInstance().alertPlayers("zpp.autosave.alert", LanguageManager.getString("AUTO-SAVE.ENDED")), NumberUtil.getRandomNumber(4, 10) * 20L);
+                    ServerManager.getInstance().alertPlayers("ap.autosave.alert", LanguageManager.getString("AUTO-SAVE.ENDED")), NumberUtil.getRandomNumber(4, 10) * 20L);
         }
 
         save();
