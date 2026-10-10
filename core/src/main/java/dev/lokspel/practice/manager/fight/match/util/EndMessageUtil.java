@@ -45,9 +45,11 @@ public enum EndMessageUtil {
                 message.add(line
                         .replace("%matchId%", duel.getId())
                         .replace("%winner%", winner.getName())
-                        .replace("%winner_uuid%", ProfileManager.getInstance().getUuids().get(winner).toString())
+                        .replace("%winner_uuid%", ProfileManager.getInstance().getUuids().get(winner) != null
+                                ? ProfileManager.getInstance().getUuids().get(winner).toString() : "")
                         .replace("%loser%", loser.getName())
-                        .replace("%loser_uuid%", ProfileManager.getInstance().getUuids().get(loser).toString())
+                        .replace("%loser_uuid%", ProfileManager.getInstance().getUuids().get(loser) != null
+                                ? ProfileManager.getInstance().getUuids().get(loser).toString() : "")
                 );
             }
         }
@@ -67,7 +69,8 @@ public enum EndMessageUtil {
                 loserString = LanguageManager.getString("MATCH.PARTY-FFA.MATCH-END.LOSER-PLAYER-FORMAT")
                         .replace("%matchId%", partyFFA.getId())
                         .replace("%player%", loser.getName())
-                        .replace("%player_uuid%", ProfileManager.getInstance().getUuids().get(loser).toString());
+                        .replace("%player_uuid%", ProfileManager.getInstance().getUuids().get(loser) != null
+                                ? ProfileManager.getInstance().getUuids().get(loser).toString() : "");
             } else {
                 loserString = LanguageManager.getString("MATCH.PARTY-FFA.MATCH-END.LEFT-PLAYER-FORMAT")
                         .replace("%player%", loser.getName());
@@ -99,7 +102,8 @@ public enum EndMessageUtil {
                         .replace("%matchId%", partyFFA.getId())
                         .replace("%losers%", losersString)
                         .replace("%winner%", winner.getName())
-                        .replace("%winner_uuid%", ProfileManager.getInstance().getUuids().get(winner).toString())
+                        .replace("%winner_uuid%", ProfileManager.getInstance().getUuids().get(winner) != null
+                                ? ProfileManager.getInstance().getUuids().get(winner).toString() : "")
                 );
             }
         }
