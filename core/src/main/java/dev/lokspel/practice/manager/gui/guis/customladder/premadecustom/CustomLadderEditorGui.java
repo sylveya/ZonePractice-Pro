@@ -193,11 +193,17 @@ public class CustomLadderEditorGui extends GUI {
             e.setCancelled(false);
             // Second hand item
         } else if (slot == 18 || slot == 27 || slot == 36 || slot == 45) {
-            // Armor slots - allow editing based on armor type
+            // Only cursor clicks are validated below, so block hotbar swaps
+            // (they swap the item in directly without ever putting it on the cursor).
+            if (GUIManager.isHotbarSwap(e.getClick(), action)) {
+                e.setCancelled(true);
+                return;
+            }
+
             ItemStack cursorItem = e.getCursor();
 
             // If cursor is empty, allow picking up the armor
-            if (cursorItem == null || cursorItem.getType().equals(Material.AIR)) {
+            if (cursorItem.getType().equals(Material.AIR)) {
                 e.setCancelled(false);
                 return;
             }

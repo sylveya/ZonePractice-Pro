@@ -129,18 +129,27 @@ public class GUIManager implements Listener {
         }
 
         ClickType clickType = e.getClick();
+        InventoryAction action = e.getAction();
+
+        if (isHotbarSwap(clickType, action)) {
+            return !(clickedBottomInventory && allowsInventoryMutation(gui));
+        }
+
         if (clickType == ClickType.DOUBLE_CLICK
-                || clickType == ClickType.NUMBER_KEY
-                || clickType == ClickType.SWAP_OFFHAND
                 || clickType == ClickType.CONTROL_DROP
                 || clickType == ClickType.CREATIVE
                 || clickType == ClickType.MIDDLE) {
             return true;
         }
 
-        InventoryAction action = e.getAction();
         return action == InventoryAction.COLLECT_TO_CURSOR
-                || action == InventoryAction.MOVE_TO_OTHER_INVENTORY
+                || action == InventoryAction.MOVE_TO_OTHER_INVENTORY;
+    }
+
+    /** Number-key and F-key swaps between a slot and the hotbar/offhand. */
+    public static boolean isHotbarSwap(ClickType clickType, InventoryAction action) {
+        return clickType == ClickType.NUMBER_KEY
+                || clickType == ClickType.SWAP_OFFHAND
                 || action == InventoryAction.HOTBAR_SWAP;
     }
 

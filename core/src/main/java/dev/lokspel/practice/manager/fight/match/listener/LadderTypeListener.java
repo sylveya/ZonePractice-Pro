@@ -49,6 +49,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.EnchantingInventory;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import static dev.lokspel.practice.manager.arena.util.ArenaUtil.containsDestroyableBlock;
 import static dev.lokspel.practice.util.PermanentConfig.FIGHT_ENTITY;
@@ -837,7 +838,13 @@ public class LadderTypeListener implements Listener {
                         }
                     }
                 }
-                case EDITOR -> e.setCancelled(true);
+                case EDITOR -> {
+                    // Allow hotbar swaps inside the player's own inventory (kit storage)
+                    // while editing; only block swaps that target the editor GUI.
+                    if (!(e.getClickedInventory() instanceof PlayerInventory)) {
+                        e.setCancelled(true);
+                    }
+                }
             }
         }
     }
