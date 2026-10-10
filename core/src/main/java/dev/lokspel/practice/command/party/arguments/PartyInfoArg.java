@@ -1,0 +1,57 @@
+package dev.lokspel.practice.command.party.arguments;
+
+import dev.lokspel.practice.manager.backend.LanguageManager;
+import dev.lokspel.practice.manager.party.Party;
+import dev.lokspel.practice.manager.party.PartyManager;
+import dev.lokspel.practice.util.Common;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+public final class PartyInfoArg {
+
+    private PartyInfoArg() {}
+
+    public static void InfoCommand(Player player, String label, String[] args) {
+        if (args.length != 1 && args.length != 2) {
+            Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PARTY.ARGUMENTS.INFO.COMMAND-HELP").replace("%label%", label));
+            return;
+        }
+
+        Party party;
+        if (args.length == 1) {
+            party = PartyManager.getInstance().getParty(player);
+            if (party == null) {
+                Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PARTY.ARGUMENTS.INFO.NO-PARTY"));
+                return;
+            }
+        } else {
+            if (!player.hasPermission("zpp.party.info.others")) {
+                Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PARTY.ARGUMENTS.INFO.NO-PERMISSION"));
+            }
+
+            Player target = Bukkit.getPlayer(args[1]);
+            if (target == null) {
+                Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PARTY.ARGUMENTS.INFO.NOT-ONLINE").replace("%target%", args[1]));
+                return;
+            }
+
+            party = PartyManager.getInstance().getParty(target);
+            if (party == null) {
+                Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PARTY.ARGUMENTS.INFO.PLAYER-NO-PARTY").replace("%target%", target.getName()));
+                return;
+            }
+        }
+
+        for (String line : LanguageManager.getList("COMMAND.PARTY.ARGUMENTS.INFO.PARTY-INFO")) {
+            Common.sendMMMessage(player, line
+
+                    .replace("%leader%", party.getLeader().getName())
+                    .replace("%partyState%", (party.isPublicParty() ? LanguageManager.getString("COMMAND.PARTY.ARGUMENTS.INFO.PARTY-STATES.PUBLIC") : LanguageManager.getString("COMMAND.PARTY.ARGUMENTS.INFO.PARTY-STATES.PRIVATE")))
+                    .replace("%maxPlayerLimit%", String.valueOf(party.getMaxPlayerLimit()))
+                    .replace("%memberSize%", String.valueOf(party.getMembers().size()))
+                    .replace("%members%", party.getMemberNames().toString().replace("[", "").replace("]", ""))
+            );
+        }
+    }
+
+}

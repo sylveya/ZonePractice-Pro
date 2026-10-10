@@ -1,0 +1,34 @@
+package dev.lokspel.practice.manager.gui.setup.ladder.laddersettings.Settings.Items;
+
+import dev.lokspel.practice.manager.backend.GUIFile;
+import dev.lokspel.practice.manager.gui.setup.ladder.laddersettings.Settings.SettingItem;
+import dev.lokspel.practice.manager.gui.setup.ladder.laddersettings.Settings.SettingType;
+import dev.lokspel.practice.manager.gui.setup.ladder.laddersettings.Settings.SettingsGui;
+import dev.lokspel.practice.manager.ladder.abstraction.normal.NormalLadder;
+import org.bukkit.event.inventory.InventoryClickEvent;
+
+public class EnderpearlItem extends SettingItem {
+
+    public EnderpearlItem(SettingsGui settingsGui, NormalLadder ladder) {
+        super(settingsGui, SettingType.ENDER_PEARL_COOLDOWN, ladder);
+    }
+
+    @Override
+    public void updateItemStack() {
+        guiItem = GUIFile.getGuiItem("GUIS.SETUP.LADDER.SETTINGS.ICONS.ENDERPEARL-COOLDOWN")
+                .replace("%epCooldown%", String.valueOf(ladder.getEnderPearlCooldown()));
+    }
+
+    @Override
+    public void clickEvent(InventoryClickEvent e) {
+        double epCooldown = ladder.getEnderPearlCooldown();
+
+        if (e.getClick().isLeftClick() && epCooldown > 0)
+            ladder.setEnderPearlCooldown(epCooldown - 0.5);
+        else if (e.getClick().isRightClick() && epCooldown < 60)
+            ladder.setEnderPearlCooldown(epCooldown + 0.5);
+
+        build(true);
+    }
+
+}

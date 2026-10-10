@@ -1,0 +1,190 @@
+package dev.lokspel.practice.manager.gui.guis;
+
+import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.util.TimeUtil;
+import dev.lokspel.practice.manager.backend.GUIFile;
+import dev.lokspel.practice.manager.fight.match.Match;
+import dev.lokspel.practice.manager.fight.match.Round;
+import dev.lokspel.practice.manager.fight.util.Stats.Statistic;
+import dev.lokspel.practice.manager.gui.GUI;
+import dev.lokspel.practice.manager.gui.GUIType;
+import dev.lokspel.practice.util.Common;
+import dev.lokspel.practice.util.InventoryUtil;
+import dev.lokspel.practice.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+
+import java.util.*;
+
+public class MatchStatsGui extends GUI {
+
+    private final Match match;
+    private final UUID uuid;
+    private final OfflinePlayer player;
+    private final Map<Integer, Statistic> stats = new HashMap<>();
+
+    public MatchStatsGui(Match match, UUID uuid) {
+        super(GUIType.MatchStatGui);
+        this.match = match;
+        this.uuid = uuid;
+        this.player = Bukkit.getOfflinePlayer(uuid);
+
+        for (Round round : match.getRounds().values()) {
+            Statistic statistic = round.getStatistics().get(uuid);
+            if (statistic != null)
+                stats.put(round.getRoundNumber(), statistic);
+        }
+
+        build();
+    }
+
+    @Override
+    public void build() {
+        update();
+    }
+
+    @Override
+    public void update() {
+        if (!ZonePractice.getInstance().isEnabled()) return;
+
+        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        {
+            int round = 1;
+            while (stats.containsKey(round)) {
+                String title;
+                if (match.getLadder().getRounds() == 1)
+                    title = GUIFile.getString("GUIS.MATCH-STATISTICS.TITLE.SINGLE-ROUND").replace("%player%", Objects.requireNonNull(player.getName()));
+                else
+                    title = GUIFile.getString("GUIS.MATCH-STATISTICS.TITLE.MULTIPLE-ROUND").replace("%player%", Objects.requireNonNull(player.getName())).replace("%round%", String.valueOf(round));
+                gui.put(round, InventoryUtil.createInventory(title, 6));
+
+                Statistic roundStatistic = stats.get(round);
+                Inventory inventory = gui.get(round);
+
+                // Inventory Content
+                ItemStack[] endInv = roundStatistic.getEndInventory();
+                List<ItemStack> inventoryContent = endInv != null ? Arrays.asList(endInv) : Collections.emptyList();
+                List<ItemStack> firstLine = new ArrayList<>();
+                int healthPotionsLeft = 0;
+                for (int i = 0; i < 36 && i < inventoryContent.size(); i++) {
+                    if (i < 9)
+                        firstLine.add(inventoryContent.get(i));
+
+                    if (i < 27) inventory.setItem(i, inventoryContent.get(i + 9));
+                    else inventory.setItem(i, firstLine.get(i - 27));
+
+                    if (inventoryContent.get(i) != null && inventoryContent.get(i).getType().equals(Material.POTION) && Common.getItemDamage(inventoryContent.get(i)) == 16421)
+                        healthPotionsLeft++;
+                }
+
+                // Armor Content
+                ItemStack[] endArmorArray = roundStatistic.getEndArmor();
+                List<ItemStack> armor = endArmorArray != null ? Arrays.asList(endArmorArray) : Collections.emptyList();
+                for (int i = 36; i <= 39 && (i - 36) < armor.size(); i++)
+                    inventory.setItem(i, armor.get(i - 36));
+
+                if (roundStatistic.getPotionThrown() != 0)
+                    inventory.setItem(47, getPotionItem(roundStatistic, healthPotionsLeft));
+                inventory.setItem(48, getHealthItem(roundStatistic.getEndHeart()));
+                inventory.setItem(49, getFoodItem(roundStatistic.getEndHunger()));
+                inventory.setItem(50, getEffectItem(roundStatistic));
+                inventory.setItem(51, getStatsItem(roundStatistic));
+
+                if (match.getLadder().getRounds() != 1)
+                    inventory.setItem(53, getNextRoundItem(stats.containsKey(round + 1) ? round + 1 : 1));
+
+                round++;
+            }
+
+            updatePlayers();
+        });
+    }
+
+    @Override
+    public void handleClickEvent(InventoryClickEvent e) {
+        Player player = (Player) e.getWhoClicked();
+        int round = inGuiPlayers.get(player);
+
+        e.setCancelled(true);
+
+        if (e.getRawSlot() == 53 && e.getCurrentItem() != null)
+            player.performCommand("matchinv " + match.getId() + " " + uuid + " " + (stats.containsKey(round + 1) ? round + 1 : 1));
+    }
+
+
+    private ItemStack getPotionItem(Statistic roundStatistic, int healthPotionsLeft) {
+        return GUIFile.getGuiItem("GUIS.MATCH-STATISTICS.ICONS.POTION")
+                .replace("%potion_left%", String.valueOf(healthPotionsLeft))
+                .replace("%potion_thrown%", String.valueOf(roundStatistic.getPotionThrown()))
+                .replace("%potion_missed%", String.valueOf(roundStatistic.getPotionMissed()))
+                .replace("%potion_accuracy%", String.valueOf(roundStatistic.getPotionAccuracy()))
+                .setAmount(healthPotionsLeft >= 1 && healthPotionsLeft <= 64 ? healthPotionsLeft : 1)
+                .get();
+    }
+
+    private ItemStack getHealthItem(double endHearth) {
+        return GUIFile.getGuiItem("GUIS.MATCH-STATISTICS.ICONS.HEALTH")
+                .replace("%end_hearth%", String.valueOf(endHearth))
+                .get();
+    }
+
+    private ItemStack getFoodItem(double endHunger) {
+        return GUIFile.getGuiItem("GUIS.MATCH-STATISTICS.ICONS.HUNGER")
+                .replace("%end_hunger%", String.valueOf(endHunger))
+                .get();
+    }
+
+    private ItemStack getEffectItem(Statistic roundStatistic) {
+        if (!roundStatistic.getEndPotionEffects().isEmpty()) {
+            List<String> effects = new ArrayList<>();
+            for (PotionEffect potionEffect : roundStatistic.getEndPotionEffects()) {
+                effects.add(GUIFile.getString("GUIS.MATCH-STATISTICS.ICONS.EFFECT.HAS-EFFECT.FORMAT")
+                        .replace("%name%", StringUtils.capitalize(potionEffect.getType().getKey().getKey().replace("_", " ").toLowerCase()))
+                        .replace("%amplifier%", String.valueOf(potionEffect.getAmplifier() + 1))
+                        .replace("%time%", TimeUtil.formatDuration((potionEffect.getDuration() / 20) * 1000L))
+                );
+            }
+
+            List<String> lore = new ArrayList<>();
+            for (String line : GUIFile.getStringList("GUIS.MATCH-STATISTICS.ICONS.EFFECT.HAS-EFFECT.ICON.LORE")) {
+                if (line.contains("%effects%"))
+                    lore.addAll(effects);
+                else
+                    lore.add(line);
+            }
+
+            ItemStack item = GUIFile.getGuiItem("GUIS.MATCH-STATISTICS.ICONS.EFFECT.HAS-EFFECT.ICON").get();
+            ItemMeta itemMeta = item.getItemMeta();
+
+            itemMeta.lore(StringUtil.CC(lore).stream().map(Common::legacyToComponent).toList());
+            item.setItemMeta(itemMeta);
+
+            return item;
+        } else
+            return GUIFile.getGuiItem("GUIS.MATCH-STATISTICS.ICONS.EFFECT.NO-EFFECT").get();
+    }
+
+    private ItemStack getStatsItem(Statistic roundStatistic) {
+        return GUIFile.getGuiItem("GUIS.MATCH-STATISTICS.ICONS.STATS")
+                .replace("%total_hits%", String.valueOf(roundStatistic.getHit()))
+                .replace("%total_hits_received%", String.valueOf(roundStatistic.getGetHit()))
+                .replace("%longest_combo%", String.valueOf(roundStatistic.getLongestCombo()))
+                .replace("%avarage_cps%", String.valueOf(roundStatistic.getAverageCPS()))
+                .get();
+    }
+
+    private ItemStack getNextRoundItem(int nextRound) {
+        return GUIFile.getGuiItem("GUIS.MATCH-STATISTICS.ICONS.VIEW-ROUND")
+                .replace("%round%", String.valueOf(nextRound))
+                .get();
+    }
+
+}

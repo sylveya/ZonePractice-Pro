@@ -1,0 +1,671 @@
+package dev.lokspel.practice.manager.fight.match;
+
+import dev.lokspel.practice.manager.fight.match.enums.*;
+import dev.lokspel.api.Event.Match.MatchEndEvent;
+import dev.lokspel.practice.util.TimeUtil;
+import dev.lokspel.api.Event.Match.MatchStartEvent;
+import dev.lokspel.api.Event.Spectate.End.MatchSpectateEndEvent;
+import dev.lokspel.api.Event.Spectate.Start.MatchSpectateStartEvent;
+import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.manager.arena.arenas.Arena;
+import dev.lokspel.practice.manager.arena.arenas.interfaces.NormalArena;
+import dev.lokspel.practice.manager.backend.GUIFile;
+import dev.lokspel.practice.manager.backend.LanguageManager;
+import dev.lokspel.practice.manager.fight.match.interfaces.Team;
+import dev.lokspel.practice.manager.fight.match.type.duel.Duel;
+import dev.lokspel.practice.manager.fight.match.util.MatchFightPlayer;
+import dev.lokspel.practice.manager.fight.match.util.MatchUtil;
+import dev.lokspel.practice.manager.fight.match.util.TeamUtil;
+import dev.lokspel.practice.manager.fight.util.ChangedBlock;
+import dev.lokspel.practice.manager.fight.util.DeathCause;
+import dev.lokspel.practice.manager.fight.util.Stats.Statistic;
+import dev.lokspel.practice.manager.gui.GUIItem;
+import dev.lokspel.practice.manager.gui.guis.MatchStatsGui;
+import dev.lokspel.practice.manager.inventory.Inventory;
+import dev.lokspel.practice.manager.inventory.InventoryManager;
+import dev.lokspel.practice.manager.ladder.abstraction.Ladder;
+import dev.lokspel.practice.manager.ladder.abstraction.interfaces.DeathResult;
+import dev.lokspel.practice.manager.ladder.abstraction.interfaces.RespawnableLadder;
+import dev.lokspel.practice.manager.ladder.abstraction.interfaces.ScoringLadder;
+import dev.lokspel.practice.manager.ladder.abstraction.normal.NormalLadder;
+import dev.lokspel.practice.manager.profile.Profile;
+import dev.lokspel.practice.manager.profile.ProfileManager;
+import dev.lokspel.practice.manager.profile.enums.ProfileStatus;
+import dev.lokspel.practice.manager.spectator.SpectatorManager;
+import dev.lokspel.practice.util.Common;
+import dev.lokspel.practice.util.Cuboid;
+import dev.lokspel.practice.util.LastAttackerTracker;
+import dev.lokspel.practice.util.PermanentConfig;
+import dev.lokspel.practice.util.entityhider.PlayerHider;
+import dev.lokspel.practice.util.fightmapchange.FightChangeOptimized;
+import dev.lokspel.practice.util.interfaces.Spectatable;
+import dev.lokspel.practice.util.playerutil.PlayerUtil;
+import static dev.lokspel.practice.manager.fight.util.PlayerUtil.isPlayerStuck;
+import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
+
+@Getter
+public abstract class Match extends BukkitRunnable implements Spectatable, dev.lokspel.api.Interface.Match {
+
+    // Match ID
+    protected final String id;
+    protected MatchType type;
+
+    // Basic match variables
+    protected final NormalArena arena;
+    protected final Ladder ladder;
+    protected final Cuboid sideBuildLimit;
+
+    @Setter
+    private boolean playerSelectedArena = false;
+
+    // Duration
+    protected int duration = 0;
+
+    // Round
+    protected final int winsNeeded;
+    protected final Map<Integer, Round> rounds = new java.util.concurrent.ConcurrentHashMap<>();
+
+    // Player variables
+    protected final Map<Player, MatchFightPlayer> matchPlayers = new HashMap<>();
+    protected final List<Player> players; // List of the in game players
+    protected final Map<UUID, MatchStatsGui> matchStatsGuis = new HashMap<>();
+
+    // Spectator variables
+    @Setter
+    private boolean allowSpectators = true;
+    protected final List<Player> spectators = new ArrayList<>(); // List of the spectators
+
+    // Fight change
+    private final FightChangeOptimized fightChange;
+
+    /** Tracks the last player that dealt damage to another player, for void-kill attribution. */
+    private final LastAttackerTracker lastAttackerTracker = new LastAttackerTracker();
+    /** Tracks whether a player's last registered death in this match was void-related. */
+    private final Map<UUID, Boolean> lastDeathWasVoid = new HashMap<>();
+
+    /** True while the arena is being rolled back between rounds — players are frozen. */
+    @Getter
+    private boolean rollingBack = false;
+
+    @Setter
+    protected MatchStatus status;
+
+    protected Match(final Ladder ladder, final Arena arena, final List<Player> players, final int winsNeeded) {
+        this.id = MatchUtil.getMatchID();
+        NormalArena resolvedArena = arena != null ? arena.getAvailableArena() : null;
+        if (resolvedArena == null) {
+            String ladderName = ladder != null ? ladder.getName() : "unknown";
+            String arenaName = arena != null ? arena.getName() : "null";
+            throw new IllegalStateException("Cannot create match without available arena (ladder=" + ladderName + ", arena=" + arenaName + ")");
+        }
+
+        this.arena = resolvedArena;
+        this.ladder = ladder;
+        this.winsNeeded = winsNeeded;
+        this.players = new ArrayList<>(players);
+        for (Player player : players) {
+            this.matchPlayers.put(player, new MatchFightPlayer(player, this));
+            this.addPlayerToBelowName(player);
+        }
+        this.fightChange = new FightChangeOptimized(this);
+
+        if (arena.getSideBuildLimit() > 0)
+            this.sideBuildLimit = MatchUtil.getSideBuildLimitCube(this.arena.getCuboid().clone(), arena.getSideBuildLimit());
+        else
+            this.sideBuildLimit = null;
+    }
+
+    public void startMatch() {
+        MatchStartEvent matchStartEvent = new MatchStartEvent(this);
+        Bukkit.getPluginManager().callEvent(matchStartEvent);
+        if (matchStartEvent.isCancelled()) return;
+
+        if (this.ladder.isBuild()) {
+            this.arena.setAvailable(false);
+        }
+
+        for (Player player : this.players) {
+            Profile profile = ProfileManager.getInstance().getProfile(player);
+
+            profile.setStatus(ProfileStatus.MATCH);
+
+            if (!profile.isAllowSpectate() && this.allowSpectators) {
+                this.allowSpectators = false;
+            }
+
+            PlayerUtil.setFightPlayer(player, this.ladder);
+
+            for (Player online : Bukkit.getOnlinePlayers()) {
+                if (!this.players.contains(online)) {
+                    // The fighters are still mapped to the lobby world here, they only get
+                    // teleported into the arena with the first round, so they must not be treated
+                    // as lobby players and keep everybody in their tab list.
+                    PlayerHider.getInstance().hidePlayer(player, online, false);
+                    PlayerHider.getInstance().hidePlayer(online, player);
+                }
+            }
+
+            this.entityVanish(player);
+        }
+
+        this.status = MatchStatus.START;
+        this.startNextRound();
+        this.runTaskTimerAsynchronously(ZonePractice.getInstance(), 0, 20L);
+    }
+
+    public void sendMessage(String message, boolean spectator) {
+        Common.sendMessage(players, spectators, message, spectator);
+    }
+
+    public void entityVanish(Player player) {
+        if (!ladder.isBuild()) {
+            if (players.contains(player)) {
+                for (Entity entity : arena.getCuboid().getEntities()) {
+                    if (!(entity instanceof Player)) {
+                        ZonePractice.getEntityHider().hideEntity(player, entity);
+                    }
+                }
+            } else if (spectators.contains(player)) {
+                for (Entity entity : arena.getCuboid().getEntities()) {
+                    if (!(entity instanceof Player)) {
+                        if (fightChange.containsEntity(entity))
+                            ZonePractice.getEntityHider().showEntity(player, entity);
+                        else
+                            ZonePractice.getEntityHider().hideEntity(player, entity);
+                    }
+                }
+            }
+        }
+    }
+
+    public abstract void startNextRound();
+
+    public abstract Round getCurrentRound();
+
+    public abstract int getWonRounds(Player player);
+
+    public abstract void teleportPlayer(Player player);
+
+    /**
+     * Records that {@code attacker} last hit {@code victim}.
+     * Called from damage listeners so void deaths can be attributed correctly.
+     */
+    public void recordAttack(Player victim, Player attacker) {
+        lastAttackerTracker.recordAttack(victim, attacker);
+    }
+
+    /**
+     * Returns the last player who hit {@code victim} within the expiry window,
+     * or {@code null} if there is none.
+     */
+    public @Nullable Player getLastAttacker(Player victim) {
+        return lastAttackerTracker.getLastAttacker(victim, players);
+    }
+
+    public boolean wasLastDeathVoid(Player player) {
+        return lastDeathWasVoid.getOrDefault(player.getUniqueId(), false);
+    }
+
+    public void clearRoundDeathCauses() {
+        lastDeathWasVoid.clear();
+    }
+
+    private static boolean isVoidDeathMessage(String deathMessage) {
+        if (deathMessage == null) {
+            return false;
+        }
+
+        if (deathMessage.equals(DeathCause.VOID.getMessage())) {
+            return true;
+        }
+
+        String voidByPlayerPattern = DeathCause.VOID_BY_PLAYER.getMessage();
+        if (voidByPlayerPattern == null) {
+            return false;
+        }
+
+        int placeholderIndex = voidByPlayerPattern.indexOf("%killer%");
+        if (placeholderIndex < 0) {
+            return deathMessage.equals(voidByPlayerPattern);
+        }
+
+        String prefix = voidByPlayerPattern.substring(0, placeholderIndex);
+        String suffix = voidByPlayerPattern.substring(placeholderIndex + "%killer%".length());
+        return deathMessage.startsWith(prefix) && deathMessage.endsWith(suffix);
+    }
+
+    public void killPlayer(Player player, Player killer, String deathMessage) {
+        if (this.getCurrentStat(player).isSet())
+            return;
+
+        boolean voidDeath = isVoidDeathMessage(deathMessage);
+
+        // If no explicit killer and the death message is the plain void message,
+        // check whether a recent attacker should be credited instead.
+        if (killer == null) {
+            Player lastAttacker = getLastAttacker(player);
+            if (lastAttacker != null && !lastAttacker.equals(player) && deathMessage != null
+                    && deathMessage.equals(DeathCause.VOID.getMessage())) {
+                killer = lastAttacker;
+                voidDeath = true;
+                deathMessage = DeathCause.VOID_BY_PLAYER
+                        .getMessage()
+                        .replace("%killer%", killer.getName());
+            }
+        }
+
+        lastDeathWasVoid.put(player.getUniqueId(), voidDeath);
+
+        deathMessage = TeamUtil.replaceTeamNames((deathMessage != null ? deathMessage : ""), player, this instanceof Team team ? team.getTeam(player) : TeamEnum.FFA);
+        matchPlayers.get(player).die(deathMessage, this.getCurrentStat(player));
+
+        if (ladder instanceof NormalLadder) {
+            if (killer != null) {
+                Profile killerProfile = matchPlayers.get(killer).getProfile();
+                killerProfile.getStats().getLadderStat((NormalLadder) ladder).increaseKills();
+            }
+            Profile deadProfile = matchPlayers.get(player).getProfile();
+            deadProfile.getStats().getLadderStat((NormalLadder) ladder).increaseDeaths();
+        }
+
+        playDeathEffect(killer, player);
+
+        killPlayer(player, deathMessage);
+    }
+
+    private void playDeathEffect(Player killer, Player victim) {
+        if (killer == null || victim == null) return;
+
+        Profile killerProfile = matchPlayers.containsKey(killer)
+                ? matchPlayers.get(killer).getProfile()
+                : ProfileManager.getInstance().getProfile(killer);
+
+        Common.playDeathEffect(killerProfile, victim.getLocation(), getPeople());
+    }
+
+    protected abstract void killPlayer(Player player, String deathMessage);
+
+    public abstract void removePlayer(Player player, boolean quit);
+
+    public abstract Object getMatchWinner();
+
+    public abstract boolean isEndMatch();
+
+    public void endMatch() {
+        if (ZonePractice.getInstance().isEnabled()) {
+            Round round = this.getCurrentRound();
+            if (!round.getRoundStatus().equals(RoundStatus.END)) {
+                this.getCurrentRound().endRound();
+            }
+        }
+
+        Bukkit.getPluginManager().callEvent(new MatchEndEvent(this));
+
+        for (Player player : new ArrayList<>(players))
+            removePlayer(player, false);
+
+        for (Player spectator : new ArrayList<>(spectators))
+            removeSpectator(spectator);
+
+        // Reset the arena and only make it reusable after rollback completes.
+        // Also defer live-match removal to the rollback callback so block event listeners
+        // can still resolve this match via cuboid lookup during the multi-tick rollback,
+        // preventing untracked block changes from leaking into the next match.
+        resetMap(() -> {
+            MatchManager.getInstance().getLiveMatches().remove(this);
+            this.arena.setAvailable(true);
+        });
+
+        this.cancel();
+
+        if (ZonePractice.getInstance().isEnabled()) {
+            for (UUID uuid : rounds.get(1).getStatistics().keySet()) {
+                matchStatsGuis.put(uuid, new MatchStatsGui(this, uuid));
+            }
+        }
+
+        // Availability is flipped in the reset callback above.
+    }
+
+    /*
+     * Statistics methods
+     */
+    public Statistic getCurrentStat(Player player) {
+        Round currentRound = this.getCurrentRound();
+        if (currentRound == null) return null;
+        return currentRound.getStatistics().getOrDefault(
+                ProfileManager.getInstance().getUuids().get(player), null);
+    }
+
+    @Override
+    public String getLadderName() {
+        return this.ladder != null ? this.ladder.getName() : null;
+    }
+
+    @Override
+    public String getLadderDisplayName() {
+        return this.ladder != null ? this.ladder.getDisplayName() : null;
+    }
+
+    /*
+     * Ladder behavior helper methods
+     * These methods provide convenient access to ladder-specific behaviors
+     * through the new interface system.
+     */
+
+    /**
+     * Checks if the current ladder supports player respawning.
+     *
+     * @return true if the ladder implements RespawnableLadder
+     */
+    public boolean isRespawnableLadder() {
+        return ladder instanceof RespawnableLadder;
+    }
+
+    /**
+     * Checks if the current ladder has custom scoring mechanics.
+     *
+     * @return true if the ladder implements ScoringLadder
+     */
+    public boolean isScoringLadder() {
+        return ladder instanceof ScoringLadder;
+    }
+
+    /**
+     * Gets the ladder as a RespawnableLadder if applicable.
+     *
+     * @return Optional containing the RespawnableLadder, or empty if not applicable
+     */
+    public Optional<RespawnableLadder> asRespawnableLadder() {
+        return ladder instanceof RespawnableLadder r ? Optional.of(r) : Optional.empty();
+    }
+
+    /**
+     * Handles player death using the ladder's respawn mechanics.
+     * Returns the death result which indicates how the death should be processed.
+     *
+     * @param player The player who died
+     * @return DeathResult indicating the outcome, or ELIMINATED if ladder doesn't support respawning
+     */
+    public DeathResult handleLadderDeath(Player player) {
+        if (ladder instanceof RespawnableLadder respawnableLadder) {
+            return respawnableLadder.handlePlayerDeath(player, this, getCurrentRound());
+        }
+        return DeathResult.ELIMINATED;
+    }
+
+    /*
+     * Spectator methods
+     */
+    private final Random random = new Random();
+
+    public void addSpectator(Player player, Player target, boolean teleport, boolean message) {
+        if (this.spectators.contains(player)) {
+            Common.sendMMMessage(player, LanguageManager.getString("SPECTATE.MATCH.ALREADY-SPECTATING"));
+            return;
+        }
+
+        if (this.status.equals(MatchStatus.OVER) || this.players.isEmpty()) {
+            Common.sendMMMessage(player, LanguageManager.getString("SPECTATE.MATCH.MATCH-ENDED"));
+            return;
+        }
+
+        if (!isAllowSpectators() && !player.hasPermission("zpp.bypass.spectate")) {
+            Common.sendMMMessage(player, LanguageManager.getString("SPECTATE.MATCH.CANT-SPECTATE"));
+            return;
+        }
+
+        // If the target is given and the target is not in the match, return
+        if (target != null && !this.players.contains(target)) return;
+
+        // Call the match spectate start event
+        MatchSpectateStartEvent event = new MatchSpectateStartEvent(player, this);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) return;
+
+        // If the spectator was spectating a match, remove.
+        Spectatable spectatable = SpectatorManager.getInstance().getSpectators().get(player);
+        if (spectatable != null) {
+            spectatable.removeSpectator(player);
+        }
+
+        this.spectators.add(player);
+        SpectatorManager.getInstance().getSpectators().put(player, this);
+        this.addPlayerToBelowName(player);
+
+        if (message) {
+            sendMessage(LanguageManager.getString("SPECTATE.MATCH.SPECTATE-START").replace("%player%", player.getName()), true);
+        }
+
+        entityVanish(player);
+
+        if (target != null) {
+            player.teleport(target);
+        } else {
+            player.teleport(players.get(random.nextInt(players.size())));
+        }
+
+        Profile profile = ProfileManager.getInstance().getProfile(player);
+        profile.setStatus(ProfileStatus.SPECTATE);
+
+        if (profile.isStaffMode()) {
+            InventoryManager.getInstance().setStaffModeInventory(player);
+            player.setFlySpeed((float) InventoryManager.STAFF_SPECTATOR_SPEED / 10);
+        } else {
+            InventoryManager.getInstance().setInventory(player, Inventory.InventoryType.SPECTATE_MATCH);
+        }
+
+        SpectatorManager.getInstance().getSpectatorMenuGui().update();
+    }
+
+    public void removeSpectator(Player player) {
+        if (!spectators.contains(player)) return;
+
+        this.spectators.remove(player);
+        SpectatorManager.getInstance().getSpectators().remove(player);
+        this.removePlayerFromBelowName(player);
+
+        if (!status.equals(MatchStatus.END) && !status.equals(MatchStatus.OVER)) {
+            Bukkit.getPluginManager().callEvent(new MatchSpectateEndEvent(player, this));
+
+            SpectatorManager.getInstance().getSpectatorMenuGui().update();
+        }
+
+        if (ZonePractice.getInstance().isEnabled() && player.isOnline()) {
+            InventoryManager.getInstance().setLobbyInventory(player, true);
+        }
+    }
+
+    @Override
+    public List<Player> getActivePlayerList() {
+        return this.players;
+    }
+
+    @Override
+    public boolean isBuild() {
+        return ladder.isBuild();
+    }
+
+    @Override
+    public void addBlockChange(ChangedBlock changedBlock) {
+        fightChange.addBlockChange(changedBlock);
+    }
+
+    @Override
+    public void addEntityChange(Entity entity) {
+        fightChange.addEntityChange(entity);
+
+        if (!ladder.isBuild()) {
+            for (Player player : MatchManager.getInstance().getHidePlayers(this)) {
+                ZonePractice.getEntityHider().hideEntity(player, entity);
+            }
+        }
+    }
+
+    public void addEntityChange(@NotNull List<Entity> entities) {
+        for (Entity entity : entities)
+            addEntityChange(entity);
+    }
+
+    /**
+     * Rolls back the arena and, once every block is restored, fires {@code afterRollback}
+     * on the main thread (e.g. to start the next round).
+     * <p>
+     * While rolling back:
+     * <ul>
+     *   <li>Every player is teleported to their spawn position and frozen there.</li>
+     *   <li>A "rolling back arena" message is sent to all participants.</li>
+     * </ul>
+     *
+     * @param afterRollback called when rollback is complete, or {@code null} to do nothing
+     */
+    public void resetMap(@Nullable Runnable afterRollback) {
+        // Make sure that the players can safely spawn back to the starting position.
+        for (Location location : this.arena.getStandingLocations()) {
+            MatchUtil.safePlayerTeleportBlock(location.getBlock().getRelative(BlockFace.DOWN));
+        }
+
+        // Teleport every player to their spawn position and freeze them there
+        // so they cannot walk around in the arena while it is being regenerated.
+        rollingBack = true;
+        for (Player player : this.players) {
+            teleportPlayer(player);
+        }
+
+        if (this.isBuild()) {
+             // Inform everyone that they must wait for the arena to regenerate.
+            sendMessage(LanguageManager.getString("MATCH.ARENA-ROLLING-BACK"), true);
+        }
+
+        Runnable onRollbackComplete = () -> {
+            if (this.isBuild()) {
+                this.teleportStuckSpectatorsAfterRollback();
+            }
+
+            rollingBack = false;
+            if (afterRollback != null) {
+                afterRollback.run();
+            }
+        };
+
+        if (ZonePractice.getInstance().isEnabled()) {
+            Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+                    fightChange.rollback(PermanentConfig.MATCH_ROLLBACK_MAX_CHECKS, PermanentConfig.MATCH_ROLLBACK_MAX_CHANGES, onRollbackComplete), 2L);
+        } else {
+            fightChange.rollback(PermanentConfig.MATCH_ROLLBACK_MAX_CHECKS, PermanentConfig.MATCH_ROLLBACK_MAX_CHANGES, onRollbackComplete);
+        }
+    }
+
+    private void teleportStuckSpectatorsAfterRollback() {
+        if (this.spectators.isEmpty()) {
+            return;
+        }
+
+        for (Player spectator : new ArrayList<>(this.spectators)) {
+            if (spectator == null || !spectator.isOnline()) {
+                continue;
+            }
+
+            if (!isPlayerStuck(spectator)) {
+                continue;
+            }
+
+            if (!this.players.isEmpty()) {
+                spectator.teleport(this.players.get(random.nextInt(this.players.size())));
+                continue;
+            }
+
+            List<Location> standingLocations = this.arena.getStandingLocations();
+            if (!standingLocations.isEmpty()) {
+                spectator.teleport(standingLocations.get(random.nextInt(standingLocations.size())));
+            } else {
+                spectator.teleport(this.arena.getCuboid().getCenter().add(0, 1, 0));
+            }
+        }
+    }
+
+    public List<Player> getPeople() {
+        List<Player> people = new ArrayList<>();
+        people.addAll(players);
+        people.addAll(spectators);
+        return people;
+    }
+
+    public void addPlayerToBelowName(Player player) {
+        if (!this.ladder.isHealthBelowName()) {
+            return;
+        }
+
+        MatchManager.getInstance().getBelowNameManager().initForUser(player);
+    }
+
+    public void removePlayerFromBelowName(Player player) {
+        if (!this.ladder.isHealthBelowName()) {
+            return;
+        }
+
+        MatchManager.getInstance().getBelowNameManager().cleanUpForUser(player);
+    }
+
+    @Override
+    public void run() {
+        Round currentRound = this.getCurrentRound();
+        if (currentRound != null && currentRound.getRoundStatus().equals(RoundStatus.LIVE)) {
+            this.duration++;
+
+            if (ladder instanceof NormalLadder) {
+                if (ladder.getMaxDuration() - 30 == this.duration) {
+                    this.sendMessage(LanguageManager.getString("MATCH.MATCH-OVER-IN-30"), true);
+                } else if (ladder.getMaxDuration() == this.duration) {
+                    Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+                        this.setStatus(MatchStatus.END);
+                        this.endMatch();
+                    });
+                }
+            }
+        }
+    }
+
+    public String getFormattedTime() {
+        return TimeUtil.formatDuration(duration * 1000L);
+    }
+
+    @Override
+    public GUIItem getSpectatorMenuItem() {
+        return GUIFile.getGuiItem("GUIS.SPECTATOR-MENU.ICONS.MATCH-ICON")
+                .setMaterial(ladder.getIcon().getType())
+                .setDamage(Common.getItemDamage(ladder.getIcon()))
+                .replace("%match_id%", id)
+                .replace("%weight_class%", ((this instanceof Duel && ((Duel) this).isRanked()) ? WeightClass.RANKED.getName() : WeightClass.UNRANKED.getName()))
+                .replace("%match_type%", type.getName(false))
+                .replace("%ladder%", ladder.getDisplayName())
+                .replace("%arena%", arena.getDisplayName())
+                .replace("%round%", String.valueOf(getCurrentRound().getRoundNumber()))
+                .replace("%duration%", getCurrentRound().getFormattedTime())
+                .replace("%roundDuration%", getCurrentRound().getFormattedTime())
+                .replace("%matchDuration%", this.getFormattedTime())
+                .replace("%spectators%", String.valueOf(spectators.size()));
+    }
+
+    @Override
+    public boolean canDisplay() {
+        return status.equals(MatchStatus.LIVE) && ladder instanceof NormalLadder;
+    }
+
+    @Override
+    public Cuboid getCuboid() {
+        return arena != null ? arena.getCuboid() : null;
+    }
+
+}

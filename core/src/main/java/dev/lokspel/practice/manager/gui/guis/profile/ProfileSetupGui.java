@@ -1,0 +1,275 @@
+package dev.lokspel.practice.manager.gui.guis.profile;
+
+import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.util.TimeUtil;
+import dev.lokspel.practice.manager.backend.GUIFile;
+import dev.lokspel.practice.manager.backend.LanguageManager;
+import dev.lokspel.practice.manager.fight.event.EventManager;
+import dev.lokspel.practice.manager.fight.event.interfaces.Event;
+import dev.lokspel.practice.manager.fight.ffa.FFAManager;
+import dev.lokspel.practice.manager.fight.ffa.game.FFA;
+import dev.lokspel.practice.manager.fight.match.Match;
+import dev.lokspel.practice.manager.fight.match.MatchManager;
+import dev.lokspel.practice.manager.fight.util.PlayerUtil;
+import dev.lokspel.practice.manager.gui.GUI;
+import dev.lokspel.practice.manager.gui.GUIItem;
+import dev.lokspel.practice.manager.gui.GUIManager;
+import dev.lokspel.practice.manager.gui.GUIType;
+import dev.lokspel.practice.manager.profile.Profile;
+import dev.lokspel.practice.manager.profile.RankedBan;
+import dev.lokspel.practice.manager.profile.enums.ProfileStatus;
+import dev.lokspel.practice.manager.spectator.SpectatorManager;
+import dev.lokspel.practice.util.Common;
+import dev.lokspel.practice.util.InventoryUtil;
+import dev.lokspel.practice.util.ItemCreateUtil;
+import dev.lokspel.practice.util.interfaces.Spectatable;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
+
+public class ProfileSetupGui extends GUI {
+
+    private final Profile profile;
+    private final ProfileLadderStats profileLadderStats;
+
+    public ProfileSetupGui(Profile profile) {
+        super(GUIType.Profile_Setup);
+        this.profile = profile;
+        this.profileLadderStats = new ProfileLadderStats(profile, this);
+
+        this.gui.put(1, InventoryUtil.createInventory(GUIFile.getString("GUIS.PLAYER-INFORMATION.MAIN-PAGE.TITLE").replace("%player%", Objects.requireNonNull(profile.getPlayer().getName())), 4));
+
+        build();
+    }
+
+    @Override
+    public void build() {
+        update();
+    }
+
+    @Override
+    public void update() {
+        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        {
+            Inventory inventory = gui.get(1);
+
+            for (int i : new int[]{27, 28, 29, 30, 31, 32, 33, 34, 35})
+                inventory.setItem(i, GUIManager.getFILLER_ITEM());
+
+            inventory.setItem(10, getBasicInfoItem(profile));
+            inventory.setItem(11, getOnlineItem(profile));
+            inventory.setItem(13, getPartyItem(profile));
+            inventory.setItem(14, getGameItem(profile));
+            inventory.setItem(16, GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.STATISTICS").get());
+            inventory.setItem(19, getRankedBanItem(profile));
+            inventory.setItem(31, GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.REFRESH").get());
+
+            updatePlayers();
+        });
+    }
+
+    @Override
+    public void handleClickEvent(InventoryClickEvent e) {
+        Player player = (Player) e.getWhoClicked();
+        int slot = e.getRawSlot();
+        Inventory inventory = e.getView().getTopInventory();
+        ItemStack item = e.getCurrentItem();
+        ClickType click = e.getClick();
+
+        e.setCancelled(true);
+
+        if (inventory.getSize() > slot && item != null) {
+            switch (slot) {
+                case 14:
+                    Player target = profile.getPlayer().getPlayer();
+                    if (target == null) return;
+
+                    ProfileStatus profileStatus = profile.getStatus();
+                    switch (profileStatus) {
+                        case MATCH:
+                            Match match = MatchManager.getInstance().getLiveMatchByPlayer(target);
+                            if (match == null) return;
+
+                            if (click.isLeftClick()) {
+                                if (!player.hasPermission("zpp.practice.info.teleport")) {
+                                    Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
+                                    return;
+                                }
+
+                                match.addSpectator(player, target, true, false);
+                            } else if (click.isRightClick()) {
+                                if (!player.hasPermission("zpp.practice.info.cancel")) {
+                                    Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
+                                    return;
+                                }
+
+                                Common.sendMMMessage(player, LanguageManager.getString("PROFILE.PLAYER-REMOVED-MATCH").replace("%target%", target.getName()));
+                                match.sendMessage(LanguageManager.getString("PROFILE.REMOVED-PLAYER-MATCH").replace("%target%", target.getName()), true);
+
+                                match.removePlayer(target, false);
+                            }
+                            break;
+                        case FFA:
+                            FFA ffa = FFAManager.getInstance().getFFAByPlayer(target);
+                            if (ffa == null) return;
+
+                            if (click.isLeftClick()) {
+                                if (!player.hasPermission("zpp.practice.info.teleport")) {
+                                    Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
+                                    return;
+                                }
+
+                                ffa.addSpectator(player, target, true, false);
+                            } else if (click.isRightClick()) {
+                                if (!player.hasPermission("zpp.practice.info.cancel")) {
+                                    Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
+                                    return;
+                                }
+
+                                ffa.removePlayer(target);
+                            }
+                            break;
+                        case EVENT:
+                            Event event = EventManager.getInstance().getEventByPlayer(target);
+                            if (event == null) return;
+
+                            if (click.isLeftClick()) {
+                                if (!player.hasPermission("zpp.practice.info.teleport")) {
+                                    Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
+                                    return;
+                                }
+
+                                event.addSpectator(player, target, true, false);
+                            } else if (click.isRightClick()) {
+                                if (!player.hasPermission("zpp.practice.info.cancel")) {
+                                    Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
+                                    return;
+                                }
+
+                                Common.sendMMMessage(player, LanguageManager.getString("PROFILE.PLAYER-REMOVED-EVENT").replace("%target%", target.getName()));
+                                event.sendMessage(LanguageManager.getString("PROFILE.REMOVED-PLAYER-EVENT").replace("%target%", target.getName()), true);
+
+                                event.removePlayer(target, false);
+                            }
+                            break;
+                        case SPECTATE:
+                            Spectatable spectatable = SpectatorManager.getInstance().getSpectators().get(target);
+
+                            if (click.isLeftClick()) {
+                                if (!player.hasPermission("zpp.practice.info.teleport")) {
+                                    Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
+                                    return;
+                                }
+
+                                if (spectatable != null) {
+                                    spectatable.addSpectator(player, target, true, false);
+                                }
+                            } else if (click.isRightClick()) {
+                                if (!player.hasPermission("zpp.practice.info.cancel")) {
+                                    Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
+                                    return;
+                                }
+
+                                if (spectatable != null) {
+                                    spectatable.removeSpectator(target);
+                                }
+
+                                Common.sendMMMessage(player, LanguageManager.getString("PROFILE.PLAYER-REMOVED-SPECTATOR").replace("%target%", target.getName()));
+                            }
+                            break;
+                    }
+                    break;
+                case 16:
+                    profileLadderStats.update();
+                    profileLadderStats.open(player);
+                    break;
+                case 19:
+                    player.performCommand("practice ranked unban " + profile.getPlayer().getName());
+                    this.update();
+                    break;
+                case 31:
+                    this.update();
+                    break;
+            }
+        }
+    }
+
+    private static ItemStack getBasicInfoItem(Profile profile) {
+        GUIItem guiItem = new GUIItem(ItemCreateUtil.getPlayerHead(profile.getPlayer()));
+        guiItem.setName(GUIFile.getString("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.BASIC-INFO.NAME"));
+        guiItem.setLore(GUIFile.getStringList("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.BASIC-INFO.LORE"));
+
+        guiItem
+                .replace("%player%", profile.getPlayer().getName())
+                .replace("%uuid%", String.valueOf(profile.getUuid()))
+                .replace("%first_played%", TimeUtil.formatDate(profile.getFirstJoin()))
+                .replace("%last_played%", (profile.getStatus().equals(ProfileStatus.OFFLINE) ? TimeUtil.formatDate(profile.getLastJoin()) : GUIFile.getString("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.BASIC-INFO.ONLINE-STATUS")))
+                .replace("%unranked_left%", String.valueOf(profile.getUnrankedLeft()))
+                .replace("%ranked_left%", String.valueOf(profile.getRankedLeft()))
+                .replace("%division_fullName%", profile.getStats().getDivision() != null ? Common.mmToNormal(profile.getStats().getDivision().getFullName()) : "<red>N/A")
+                .replace("%division_shortName%", profile.getStats().getDivision() != null ? Common.mmToNormal(profile.getStats().getDivision().getShortName()) : "<red>N/A");
+
+        return guiItem.get();
+    }
+
+    private static ItemStack getOnlineItem(Profile profile) {
+        Player player = profile.getPlayer().getPlayer();
+
+        if (profile.getStatus().equals(ProfileStatus.OFFLINE) || player == null)
+            return GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.ONLINE-INFO.PLAYER-OFFLINE").get();
+        else {
+            player.playerListName();
+            return GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.ONLINE-INFO.PLAYER-ONLINE")
+                    .replace("%world%", player.getWorld().getName())
+                    .replace("%gamemode%", player.getGameMode().name())
+                    .replace("%flying%", String.valueOf(player.isFlying()))
+                    .replace("%tablist_name%", Common.serializeComponentToLegacyString(player.playerListName()))
+                    .replace("%health%", String.valueOf(player.getHealth()))
+                    .replace("%food%", String.valueOf(player.getFoodLevel()))
+                    .replace("%hit_delay%", String.valueOf(player.getMaximumNoDamageTicks()))
+                    .replace("%ping%", String.valueOf(PlayerUtil.getPing(player)))
+                    .get();
+        }
+    }
+
+    private static ItemStack getGameItem(Profile profile) {
+        ProfileStatus profileStatus = profile.getStatus();
+
+        return switch (profileStatus) {
+            case OFFLINE ->
+                    GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.ONLINE-INFO.GAME.OFFLINE").get();
+            case MATCH -> GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.ONLINE-INFO.GAME.IN-MATCH").get();
+            case FFA -> GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.ONLINE-INFO.GAME.IN-FFA").get();
+            case EVENT -> GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.ONLINE-INFO.GAME.IN-EVENT").get();
+            case SPECTATE ->
+                    GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.ONLINE-INFO.GAME.SPECTATING").get();
+            default -> GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.ONLINE-INFO.GAME.NOTHING").get();
+        };
+    }
+
+    private static ItemStack getPartyItem(Profile profile) {
+        if (profile.isParty())
+            return GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.PARTY.IN-PARTY").get();
+        else
+            return GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.PARTY.NOT-IN-PARTY").get();
+    }
+
+    private static ItemStack getRankedBanItem(Profile profile) {
+        if (profile.getRankedBan().isBanned()) {
+            RankedBan rankedBan = profile.getRankedBan();
+            return GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.MAIN-PAGE.ICONS.RANKED-BAN")
+                    .replace("%player%", profile.getPlayer().getName())
+                    .replace("%banner%", rankedBan.getBanner() == null ? "<red>Console" : rankedBan.getBanner().getPlayer().getName())
+                    .replace("%reason%", rankedBan.getReason() == null ? "<red>N/A" : rankedBan.getReason())
+                    .replace("%time%", TimeUtil.formatDate(rankedBan.getTime()))
+                    .get();
+        } else
+            return null;
+    }
+
+}

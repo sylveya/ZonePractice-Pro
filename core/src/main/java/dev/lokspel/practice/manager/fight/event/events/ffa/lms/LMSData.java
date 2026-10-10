@@ -1,0 +1,39 @@
+package dev.lokspel.practice.manager.fight.event.events.ffa.lms;
+
+import dev.lokspel.practice.manager.fight.event.enums.EventType;
+import dev.lokspel.practice.manager.fight.event.interfaces.EventData;
+import dev.lokspel.practice.util.KitData;
+import lombok.Getter;
+
+import java.io.IOException;
+
+@Getter
+public class LMSData extends EventData {
+
+    private final KitData kitData = new KitData();
+
+    public LMSData() {
+        super(EventType.LMS);
+    }
+
+    @Override
+    protected void setCustomData() {
+        if (kitData != null) {
+            kitData.saveData(config, "kit");
+        }
+    }
+
+    @Override
+    protected void getCustomData() {
+        if (kitData != null) {
+            kitData.getData(config, "kit");
+        }
+    }
+
+    @Override
+    protected void enable() throws NullPointerException, IOException {
+        if (kitData != null && !kitData.isSet()) {
+            throw new IOException("Kit data is not set.");
+        }
+    }
+}

@@ -1,0 +1,81 @@
+package dev.lokspel.practice.manager.gui.guis.queue;
+
+import dev.lokspel.practice.manager.division.Division;
+import dev.lokspel.practice.manager.ladder.abstraction.Ladder;
+import dev.lokspel.practice.manager.leaderboard.Leaderboard;
+import dev.lokspel.practice.manager.leaderboard.LeaderboardManager;
+import dev.lokspel.practice.manager.leaderboard.types.LbMainType;
+import dev.lokspel.practice.manager.leaderboard.types.LbSecondaryType;
+import dev.lokspel.practice.manager.profile.Profile;
+import dev.lokspel.practice.manager.profile.ProfileManager;
+import org.bukkit.OfflinePlayer;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public enum QueueGuiUtil {
+    ;
+
+    static List<String> replaceLore(String format, List<String> lore, Ladder ladder) {
+        List<String> newLore = new ArrayList<>();
+        for (String s : lore) {
+            if (s.contains("%lb_")) {
+                newLore.add(getLbString(format, s, ladder));
+            } else {
+                newLore.add(s);
+            }
+        }
+        return newLore;
+    }
+
+    static String getLbString(String format, String s, Ladder ladder) {
+        Pattern pattern = Pattern.compile("%lb_(.*?)_(\\d+)%");
+        Matcher matcher = pattern.matcher(s);
+
+        if (!matcher.matches()) {
+            return "<red>Invalid format!";
+        }
+
+        String lbType = matcher.group(1);
+        String number = matcher.group(2);
+
+        LbSecondaryType lbSecondaryType;
+        int placement;
+        try {
+            lbSecondaryType = LbSecondaryType.valueOf(lbType.toUpperCase());
+            placement = Integer.parseInt(number);
+        } catch (Exception e) {
+            return "<red>Invalid format!";
+        }
+
+        Leaderboard leaderboard = LeaderboardManager.getInstance().searchLB(LbMainType.LADDER, lbSecondaryType, ladder);
+        if (leaderboard == null) {
+            return "<red>No leaderboard found!";
+        }
+
+        List<OfflinePlayer> players = new ArrayList<>(leaderboard.getList().keySet());
+        if (players.size() < placement) {
+            return "<red>No player found!";
+        }
+
+        OfflinePlayer player = players.get(placement - 1);
+        Profile profile = ProfileManager.getInstance().getProfile(player);
+
+        if (profile == null || player.getName() == null) {
+            return "<red>No player found!";
+        }
+
+        Division division = profile.getStats().getDivision();
+        int score = leaderboard.getList().get(player);
+
+        return format
+                .replace("%placement%", String.valueOf(placement))
+                .replace("%player%", player.getName())
+                .replace("%score%", String.valueOf(score))
+                .replace("%division%", division != null ? division.getFullName() : "<red>N/A")
+                .replace("%division_short%", division != null ? division.getShortName() : "<red>N/A");
+    }
+
+}
