@@ -2,10 +2,16 @@ package dev.lokspel.practice.manager.fight.ffa;
 
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.arenas.FFAArena;
+import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.ffa.game.FFA;
 import dev.lokspel.practice.manager.fight.ffa.game.FFAArenaSelectorGui;
 import dev.lokspel.practice.manager.gui.GUIManager;
+import dev.lokspel.practice.manager.ladder.abstraction.normal.NormalLadder;
+import dev.lokspel.practice.manager.profile.Profile;
+import dev.lokspel.practice.manager.profile.ProfileManager;
+import dev.lokspel.practice.manager.profile.enums.ProfileStatus;
 import dev.lokspel.practice.manager.spectator.SpectatorManager;
+import dev.lokspel.practice.util.Common;
 import dev.lokspel.practice.util.interfaces.Spectatable;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -30,6 +36,39 @@ public class FFAManager {
     private FFAManager() {
         this.arenaSelectorGui = new FFAArenaSelectorGui();
         GUIManager.getInstance().addGUI(this.arenaSelectorGui);
+    }
+
+    /**
+     * Returns true if the player joins the arena or its ladder selector opens.
+     */
+    public boolean joinArena(Player player, FFAArena arena) {
+        Profile profile = ProfileManager.getInstance().getProfile(player);
+        if (!profile.getStatus().equals(ProfileStatus.LOBBY)) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.COMMAND.JOIN.CANT-JOIN-FFA"));
+            return false;
+        }
+
+        if (arena == null) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.COMMAND.JOIN.ARENA-NOT-FOUND"));
+            return false;
+        }
+
+        FFA ffa = arena.getFfa();
+        if (!arena.isEnabled() || ffa == null || !ffa.isOpen()) {
+            Common.sendMMMessage(player, LanguageManager.getString("FFA.COMMAND.JOIN.ARENA-CLOSED").replace("%arena%", arena.getDisplayName()));
+            return false;
+        }
+
+        if (arena.getAssignedLadders().size() == 1) {
+            NormalLadder ladder = arena.getAssignedLadders().iterator().next();
+            player.closeInventory();
+            ffa.addPlayer(player, ladder);
+        } else {
+            ffa.getLadderSelectorGui().update();
+            ffa.getLadderSelectorGui().open(player);
+        }
+
+        return true;
     }
 
     public List<FFA> getOpenFFAs() {
