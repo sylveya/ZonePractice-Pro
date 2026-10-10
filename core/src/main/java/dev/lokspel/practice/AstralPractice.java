@@ -127,6 +127,7 @@ public final class AstralPractice extends JavaPlugin {
             return;
         }
 
+        DataFolderMigrationUtil.migrate(this);
         new SaveResource().saveResources(this);
 
         ConfigManager.createFile();
