@@ -10,6 +10,7 @@ import dev.lokspel.practice.manager.profile.ProfileManager;
 import dev.lokspel.practice.manager.profile.cosmetics.CosmeticsPermissionManager;
 import dev.lokspel.practice.manager.profile.cosmetics.armortrim.ArmorSlot;
 import dev.lokspel.practice.manager.profile.cosmetics.armortrim.ArmorTrimTier;
+import dev.lokspel.practice.util.InventoryUtil;
 import dev.lokspel.practice.util.KitData;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -35,9 +36,9 @@ public enum KitUtil {
     public static void loadKit(Player player, TeamEnum team, ItemStack[] armor, ItemStack[] inventory, ItemStack[] extra) {
         PlayerUtil.clearInventory(player);
 
-        ItemStack[] armorCopy = cloneItems(armor);
-        ItemStack[] inventoryCopy = cloneItems(inventory);
-        ItemStack[] extraCopy = cloneItems(extra);
+        ItemStack[] armorCopy = InventoryUtil.cloneItems(armor);
+        ItemStack[] inventoryCopy = InventoryUtil.cloneItems(inventory);
+        ItemStack[] extraCopy = InventoryUtil.cloneItems(extra);
 
         if (team == null) {
             LadderUtil.loadInventory(player, armorCopy, inventoryCopy, extraCopy);
@@ -176,20 +177,6 @@ public enum KitUtil {
             case NETHERITE_HELMET, NETHERITE_CHESTPLATE, NETHERITE_LEGGINGS, NETHERITE_BOOTS -> ArmorTrimTier.NETHERITE;
             default -> null;
         };
-    }
-
-    private static ItemStack[] cloneItems(ItemStack[] source) {
-        if (source == null) {
-            return null;
-        }
-
-        ItemStack[] copy = source.clone();
-        for (int i = 0; i < copy.length; i++) {
-            if (copy[i] != null) {
-                copy[i] = copy[i].clone();
-            }
-        }
-        return copy;
     }
 
 }

@@ -8,6 +8,7 @@ import dev.lokspel.practice.manager.fight.util.FightPlayer;
 import dev.lokspel.practice.manager.fight.util.KitSelectionHandler;
 import dev.lokspel.practice.manager.fight.match.util.KitUtil;
 import dev.lokspel.practice.manager.ladder.abstraction.normal.NormalLadder;
+import dev.lokspel.practice.util.InventoryUtil;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -99,9 +100,9 @@ public class FFAFightPlayer extends FightPlayer {
             this.chosenKit = slot;
 
             KitSelectionHandler handler = this.kitSelectionHandler;
-            savedInventory = cloneItems(handler.getKits().get(slot).getInventory());
-            savedArmor = cloneItems(handler.getKits().get(slot).getArmor());
-            savedExtra = cloneItems(handler.getKits().get(slot).getExtra());
+            savedInventory = InventoryUtil.cloneItems(handler.getKits().get(slot).getInventory());
+            savedArmor = InventoryUtil.cloneItems(handler.getKits().get(slot).getArmor());
+            savedExtra = InventoryUtil.cloneItems(handler.getKits().get(slot).getExtra());
         }
     }
 
@@ -133,12 +134,4 @@ public class FFAFightPlayer extends FightPlayer {
         this.kitSelectionHandler = new KitSelectionHandler(player, getProfile(), newLadder);
     }
 
-    private static ItemStack[] cloneItems(ItemStack[] source) {
-        if (source == null) return null;
-        ItemStack[] copy = source.clone();
-        for (int i = 0; i < copy.length; i++) {
-            if (copy[i] != null) copy[i] = copy[i].clone();
-        }
-        return copy;
-    }
 }

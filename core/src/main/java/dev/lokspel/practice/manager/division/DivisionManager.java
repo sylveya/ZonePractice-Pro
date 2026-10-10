@@ -177,6 +177,36 @@ public class DivisionManager extends ConfigFile implements Listener {
         return true;
     }
 
+    public void sendRankedProgressMessage(final Player player, final Profile profile, final Division requirement) {
+        int currentExp = profile.getStats().getExperience();
+        int requiredExp = requirement.getExperience();
+        int currentWins = profile.getStats().getGlobalWins();
+        int requiredWins = requirement.getWin();
+
+        Common.sendMMMessage(player, "");
+        Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.RANKED.PROGRESS-HEADER"));
+
+        // Experience progress
+        int expProgress = Math.min(100, (int) ((double) currentExp / requiredExp * 100));
+        Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.RANKED.PROGRESS-EXP")
+                .replace("%current%", String.valueOf(currentExp))
+                .replace("%required%", String.valueOf(requiredExp))
+                .replace("%percent%", String.valueOf(expProgress))
+        );
+
+        // Wins progress (if wins are counted)
+        if (this.COUNT_BY_WINS) {
+            int winsProgress = Math.min(100, (int) ((double) currentWins / requiredWins * 100));
+            Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.RANKED.PROGRESS-WINS")
+                    .replace("%current%", String.valueOf(currentWins))
+                    .replace("%required%", String.valueOf(requiredWins))
+                    .replace("%percent%", String.valueOf(winsProgress))
+            );
+        }
+
+        Common.sendMMMessage(player, "");
+    }
+
     @Override
     public void setData() {
     }

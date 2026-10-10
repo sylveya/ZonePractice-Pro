@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,24 +109,7 @@ public class LadderSingleGui extends GUI {
             inventory.setItem(53, right);
         }
 
-        for (Map.Entry<Integer, Inventory> entry : new LinkedHashMap<>(gui).entrySet()) {
-            if (newGui.containsKey(entry.getKey())) {
-                continue;
-            }
-
-            gui.remove(entry.getKey());
-            for (Player player : inGuiPlayers.keySet()) {
-                if (inGuiPlayers.get(player).equals(entry.getKey())) {
-                    open(player, entry.getKey() - 1);
-                }
-            }
-        }
-
-        gui.putAll(newGui);
-        ladderSlots.clear();
-        ladderSlots.putAll(newLadderSlots);
-
-        updatePlayers();
+        updatePages(newGui, ladderSlots, newLadderSlots);
     }
 
     @Override

@@ -92,24 +92,7 @@ public class ProfileLadderStats extends GUI {
             inventory.setItem(53, GUIFile.getGuiItem("GUIS.PLAYER-INFORMATION.LADDER-STATS.ICONS.RESET-ALL-STATS").get());
         }
 
-        for (Map.Entry<Integer, Inventory> entry : new LinkedHashMap<>(gui).entrySet()) {
-            if (newGui.containsKey(entry.getKey())) {
-                continue;
-            }
-
-            gui.remove(entry.getKey());
-            for (Player player : inGuiPlayers.keySet()) {
-                if (inGuiPlayers.get(player).equals(entry.getKey())) {
-                    open(player, entry.getKey() - 1);
-                }
-            }
-        }
-
-        gui.putAll(newGui);
-        ladderSlots.clear();
-        ladderSlots.putAll(newLadderSlots);
-
-        updatePlayers();
+        updatePages(newGui, ladderSlots, newLadderSlots);
     }
 
     @Override

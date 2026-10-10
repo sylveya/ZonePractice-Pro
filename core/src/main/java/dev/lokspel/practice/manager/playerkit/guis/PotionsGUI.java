@@ -1,6 +1,5 @@
 package dev.lokspel.practice.manager.playerkit.guis;
 
-import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUI;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
@@ -9,7 +8,6 @@ import dev.lokspel.practice.manager.playerkit.PlayerKitManager;
 import dev.lokspel.practice.manager.playerkit.StaticItems;
 import dev.lokspel.practice.manager.playerkit.items.KitItem;
 import dev.lokspel.practice.util.InventoryUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -84,21 +82,7 @@ public class PotionsGUI extends GUI {
             editing.reset();
             editing.setItemStack(item.clone());
 
-            // Route back to shulker editor if we came from one
-            if (playerKitEditing.isEditingShulker()) {
-                ShulkerBoxEditorGUI editor =
-                        playerKitEditing.getShulkerEditor();
-                int shulkerSlot = playerKitEditing.getShulkerSlot();
-                playerKitEditing.clearShulkerContext();
-                editor.onItemSelected(shulkerSlot, item.clone());
-                editor.update(true);
-                editor.open(player);
-                return;
-            }
-
-            GUI mainGUI = playerKitEditing.getCustomLadder().getMainGUI();
-            mainGUI.update();
-            mainGUI.open(player);
+            playerKitEditing.returnToEditor(player, item);
         }
     }
 
@@ -106,15 +90,7 @@ public class PotionsGUI extends GUI {
     public void handleCloseEvent(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
         PlayerKitEditing playerKitEditing = PlayerKitManager.getInstance().getEditing().get(player);
-        GUI mainGUI = playerKitEditing.getCustomLadder().getMainGUI();
-
-        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
-            if (GUIManager.getInstance().getOpenGUI().containsKey(player)) {
-                return;
-            }
-
-            mainGUI.open(player);
-        }, 5L);
+        playerKitEditing.scheduleReturnToMainEditor(player);
     }
 
 }

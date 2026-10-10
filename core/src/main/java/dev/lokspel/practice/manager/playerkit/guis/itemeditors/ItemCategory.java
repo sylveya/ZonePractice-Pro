@@ -124,17 +124,7 @@ public class ItemCategory extends ItemEditor {
         // None
         if (icon.equals(StaticItems.CATEGORY_GUI_NONE_ICON)) {
             kitItem.reset();
-            if (editing.isEditingShulker()) {
-                ShulkerBoxEditorGUI editor = editing.getShulkerEditor();
-                int shulkerSlot = editing.getShulkerSlot();
-                editing.clearShulkerContext();
-                editor.onItemSelected(shulkerSlot, null);
-                editor.update(true);
-                editor.open(player);
-            } else {
-                mainGUI.update();
-                mainGUI.open(player);
-            }
+            editing.returnToEditor(player, null);
             return;
         }
 
@@ -174,10 +164,6 @@ public class ItemCategory extends ItemEditor {
         Player player = (Player) e.getPlayer();
         PlayerKitEditing editing = PlayerKitManager.getInstance().getEditing().get(player);
         if (editing == null) return;
-        GUI mainGUI = editing.getCustomLadder().getMainGUI();
-        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
-            if (!GUIManager.getInstance().getOpenGUI().containsKey(player))
-                mainGUI.open(player);
-        }, 5L);
+        editing.scheduleReturnToMainEditor(player);
     }
 }

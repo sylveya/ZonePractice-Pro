@@ -46,122 +46,65 @@ public class ArenaListener implements Listener {
 
     @EventHandler ( priority = EventPriority.HIGHEST )
     public void onBlockBreak(BlockBreakEvent e) {
-        Player player = e.getPlayer();
-        Profile profile = ProfileManager.getInstance().getProfile(player);
-
-        switch (profile.getStatus()) {
-            case MATCH:
-            case FFA:
-            case EVENT:
-            case SPECTATE:
-                return;
-        }
-
-        World playerWorld = player.getWorld();
-        Location blockLoc = e.getBlock().getLocation();
-
-        if (playerWorld.equals(ArenaWorldUtil.getArenasCopyWorld())) {
-            Common.sendMMMessage(player, LanguageManager.getString("ARENA.CANT-EDIT-COPIES"));
+        if (shouldCancelArenaEdit(e.getPlayer(), e.getBlock().getLocation())) {
             e.setCancelled(true);
-        } else if (playerWorld.equals(ArenaWorldUtil.getArenasWorld())) {
-            for (Cuboid cuboid : ArenaManager.getInstance().getArenaCuboids().keySet()) {
-                if (cuboid.contains(blockLoc)) {
-                    BasicArena arena = ArenaManager.getInstance().getArenaCuboids().get(cuboid);
-                    Arena mainArena = ArenaUtil.getArena(arena);
-                    if (mainArena == null)
-                        return;
-
-                    if (mainArena.isBuild() && !mainArena.getCopies().isEmpty()) {
-                        e.setCancelled(true);
-                        Common.sendMMMessage(player, LanguageManager.getString("ARENA.CANT-EDIT-ARENA-WITH-COPIES").replace("%arena%", mainArena.getDisplayName()));
-                    } else if (!MatchManager.getInstance().getLiveMatchesByArena(arena).isEmpty()) {
-                        e.setCancelled(true);
-                        Common.sendMMMessage(player, LanguageManager.getString("ARENA.CANT-EDIT-ARENA-WITH-MATCH").replace("%arena%", mainArena.getDisplayName()));
-                    }
-                }
-            }
         }
     }
 
     @EventHandler ( priority = EventPriority.HIGHEST )
     public void onBlockPlace(BlockPlaceEvent e) {
-        Player player = e.getPlayer();
-        Profile profile = ProfileManager.getInstance().getProfile(player);
-
-        switch (profile.getStatus()) {
-            case MATCH:
-            case FFA:
-            case EVENT:
-            case SPECTATE:
-                return;
-        }
-
-        World playerWorld = player.getWorld();
-        Location blockLoc = e.getBlock().getLocation();
-
-        if (playerWorld.equals(ArenaWorldUtil.getArenasCopyWorld())) {
-            Common.sendMMMessage(player, LanguageManager.getString("ARENA.CANT-EDIT-COPIES"));
+        if (shouldCancelArenaEdit(e.getPlayer(), e.getBlock().getLocation())) {
             e.setCancelled(true);
-        } else if (playerWorld.equals(ArenaWorldUtil.getArenasWorld())) {
-            for (Cuboid cuboid : ArenaManager.getInstance().getArenaCuboids().keySet()) {
-                if (cuboid.contains(blockLoc)) {
-                    BasicArena arena = ArenaManager.getInstance().getArenaCuboids().get(cuboid);
-                    Arena mainArena = ArenaUtil.getArena(arena);
-                    if (mainArena == null)
-                        return;
-
-                    if (mainArena.isBuild() && !mainArena.getCopies().isEmpty()) {
-                        e.setCancelled(true);
-                        Common.sendMMMessage(player, LanguageManager.getString("ARENA.CANT-EDIT-ARENA-WITH-COPIES").replace("%arena%", mainArena.getDisplayName()));
-                    } else if (!MatchManager.getInstance().getLiveMatchesByArena(arena).isEmpty()) {
-                        e.setCancelled(true);
-                        Common.sendMMMessage(player, LanguageManager.getString("ARENA.CANT-EDIT-ARENA-WITH-MATCH").replace("%arena%", mainArena.getDisplayName()));
-                    }
-                }
-            }
         }
     }
 
     @EventHandler ( priority = EventPriority.HIGHEST )
     public void onPlayerInteract(PlayerInteractEvent e) {
-        Player player = e.getPlayer();
-        Profile profile = ProfileManager.getInstance().getProfile(player);
         Action action = e.getAction();
+        if (!action.equals(Action.RIGHT_CLICK_BLOCK) && !action.equals(Action.LEFT_CLICK_BLOCK)) return;
+
+        if (shouldCancelArenaEdit(e.getPlayer(), e.getClickedBlock().getLocation())) {
+            e.setCancelled(true);
+        }
+    }
+
+    private boolean shouldCancelArenaEdit(Player player, Location blockLoc) {
+        Profile profile = ProfileManager.getInstance().getProfile(player);
 
         switch (profile.getStatus()) {
             case MATCH:
             case FFA:
             case EVENT:
             case SPECTATE:
-                return;
+                return false;
         }
 
-        if (!action.equals(Action.RIGHT_CLICK_BLOCK) && !action.equals(Action.LEFT_CLICK_BLOCK)) return;
-
         World playerWorld = player.getWorld();
-        Location blockLoc = e.getClickedBlock().getLocation();
+        boolean cancelled = false;
 
         if (playerWorld.equals(ArenaWorldUtil.getArenasCopyWorld())) {
             Common.sendMMMessage(player, LanguageManager.getString("ARENA.CANT-EDIT-COPIES"));
-            e.setCancelled(true);
+            return true;
         } else if (playerWorld.equals(ArenaWorldUtil.getArenasWorld())) {
             for (Cuboid cuboid : ArenaManager.getInstance().getArenaCuboids().keySet()) {
                 if (cuboid.contains(blockLoc)) {
                     BasicArena arena = ArenaManager.getInstance().getArenaCuboids().get(cuboid);
                     Arena mainArena = ArenaUtil.getArena(arena);
                     if (mainArena == null)
-                        return;
+                        return cancelled;
 
                     if (mainArena.isBuild() && !mainArena.getCopies().isEmpty()) {
-                        e.setCancelled(true);
+                        cancelled = true;
                         Common.sendMMMessage(player, LanguageManager.getString("ARENA.CANT-EDIT-ARENA-WITH-COPIES").replace("%arena%", mainArena.getDisplayName()));
                     } else if (!MatchManager.getInstance().getLiveMatchesByArena(arena).isEmpty()) {
-                        e.setCancelled(true);
+                        cancelled = true;
                         Common.sendMMMessage(player, LanguageManager.getString("ARENA.CANT-EDIT-ARENA-WITH-MATCH").replace("%arena%", mainArena.getDisplayName()));
                     }
                 }
             }
         }
+
+        return cancelled;
     }
 
     @EventHandler

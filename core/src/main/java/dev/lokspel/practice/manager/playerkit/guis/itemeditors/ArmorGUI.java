@@ -1,8 +1,6 @@
 package dev.lokspel.practice.manager.playerkit.guis.itemeditors;
 
-import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUI;
-import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
 import dev.lokspel.practice.manager.playerkit.PlayerKitEditing;
 import dev.lokspel.practice.manager.playerkit.PlayerKitManager;
@@ -10,7 +8,6 @@ import dev.lokspel.practice.manager.playerkit.StaticItems;
 import dev.lokspel.practice.manager.playerkit.items.EditorIcon;
 import dev.lokspel.practice.manager.playerkit.items.KitItem;
 import dev.lokspel.practice.util.InventoryUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -64,15 +61,7 @@ public class ArmorGUI extends ItemEditor {
     public void handleCloseEvent(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
         PlayerKitEditing playerKitEditing = PlayerKitManager.getInstance().getEditing().get(player);
-        GUI mainGUI = playerKitEditing.getCustomLadder().getMainGUI();
-
-        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
-            if (GUIManager.getInstance().getOpenGUI().containsKey(player)) {
-                return;
-            }
-
-            mainGUI.open(player);
-        }, 5L);
+        playerKitEditing.scheduleReturnToMainEditor(player);
     }
 
 }

@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Getter
@@ -84,6 +85,31 @@ public abstract class GUI {
 
     public void open(Player player) {
         open(player, 1);
+    }
+
+    /** Applies rebuilt pages and slot mappings, moving viewers off removed pages. */
+    protected <T> void updatePages(Map<Integer, Inventory> newPages,
+                                   Map<Integer, Map<Integer, T>> slots,
+                                   Map<Integer, Map<Integer, T>> newSlots) {
+        for (Map.Entry<Integer, Inventory> entry : new LinkedHashMap<>(gui).entrySet()) {
+            if (newPages.containsKey(entry.getKey())) {
+                continue;
+            }
+
+            gui.remove(entry.getKey());
+            // Opening an inventory can synchronously remove viewers via its close event.
+            for (Map.Entry<Player, Integer> viewer : new HashMap<>(inGuiPlayers).entrySet()) {
+                if (viewer.getValue().equals(entry.getKey())) {
+                    open(viewer.getKey(), entry.getKey() - 1);
+                }
+            }
+        }
+
+        gui.putAll(newPages);
+        slots.clear();
+        slots.putAll(newSlots);
+
+        updatePlayers();
     }
 
     protected void updatePlayers() {

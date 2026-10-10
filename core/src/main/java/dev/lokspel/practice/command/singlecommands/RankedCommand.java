@@ -40,7 +40,7 @@ public class RankedCommand implements CommandExecutor {
             Division requirement = DivisionManager.getInstance().getMinimumForRanked();
             if (requirement != null && !DivisionManager.getInstance().meetsMinimumForRanked(profile)) {
                 // Show progress towards requirement
-                sendRankedProgressMessage(player, profile, requirement);
+                DivisionManager.getInstance().sendRankedProgressMessage(player, profile, requirement);
 
                 return false;
             }
@@ -62,36 +62,6 @@ public class RankedCommand implements CommandExecutor {
         }
 
         return true;
-    }
-
-    private void sendRankedProgressMessage(Player player, Profile profile, Division requirement) {
-        int currentExp = profile.getStats().getExperience();
-        int requiredExp = requirement.getExperience();
-        int currentWins = profile.getStats().getGlobalWins();
-        int requiredWins = requirement.getWin();
-
-        Common.sendMMMessage(player, "");
-        Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.RANKED.PROGRESS-HEADER"));
-
-        // Experience progress
-        int expProgress = Math.min(100, (int) ((double) currentExp / requiredExp * 100));
-        Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.RANKED.PROGRESS-EXP")
-                .replace("%current%", String.valueOf(currentExp))
-                .replace("%required%", String.valueOf(requiredExp))
-                .replace("%percent%", String.valueOf(expProgress))
-        );
-
-        // Wins progress (if wins are counted)
-        if (DivisionManager.getInstance().isCOUNT_BY_WINS()) {
-            int winsProgress = Math.min(100, (int) ((double) currentWins / requiredWins * 100));
-            Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.RANKED.PROGRESS-WINS")
-                    .replace("%current%", String.valueOf(currentWins))
-                    .replace("%required%", String.valueOf(requiredWins))
-                    .replace("%percent%", String.valueOf(winsProgress))
-            );
-        }
-
-        Common.sendMMMessage(player, "");
     }
 
 }

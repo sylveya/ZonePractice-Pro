@@ -1,6 +1,5 @@
 package dev.lokspel.practice.manager.playerkit.guis;
 
-import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUI;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
@@ -10,7 +9,6 @@ import dev.lokspel.practice.manager.playerkit.StaticItems;
 import dev.lokspel.practice.manager.playerkit.items.KitItem;
 import dev.lokspel.practice.util.Common;
 import dev.lokspel.practice.util.InventoryUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -156,11 +154,7 @@ public class ShulkerCategoryGUI extends GUI {
         Player player = (Player) e.getPlayer();
         PlayerKitEditing editing = PlayerKitManager.getInstance().getEditing().get(player);
         if (editing == null) return;
-        GUI mainGUI = editing.getCustomLadder().getMainGUI();
-        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
-            if (!GUIManager.getInstance().getOpenGUI().containsKey(player))
-                mainGUI.open(player);
-        }, 5L);
+        editing.scheduleReturnToMainEditor(player);
     }
 
     private static ItemStack buildShulkerItem(Material mat, String name) {

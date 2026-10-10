@@ -43,35 +43,10 @@ public class KitSelectionHandler {
     }
 
     /**
-     * Loads available custom kits for this player from their profile.
+     * Loads available unranked custom kits for this player from their profile.
      */
     public void loadKits() {
-        if (profile.getAllowedCustomKits() < 1 || !(ladder instanceof NormalLadder normalLadder)) {
-            return;
-        }
-
-        Map<Integer, CustomKit> customKits = profile.getUnrankedCustomKits().get(normalLadder);
-        
-        if (customKits != null && !customKits.isEmpty()) {
-            this.kits = new HashMap<>();
-            
-            for (Map.Entry<Integer, CustomKit> customKit : customKits.entrySet()) {
-                this.kits.put(customKit.getKey() - 1, new CustomKit(
-                        createKitBook(customKit.getKey()),
-                        customKit.getValue().getInventory(),
-                        customKit.getValue().getArmor(),
-                        customKit.getValue().getExtra()));
-            }
-
-            // Add default kit option at slot 8
-            this.kits.put(8, new CustomKit(
-                    createDefaultKitBook(),
-                    ladder.getKitData().getStorage(),
-                    ladder.getKitData().getArmor(),
-                    ladder.getKitData().getExtra()));
-
-            this.hasChosenKit = false;
-        }
+        this.loadKitsForRanked(false);
     }
 
     /**
