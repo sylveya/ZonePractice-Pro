@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.party;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.profile.Profile;
@@ -28,7 +28,7 @@ public class BroadcastTask extends BukkitRunnable {
         running = true;
         party.setBroadcastParty(true);
 
-        this.runTaskTimerAsynchronously(ZonePractice.getInstance(), 0, ConfigManager.getInt("PARTY.PUBLIC-BROADCAST-TIME") * 20L);
+        this.runTaskTimerAsynchronously(AstralPractice.getInstance(), 0, ConfigManager.getInt("PARTY.PUBLIC-BROADCAST-TIME") * 20L);
     }
 
     @Override

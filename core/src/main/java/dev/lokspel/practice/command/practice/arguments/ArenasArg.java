@@ -12,7 +12,7 @@ public final class ArenasArg {
     private ArenasArg() {}
 
     public static void run(Player player) {
-        if (!player.hasPermission("zpp.practice.arenas")) {
+        if (!player.hasPermission("ap.practice.arenas")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
             return;
         }

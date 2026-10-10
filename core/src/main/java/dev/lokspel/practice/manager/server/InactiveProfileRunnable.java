@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.server;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.profile.Profile;
@@ -20,7 +20,7 @@ public class InactiveProfileRunnable extends BukkitRunnable {
 
     public void begin() {
         running = true;
-        this.runTaskTimerAsynchronously(ZonePractice.getInstance(), 20L * 30, 20L * 60 * 60 * 24);
+        this.runTaskTimerAsynchronously(AstralPractice.getInstance(), 20L * 30, 20L * 60 * 60 * 24);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class InactiveProfileRunnable extends BukkitRunnable {
         }
 
         if (count > 0)
-            ServerManager.getInstance().alertPlayers("zpp.admin", LanguageManager.getString("PROFILE.INACTIVITY-REMOVED").replace("%count%", String.valueOf(count)));
+            ServerManager.getInstance().alertPlayers("ap.admin", LanguageManager.getString("PROFILE.INACTIVITY-REMOVED").replace("%count%", String.valueOf(count)));
     }
 
     private void deleteStatsFromMariadb(Profile profile) {

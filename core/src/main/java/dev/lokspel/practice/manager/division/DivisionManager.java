@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.division;
 
 import dev.lokspel.api.Event.Match.MatchEndEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigFile;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
@@ -51,7 +51,7 @@ public class DivisionManager extends ConfigFile implements Listener {
         this.COUNT_BY_WINS = COUNT_BY_WINS;
         this.COUNT_BY_ELO = COUNT_BY_ELO;
 
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     public void reloadRanks() {
@@ -63,7 +63,7 @@ public class DivisionManager extends ConfigFile implements Listener {
     }
 
     public void setDivisions() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             for (Profile profile : ProfileManager.getInstance().getProfiles().values()) {
                 profile.getStats().setDivision(this.getDivision(profile));

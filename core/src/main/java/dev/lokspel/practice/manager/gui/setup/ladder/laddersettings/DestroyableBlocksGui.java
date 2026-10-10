@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.ladder.laddersettings;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.gui.GUI;
@@ -56,7 +56,7 @@ public class DestroyableBlocksGui extends GUI {
 
     @Override
     public void update() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             Inventory inventory = gui.get(1);
 
@@ -169,7 +169,7 @@ public class DestroyableBlocksGui extends GUI {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETUP.LADDER.ONLY-PUT-BLOCKS"));
                 e.setCancelled(true);
             } else {
-                Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+                Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
                     for (int i = 0; i <= INVENTORY_LAST_SLOT; i++) {
                         if (i == BACK_SLOT) continue;
                         ItemStack itemStack = gui.get(1).getItem(i);

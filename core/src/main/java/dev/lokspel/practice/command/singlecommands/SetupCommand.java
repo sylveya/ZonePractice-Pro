@@ -27,7 +27,7 @@ public class SetupCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETUP.NO-PERMISSION"));
             return false;
         }
@@ -74,7 +74,7 @@ public class SetupCommand implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) return arguments;
 
         if (args.length == 1) {
-            if (player.hasPermission("zpp.setup")) {
+            if (player.hasPermission("ap.setup")) {
                 arguments.add("arena");
                 arguments.add("ladder");
                 arguments.add("hologram");

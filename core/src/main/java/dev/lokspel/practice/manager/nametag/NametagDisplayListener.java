@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.nametag;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import io.papermc.paper.event.player.PlayerClientLoadedWorldEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -66,7 +66,7 @@ public final class NametagDisplayListener implements Listener {
             oldTask.cancel();
         }
 
-        BukkitTask task = Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+        BukkitTask task = Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
             pendingSneakRefresh.remove(player.getUniqueId());
             if (player.isOnline()) {
                 NametagManager.getInstance().onVisibilityStateChange(player);
@@ -91,7 +91,7 @@ public final class NametagDisplayListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (player.isOnline()) {
                 NametagManager.getInstance().onVisibilityStateChange(player);
             }
@@ -110,7 +110,7 @@ public final class NametagDisplayListener implements Listener {
             return;
         }
 
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
             if (player.isOnline()) {
                 NametagManager.getInstance().onVisibilityStateChange(player);
             }
@@ -126,7 +126,7 @@ public final class NametagDisplayListener implements Listener {
         }
 
         Player player = event.getPlayer();
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
             if (player.isOnline() && player.getGameMode() != GameMode.SPECTATOR) {
                 manager.onVisibilityStateChange(player);
                 manager.refreshAllNametags();

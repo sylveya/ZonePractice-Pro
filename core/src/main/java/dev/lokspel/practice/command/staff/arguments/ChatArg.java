@@ -13,7 +13,7 @@ public final class ChatArg {
     private ChatArg() {}
 
     public static void run(Player player, String[] args) {
-        if (!player.hasPermission("zpp.staffmode.chat")) {
+        if (!player.hasPermission("ap.staffmode.chat")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STAFF.NO-PERMISSION"));
             return;
         }

@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.fight.listener;
 
 import com.destroystokyo.paper.event.entity.CreeperIgniteEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.match.Match;
 import dev.lokspel.practice.manager.fight.match.MatchManager;
 import dev.lokspel.practice.manager.fight.match.enums.RoundStatus;
@@ -32,7 +32,7 @@ public class CreeperListener implements Listener {
             public void run() {
                 scanMatches();
             }
-        }.runTaskTimer(ZonePractice.getInstance(), SCAN_DELAY_TICKS, SCAN_PERIOD_TICKS);
+        }.runTaskTimer(AstralPractice.getInstance(), SCAN_DELAY_TICKS, SCAN_PERIOD_TICKS);
     }
 
     private static void scanMatches() {

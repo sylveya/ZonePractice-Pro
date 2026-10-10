@@ -16,7 +16,7 @@ public class SpectatorTargetsInvItem extends InvItem {
 
     @Override
     public void handleClickEvent(Player player) {
-        if (!player.hasPermission("zpp.spectate.targets")) {
+        if (!player.hasPermission("ap.spectate.targets")) {
             Common.sendMMMessage(player, LanguageManager.getString("SPECTATE.NO-PERMISSIONS"));
             return;
         }

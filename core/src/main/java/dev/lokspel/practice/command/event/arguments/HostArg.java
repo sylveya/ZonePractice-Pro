@@ -20,7 +20,7 @@ public final class HostArg {
             return;
         }
 
-        if (!player.hasPermission("zpp.event.host")) {
+        if (!player.hasPermission("ap.event.host")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.EVENT.ARGUMENTS.HOST.NO-PERMISSION"));
             return;
         }

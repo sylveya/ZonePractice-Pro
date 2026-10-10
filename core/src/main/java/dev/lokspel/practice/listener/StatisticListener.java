@@ -1,6 +1,6 @@
 package dev.lokspel.practice.listener;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.ffa.FFAManager;
 import dev.lokspel.practice.manager.fight.ffa.game.FFA;
@@ -42,7 +42,7 @@ public class StatisticListener implements Listener {
     private double CUSTOM_COOLDOWN_VALUE;
 
     @Getter
-    protected final ZonePractice practice = ZonePractice.getInstance();
+    protected final AstralPractice practice = AstralPractice.getInstance();
     @Getter
     protected static final Map<Player, Integer> CURRENT_CPS = new ConcurrentHashMap<>();
     @Getter
@@ -51,7 +51,7 @@ public class StatisticListener implements Listener {
     protected static final Map<Player, Integer> CURRENT_COMBO = new ConcurrentHashMap<>();
 
     public StatisticListener() {
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             CUSTOM_COOLDOWN_ENABLED = ConfigManager.getBoolean("MATCH-SETTINGS.BOXING.CUSTOM-ATTACK-COOLDOWN.ENABLED");
             ONLY_SWORD = ConfigManager.getBoolean("MATCH-SETTINGS.BOXING.CUSTOM-ATTACK-COOLDOWN.ONLY-SWORD");
             double value = ConfigManager.getDouble("MATCH-SETTINGS.BOXING.CUSTOM-ATTACK-COOLDOWN.COUNT-FROM");
@@ -99,7 +99,7 @@ public class StatisticListener implements Listener {
         CURRENT_CPS.computeIfPresent(player, (key, val) -> val + 1);
 
         BukkitRunnable task = cpsRunnable(statistic, player);
-        task.runTaskLaterAsynchronously(ZonePractice.getInstance(), 20L);
+        task.runTaskLaterAsynchronously(AstralPractice.getInstance(), 20L);
     }
 
     protected static @NotNull BukkitRunnable cpsRunnable(final Statistic statistic, Player player) {
@@ -140,8 +140,8 @@ public class StatisticListener implements Listener {
                 // Immediately update scoreboards for real-time hit counter display
                 // Schedule on main thread since scoreboard updates must be on main thread
                 if (attacker != null && defender != null) {
-                    ZonePractice.getInstance().getServer().getScheduler().runTask(
-                            ZonePractice.getInstance(),
+                    AstralPractice.getInstance().getServer().getScheduler().runTask(
+                            AstralPractice.getInstance(),
                             () -> SidebarManager.getInstance().updatePlayersSidebar(attacker, defender)
                     );
                 }
@@ -204,7 +204,7 @@ public class StatisticListener implements Listener {
         }
 
         BukkitRunnable task = hitRunnable(attacker, attackerStats, defender, defenderStats);
-        task.runTaskAsynchronously(ZonePractice.getInstance());
+        task.runTaskAsynchronously(AstralPractice.getInstance());
     }
 
     @EventHandler ( priority = EventPriority.LOWEST )

@@ -40,7 +40,7 @@ public enum ArmorTrimTier {
     }
 
     public String getPermissionNode() {
-        return "zpp.cosmetics.armortrim.base." + id;
+        return "ap.cosmetics.armortrim.base." + id;
     }
 
     public Material getMaterial(ArmorSlot slot) {

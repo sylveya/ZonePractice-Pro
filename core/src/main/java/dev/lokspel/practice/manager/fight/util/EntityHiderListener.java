@@ -11,7 +11,7 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEn
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerParticle;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSoundEffect;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerSpawnEntity;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.event.EventManager;
 import dev.lokspel.practice.manager.fight.event.events.duel.brackets.Brackets;
 import dev.lokspel.practice.manager.fight.event.events.duel.interfaces.DuelFight;
@@ -57,7 +57,7 @@ public class EntityHiderListener implements PacketListener, Listener {
     }
 
     protected EntityHiderListener() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
         PacketEvents.getAPI().getEventManager().registerListener(
                 this, PacketListenerPriority.NORMAL);
     }
@@ -188,7 +188,7 @@ public class EntityHiderListener implements PacketListener, Listener {
         Player player = e.getPlayer();
         int entityID = player.getEntityId();
 
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () -> {
             if (this.checkPlayer(player)) {
                 entityLocations.put(entityID, player.getLocation());
             } else {

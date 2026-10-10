@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.playerkit.guis;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUI;
 import dev.lokspel.practice.manager.gui.GUIItem;
 import dev.lokspel.practice.manager.gui.GUIManager;
@@ -180,7 +180,7 @@ public class CustomSettingGUI extends GUI {
     public void handleCloseEvent(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (GUIManager.getInstance().getOpenGUI().containsKey(player))
                 return;
 

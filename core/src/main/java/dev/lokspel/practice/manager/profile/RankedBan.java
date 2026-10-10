@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.profile;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -57,7 +57,7 @@ public class RankedBan {
 
         if (!isBanned()) return;
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (config.isString(path + ".banner"))
                 banner = ProfileManager.getInstance().getProfile(UUID.fromString(config.getString(path + ".banner")));
         }, 20L * 3);

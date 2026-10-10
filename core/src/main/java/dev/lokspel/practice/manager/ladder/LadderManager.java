@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.ladder;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.guis.customladder.EditorMenuGui;
@@ -38,7 +38,7 @@ public class LadderManager {
 
     @Getter
     private final List<NormalLadder> ladders = new ArrayList<>();
-    private final File folder = new File(ZonePractice.getInstance().getDataFolder() + "/ladders");
+    private final File folder = new File(AstralPractice.getInstance().getDataFolder() + "/ladders");
 
     @Getter
     private static final int DEFAULT_ELO = ConfigManager.getInt("QUEUE.RANKED.DEFAULT-ELO");
@@ -59,7 +59,7 @@ public class LadderManager {
     }
 
     public void loadLadders(final StartUpCallback startUpCallback) {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () -> {
             if (folder.isDirectory() && folder.listFiles() != null) {
                 for (File ladderFile : Objects.requireNonNull(folder.listFiles())) {
                     if (ladderFile.isFile() && ladderFile.getName().endsWith(".yml")) {
@@ -83,7 +83,7 @@ public class LadderManager {
                 }
             }
 
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), startUpCallback::onLoadingDone);
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), startUpCallback::onLoadingDone);
         });
     }
 

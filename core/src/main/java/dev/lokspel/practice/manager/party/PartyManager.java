@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.party;
 
 import dev.lokspel.api.Event.PartyCreateEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.match.Match;
@@ -50,7 +50,7 @@ public class PartyManager implements Listener {
         // Assigned before the GUIs below are built, some of them read from this manager while being constructed.
         instance = this;
 
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
 
         GUIManager.getInstance().addGUI(new OtherPartiesGui());
         GUIManager.getInstance().addGUI(new PublicPartiesGui());
@@ -112,7 +112,7 @@ public class PartyManager implements Listener {
     public void createParty(Player player) {
         Profile profile = ProfileManager.getInstance().getProfile(player);
 
-        if (!player.hasPermission("zpp.party.create")) {
+        if (!player.hasPermission("ap.party.create")) {
             Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-PERMISSION"));
             return;
         }

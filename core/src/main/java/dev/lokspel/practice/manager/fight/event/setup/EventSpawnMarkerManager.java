@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.event.setup;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.event.interfaces.EventData;
 import dev.lokspel.practice.util.Common;
 import dev.lokspel.practice.util.ItemCreateUtil;
@@ -189,7 +189,7 @@ public class EventSpawnMarkerManager {
     public void updateMarkers(EventData eventData) {
         clearMarkers(eventData);
         // Recreate markers next tick so removed entities are fully despawned first.
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> showMarkers(eventData));
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> showMarkers(eventData));
     }
 
     /**

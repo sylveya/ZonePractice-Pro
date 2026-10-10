@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.playerkit.guis.itemeditors;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.playerkit.guis.ShulkerBoxEditorGUI;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.gui.GUI;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
@@ -84,7 +84,7 @@ public class ItemCategory extends ItemEditor {
 
         player.openInventory(buildInventoryFor(player));
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             inGuiPlayers.put(player, 1);
             GUIManager.getInstance().getOpenGUI().put(player, this);
         }, 2L);
@@ -175,7 +175,7 @@ public class ItemCategory extends ItemEditor {
         PlayerKitEditing editing = PlayerKitManager.getInstance().getEditing().get(player);
         if (editing == null) return;
         GUI mainGUI = editing.getCustomLadder().getMainGUI();
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (!GUIManager.getInstance().getOpenGUI().containsKey(player))
                 mainGUI.open(player);
         }, 5L);

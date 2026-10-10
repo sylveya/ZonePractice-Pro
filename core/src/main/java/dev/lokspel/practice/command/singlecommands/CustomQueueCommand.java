@@ -34,7 +34,7 @@ public class CustomQueueCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        if (!player.hasPermission("zpp.playerkit.queue.use")) {
+        if (!player.hasPermission("ap.playerkit.queue.use")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.CUSTOM.NO-PERMISSION"));
             return true;
         }
@@ -69,7 +69,7 @@ public class CustomQueueCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             case "host" -> {
-                if (!player.hasPermission("zpp.playerkit.queue.host")) {
+                if (!player.hasPermission("ap.playerkit.queue.host")) {
                     Common.sendMMMessage(player, LanguageManager.getString("QUEUES.CUSTOM.NO-PERMISSION"));
                     return true;
                 }
@@ -142,7 +142,7 @@ public class CustomQueueCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player player) || !player.hasPermission("zpp.playerkit.queue.use")) {
+        if (!(sender instanceof Player player) || !player.hasPermission("ap.playerkit.queue.use")) {
             return Collections.emptyList();
         }
 
@@ -153,7 +153,7 @@ public class CustomQueueCommand implements CommandExecutor, TabCompleter {
             return completion;
         }
 
-        if (args.length >= 2 && args[0].equalsIgnoreCase("host") && player.hasPermission("zpp.playerkit.queue.host")) {
+        if (args.length >= 2 && args[0].equalsIgnoreCase("host") && player.hasPermission("ap.playerkit.queue.host")) {
             Profile profile = ProfileManager.getInstance().getProfile(player);
             if (profile == null) {
                 return Collections.emptyList();

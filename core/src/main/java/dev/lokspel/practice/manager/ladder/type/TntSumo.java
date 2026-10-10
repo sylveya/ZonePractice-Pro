@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.ladder.type;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.util.ArenaUtil;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
@@ -53,11 +53,11 @@ public class TntSumo extends NormalLadder implements LadderHandle, TempBuild, Te
 
     private static final Map<UUID, ItemStack> TNT_SUMO_PLAYER_TNT_CACHE = new HashMap<>();
 
-    private static final String TNT_SUMO_TNT = "ZONEPRACTICE_PRO_TNT_SUMO_TNT";
-    private static final String TNT_SUMO_TNT_OWNER = "ZONEPRACTICE_PRO_TNT_SUMO_TNT_OWNER";
-    private static final String TNT_SUMO_BLOCK_OWNER = "ZONEPRACTICE_PRO_TNT_SUMO_BLOCK_OWNER";
-    private static final String TNT_SUMO_BLOCK_MATERIAL = "ZONEPRACTICE_PRO_TNT_SUMO_BLOCK_MATERIAL";
-    private static final String TNT_SUMO_BLOCK_ITEM = "ZONEPRACTICE_PRO_TNT_SUMO_BLOCK_ITEM";
+    private static final String TNT_SUMO_TNT = "ASTRALPRACTICE_TNT_SUMO_TNT";
+    private static final String TNT_SUMO_TNT_OWNER = "ASTRALPRACTICE_TNT_SUMO_TNT_OWNER";
+    private static final String TNT_SUMO_BLOCK_OWNER = "ASTRALPRACTICE_TNT_SUMO_BLOCK_OWNER";
+    private static final String TNT_SUMO_BLOCK_MATERIAL = "ASTRALPRACTICE_TNT_SUMO_BLOCK_MATERIAL";
+    private static final String TNT_SUMO_BLOCK_ITEM = "ASTRALPRACTICE_TNT_SUMO_BLOCK_ITEM";
 
     private static final String TNT_SUMO_CONFIG_PATH = "MATCH-SETTINGS.TNT-SUMO.EXPLOSION.";
     private static final double TNT_SUMO_EXPLOSION_HORIZONTAL_RADIUS = getDoubleOrDefault(TNT_SUMO_CONFIG_PATH + "EXPLOSION-HORIZONTAL-RADIUS", 4.0);
@@ -400,7 +400,7 @@ public class TntSumo extends NormalLadder implements LadderHandle, TempBuild, Te
     private static void applyTntSumoKnockback(Player player, TNTPrimed tnt) {
         final Location tntCenter = tnt.getLocation().clone();
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             Location currentPlayerLocation = player.getLocation();
             Vector currentVelocity = player.getVelocity().clone();
             double horizontalRadius = Math.max(0.0, TNT_SUMO_EXPLOSION_HORIZONTAL_RADIUS);

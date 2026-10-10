@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util.cooldown;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.event.EventManager;
 import dev.lokspel.practice.manager.fight.event.enums.EventStatus;
@@ -33,7 +33,7 @@ public class EnderpearlRunnable extends BukkitRunnable {
     public void begin() {
         running = true;
         PlayerCooldown.addCooldown(player, CooldownObject.ENDER_PEARL, seconds);
-        this.runTaskTimerAsynchronously(ZonePractice.getInstance(), 0, 1L);
+        this.runTaskTimerAsynchronously(AstralPractice.getInstance(), 0, 1L);
     }
 
     @Override

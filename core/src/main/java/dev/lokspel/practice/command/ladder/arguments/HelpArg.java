@@ -9,10 +9,10 @@ public final class HelpArg {
     private HelpArg() {}
 
     public static void run(Player player, String label) {
-        if (player.hasPermission("zpp.setup")) {
+        if (player.hasPermission("ap.setup")) {
             for (String line : LanguageManager.getList("COMMAND.LADDER.ARGUMENTS.HELP.ADMIN"))
                 Common.sendMMMessage(player, line.replace("%label%", label));
-        } else if (player.hasPermission("zpp.ladder.freeze") || player.hasPermission("zpp.ladder.stop")) {
+        } else if (player.hasPermission("ap.ladder.freeze") || player.hasPermission("ap.ladder.stop")) {
             for (String line : LanguageManager.getList("COMMAND.LADDER.ARGUMENTS.HELP.STAFF"))
                 Common.sendMMMessage(player, line.replace("%label%", label));
         } else
@@ -20,7 +20,7 @@ public final class HelpArg {
     }
 
     public static void run_setCommand(Player player, String label) {
-        if (player.hasPermission("zpp.setup")) {
+        if (player.hasPermission("ap.setup")) {
             for (String line : LanguageManager.getList("COMMAND.LADDER.ARGUMENTS.HELP.SET-COMMAND"))
                 Common.sendMMMessage(player, line.replace("%label%", label));
         } else

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.arena.arenas.interfaces;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.util.ArenaUtil;
 import dev.lokspel.practice.manager.backend.ConfigManager;
@@ -95,7 +95,7 @@ public abstract class BasicArena {
 
     public void loadChunks() {
         if (this.cuboid != null) {
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> {
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> {
                 ArenaUtil.loadArenaChunks(this);
             });
         }

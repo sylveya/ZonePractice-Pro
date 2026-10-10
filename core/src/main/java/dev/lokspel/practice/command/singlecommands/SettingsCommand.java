@@ -26,7 +26,7 @@ public class SettingsCommand implements CommandExecutor {
             return false;
         }
 
-        if (!player.hasPermission("zpp.settings.open")) {
+        if (!player.hasPermission("ap.settings.open")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SETTINGS.NO-PERMISSION"));
             return false;
         }

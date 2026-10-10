@@ -2,7 +2,7 @@ VERSION: 4
 #
 # Player Group settings
 #
-# Permission: zpp.group.%name_in_lower_case% for example: zpp.group.premium
+# Permission: ap.group.%name_in_lower_case% for example: ap.group.premium
 # Op's get the rank with the highest weight possible.
 GROUPS:
   DEFAULT:

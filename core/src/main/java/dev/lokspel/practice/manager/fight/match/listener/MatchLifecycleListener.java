@@ -2,7 +2,7 @@ package dev.lokspel.practice.manager.fight.match.listener;
 
 import dev.lokspel.api.Event.Match.MatchEndEvent;
 import dev.lokspel.api.Event.Match.MatchStartEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.match.Match;
 import dev.lokspel.practice.manager.fight.match.MatchManager;
@@ -77,7 +77,7 @@ public class MatchLifecycleListener implements Listener {
         DeleteRunnable.start(match);
 
         // Set rematch request items
-        if (ZonePractice.getInstance().isEnabled() &&
+        if (AstralPractice.getInstance().isEnabled() &&
                 match.getType().equals(MatchType.DUEL) &&
                 ConfigManager.getBoolean("MATCH-SETTINGS.REMATCH.ENABLED")) {
 

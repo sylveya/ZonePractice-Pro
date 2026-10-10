@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.server;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.match.Match;
@@ -48,7 +48,7 @@ public class ServerMatchesGui extends GUI {
 
     @Override
     public void update() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             matchIcons.clear();
 
@@ -98,7 +98,7 @@ public class ServerMatchesGui extends GUI {
 
             if (gui.containsKey(page)) {
                 final int finalPage = page;
-                Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () ->
+                Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () ->
                 {
                     gui.remove(finalPage);
 

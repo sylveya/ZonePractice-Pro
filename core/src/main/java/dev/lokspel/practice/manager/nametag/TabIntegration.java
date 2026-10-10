@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.nametag;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.inventory.InventoryUtil;
 import dev.lokspel.practice.manager.profile.Profile;
 import dev.lokspel.practice.manager.profile.ProfileManager;
@@ -127,7 +127,7 @@ public class TabIntegration {
         Profile profile = ProfileManager.getInstance().getProfile(player);
         if (profile != null) {
             // This reuses the normal lobby formatting path so TAB and vanilla fallback stay consistent.
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> InventoryUtil.setLobbyNametag(player, profile));
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> InventoryUtil.setLobbyNametag(player, profile));
         }
     }
 

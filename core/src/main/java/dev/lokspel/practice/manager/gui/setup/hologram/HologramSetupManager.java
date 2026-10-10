@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.hologram;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUI;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
@@ -28,7 +28,7 @@ public class HologramSetupManager implements Listener {
     private final Map<Hologram, Map<GUIType, GUI>> hologramSetupGUIs = new HashMap<>();
 
     public HologramSetupManager() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     public void buildHologramSetupGUIs(Hologram hologram) {

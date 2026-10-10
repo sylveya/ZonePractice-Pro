@@ -13,7 +13,7 @@ public final class CreateArg {
     private CreateArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.ARENA.NO-PERMISSION"));
             return;
         }

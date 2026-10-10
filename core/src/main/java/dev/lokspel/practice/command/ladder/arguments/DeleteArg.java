@@ -24,7 +24,7 @@ public final class DeleteArg {
     private DeleteArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.LADDER.NO-PERMISSION"));
             return;
         }
@@ -68,7 +68,7 @@ public final class DeleteArg {
 
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
-        if (!player.hasPermission("zpp.setup")) return arguments;
+        if (!player.hasPermission("ap.setup")) return arguments;
 
         if (args.length == 2) {
             for (Ladder ladder : LadderManager.getInstance().getLadders()) {

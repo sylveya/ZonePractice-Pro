@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.match;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.arenas.interfaces.BasicArena;
 import dev.lokspel.practice.manager.fight.match.listener.LadderTypeListener;
 import dev.lokspel.practice.manager.fight.match.listener.MatchEventListener;
@@ -40,7 +40,7 @@ public class MatchManager {
     private final Set<RematchRequest> rematches = new HashSet<>();
 
     private MatchManager() {
-        ZonePractice practice = ZonePractice.getInstance();
+        AstralPractice practice = AstralPractice.getInstance();
 
         // Register match lifecycle listener (start/end events)
         Bukkit.getPluginManager().registerEvents(new MatchLifecycleListener(), practice);

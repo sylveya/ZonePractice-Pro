@@ -1,10 +1,10 @@
 package dev.lokspel.practice.manager.inventory;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
 import dev.lokspel.practice.manager.inventory.inventories.*;
 import dev.lokspel.practice.manager.profile.Profile;
 import dev.lokspel.practice.manager.profile.cosmetics.CosmeticsData;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.backend.BackendManager;
 import dev.lokspel.practice.manager.backend.ConfigFile;
 import dev.lokspel.practice.manager.backend.ConfigManager;
@@ -39,8 +39,8 @@ public class InventoryManager extends ConfigFile {
 
     private final Map<Inventory.InventoryType, Inventory> inventories = new HashMap<>();
     private final List<Player> setupModePlayers = new ArrayList<>();
-    private final NamespacedKey lobbyCosmeticItemKey = new NamespacedKey(ZonePractice.getInstance(), "zpp-cosmetic-item");
-    private final NamespacedKey lobbyCosmeticTypeKey = new NamespacedKey(ZonePractice.getInstance(), "zpp-cosmetic-type");
+    private final NamespacedKey lobbyCosmeticItemKey = new NamespacedKey(AstralPractice.getInstance(), "ap-cosmetic-item");
+    private final NamespacedKey lobbyCosmeticTypeKey = new NamespacedKey(AstralPractice.getInstance(), "ap-cosmetic-type");
     private final InventoryCosmeticService cosmeticService = new InventoryCosmeticService();
     private final InventoryTransitionService transitionService = new InventoryTransitionService(this);
 
@@ -49,7 +49,7 @@ public class InventoryManager extends ConfigFile {
 
         reloadFile();
 
-        Bukkit.getPluginManager().registerEvents(new InventoryListener(), ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(new InventoryListener(), AstralPractice.getInstance());
     }
 
     public void loadInventories() {

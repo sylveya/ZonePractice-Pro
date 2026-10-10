@@ -143,7 +143,7 @@ public class ProfileLadderStats extends GUI {
                 update();
                 break;
             case 53:
-                if (!player.hasPermission("zpp.practice.info.resetstats")) {
+                if (!player.hasPermission("ap.practice.info.resetstats")) {
                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                     return;
                 }
@@ -155,7 +155,7 @@ public class ProfileLadderStats extends GUI {
             default:
                 if (!ladderSlots.containsKey(page) || !ladderSlots.get(page).containsKey(slot)) return;
 
-                if (!player.hasPermission("zpp.practice.info.resetstats")) {
+                if (!player.hasPermission("ap.practice.info.resetstats")) {
                     Common.sendMMMessage(player, LanguageManager.getString("PROFILE.NO-PERMISSION"));
                     return;
                 }

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.profile.Profile;
@@ -28,7 +28,7 @@ public final class ChatFormatUtil {
         Profile profile = ProfileManager.getInstance().getProfile(player);
 
         String playerName = profile != null
-                ? ZonePractice.getMiniMessage().serialize(
+                ? AstralPractice.getMiniMessage().serialize(
                 NameFormatUtil.resolveFullName(profile, player.getName())
         )
                 : player.getName();
@@ -43,7 +43,7 @@ public final class ChatFormatUtil {
         Profile profile = ProfileManager.getInstance().getProfile(player);
 
         String playerName = profile != null
-                ? ZonePractice.getMiniMessage().serialize(
+                ? AstralPractice.getMiniMessage().serialize(
                 NameFormatUtil.resolveFullName(profile, player.getName())
         )
                 : player.getName();
@@ -69,7 +69,7 @@ public final class ChatFormatUtil {
             format = LanguageManager.getString("GENERAL-CHAT.SERVER-CHAT");
         }
 
-        String decoratedPlayer = ZonePractice.getMiniMessage()
+        String decoratedPlayer = AstralPractice.getMiniMessage()
                 .serialize(NameFormatUtil.resolveFullName(profile, player.getName()));
 
         return normalizeStaticSpacing(
@@ -81,7 +81,7 @@ public final class ChatFormatUtil {
         List<Player> staff = new ArrayList<>();
 
         for (Player online : Bukkit.getOnlinePlayers()) {
-            if (online.hasPermission("zpp.staffmode.chat")) {
+            if (online.hasPermission("ap.staffmode.chat")) {
                 staff.add(online);
             }
         }

@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.fight.match.type.duel;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
@@ -216,7 +216,7 @@ public class Duel extends Match implements Team {
 
         this.removePlayerFromBelowName(player);
 
-        if (ZonePractice.getInstance().isEnabled()) {
+        if (AstralPractice.getInstance().isEnabled()) {
             // Remove 1 from the player's left matches
             Profile profile = ProfileManager.getInstance().getProfile(player);
             if (ranked)
@@ -242,11 +242,11 @@ public class Duel extends Match implements Team {
      * {@link QueueManager}, which fails gracefully with a player message instead of throwing.
      */
     private void scheduleAutoQueue(Player player, boolean ranked, Ladder ladder) {
-        if (!ZonePractice.getInstance().isEnabled()) return;
+        if (!AstralPractice.getInstance().isEnabled()) return;
         if (!this.queuedMatch) return;
         if (!(ladder instanceof NormalLadder normalLadder)) return;
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             boolean masterEnabled = ConfigManager.getBoolean("MATCH-SETTINGS.AUTO-QUEUE.ENABLED");
             Profile profile = ProfileManager.getInstance().getProfile(player);
             if (profile == null) return;

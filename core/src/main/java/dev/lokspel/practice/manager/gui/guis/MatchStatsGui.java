@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.guis;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.util.TimeUtil;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.fight.match.Match;
@@ -53,9 +53,9 @@ public class MatchStatsGui extends GUI {
 
     @Override
     public void update() {
-        if (!ZonePractice.getInstance().isEnabled()) return;
+        if (!AstralPractice.getInstance().isEnabled()) return;
 
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             int round = 1;
             while (stats.containsKey(round)) {

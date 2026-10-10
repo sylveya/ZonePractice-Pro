@@ -20,7 +20,7 @@ public final class UnrankedArg {
 
     public static void run(Player player, String label, String[] args) {
         if (args.length == 3 && args[1].equalsIgnoreCase("reset")) {
-            if (!player.hasPermission("zpp.practice.unranked.default")) {
+            if (!player.hasPermission("ap.practice.unranked.default")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -47,7 +47,7 @@ public final class UnrankedArg {
             } else
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.ARGUMENTS.UNRANKED.NO-GROUP").replace("%target%", target.getPlayer().getName()));
         } else if (args.length == 4 && args[1].equalsIgnoreCase("add")) {
-            if (!player.hasPermission("zpp.practice.unranked.add")) {
+            if (!player.hasPermission("ap.practice.unranked.add")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -77,7 +77,7 @@ public final class UnrankedArg {
                     .replace("%newUnranked%", String.valueOf(target.getUnrankedLeft()))
             );
         } else {
-            if (player.hasPermission("zpp.practice.unranked.default") || player.hasPermission("zpp.practice.unranked.add")) {
+            if (player.hasPermission("ap.practice.unranked.default") || player.hasPermission("ap.practice.unranked.add")) {
                 for (String line : LanguageManager.getList("COMMAND.PRACTICE.ARGUMENTS.UNRANKED.COMMAND-HELP"))
                     Common.sendMMMessage(player, line.replace("%label%", label));
             }
@@ -130,12 +130,12 @@ public final class UnrankedArg {
         List<String> arguments = new ArrayList<>();
 
         if (args.length == 2) {
-            if (player.hasPermission("zpp.practice.unranked.default")) arguments.add("reset");
-            if (player.hasPermission("zpp.practice.unranked.add")) arguments.add("add");
+            if (player.hasPermission("ap.practice.unranked.default")) arguments.add("reset");
+            if (player.hasPermission("ap.practice.unranked.add")) arguments.add("add");
 
             return StringUtil.copyPartialMatches(args[1], arguments, new ArrayList<>());
         } else if (args.length == 3) {
-            if (player.hasPermission("zpp.practice.unranked.default") || player.hasPermission("zpp.practice.unranked.add")) {
+            if (player.hasPermission("ap.practice.unranked.default") || player.hasPermission("ap.practice.unranked.add")) {
                 for (Player online : Bukkit.getOnlinePlayers())
                     arguments.add(online.getName());
             }

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.arena;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.FFAArena;
@@ -102,7 +102,7 @@ public class ArenaSummaryGui extends GUI {
 
         // Atomically swap shared state on the main thread so handleClickEvent never
         // sees a partially-rebuilt slots map
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () ->
         {
             // Remove pages that no longer exist and redirect players on those pages
             for (int p = 1; p < 10; p++) {
@@ -124,12 +124,12 @@ public class ArenaSummaryGui extends GUI {
 
     @Override
     public void update() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             // Item building is safe async; the final swap inside build() is dispatched to main thread
             build();
             // updatePlayers() must run after the main-thread swap; schedule it after build()'s runTask
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), this::updatePlayers);
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), this::updatePlayers);
         });
     }
 

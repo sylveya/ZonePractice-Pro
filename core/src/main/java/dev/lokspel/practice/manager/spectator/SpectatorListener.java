@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.spectator;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.match.Match;
 import dev.lokspel.practice.manager.fight.match.MatchManager;
 import dev.lokspel.practice.manager.fight.match.enums.MatchStatus;
@@ -147,7 +147,7 @@ public class SpectatorListener implements Listener {
 
         // The client ignores ability packets sent during a teleport until it has
         // acknowledged the new position, so the flight state has to be re-sent after it.
-        ZonePractice plugin = ZonePractice.getInstance();
+        AstralPractice plugin = AstralPractice.getInstance();
         if (plugin != null && plugin.isEnabled()) {
             Bukkit.getScheduler().runTask(plugin, () -> ensureSpectatorFlight(player));
             Bukkit.getScheduler().runTaskLater(plugin, () -> {

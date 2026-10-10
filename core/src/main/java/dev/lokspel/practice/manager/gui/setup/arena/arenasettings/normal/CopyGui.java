@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.arena.arenasettings.normal;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.ArenaCopy;
 import dev.lokspel.practice.manager.backend.ConfigManager;
@@ -49,7 +49,7 @@ public class CopyGui extends GUI {
 
     @Override
     public void update() {
-        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () ->
         {
             icons.clear();
             List<ArenaCopy> copies = arena.getCopies();
@@ -103,7 +103,7 @@ public class CopyGui extends GUI {
                 } else {
                     if (gui.containsKey(page)) {
                         int finalPage = page;
-                        Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () ->
+                        Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () ->
                         {
                             gui.remove(finalPage);
                             for (Player player : inGuiPlayers.keySet()) {
@@ -163,7 +163,7 @@ public class CopyGui extends GUI {
                     return;
                 }
 
-                Location location = ZonePractice.getArenaCopyUtilListener().createCopy(profile, arena);
+                Location location = AstralPractice.getArenaCopyUtilListener().createCopy(profile, arena);
                 if (!ConfigManager.getBoolean("ARENA.TELEPORT-TO-COPY")) return;
 
                 player.teleport(location);

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.listener;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.match.Match;
 import dev.lokspel.practice.manager.fight.match.MatchManager;
@@ -57,11 +57,11 @@ public class PlayerJoin implements Listener {
         // Set the lobby inventory
         if (PermanentConfig.JOIN_TELEPORT_LOBBY) {
             final Profile profile1 = profile;
-            Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+            Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
             {
                 PlayerUtil.setPlayerWorldTime(player);
 
-                if (ConfigManager.getBoolean("STAFF-MODE.JOIN-HIDE-FROM-PLAYERS") && player.hasPermission("zpp.staffmode"))
+                if (ConfigManager.getBoolean("STAFF-MODE.JOIN-HIDE-FROM-PLAYERS") && player.hasPermission("ap.staffmode"))
                     profile1.setHideFromPlayers(true);
             }, 10L);
 
@@ -80,7 +80,7 @@ public class PlayerJoin implements Listener {
         }
 
         // Revalidate saved cosmetics after permission plugins have finished loading player nodes.
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (!player.isOnline()) {
                 return;
             }

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import org.bukkit.Bukkit;
 
 import java.util.regex.Matcher;
@@ -34,7 +34,7 @@ public final class VersionChecker {
             final String mcVersion = extractMcVersion(versionString);
 
             if (mcVersion == null) {
-                ZonePractice.getInstance().getLogger().warning("Could not extract MC version from: " + versionString);
+                AstralPractice.getInstance().getLogger().warning("Could not extract MC version from: " + versionString);
                 return null;
             }
 
@@ -47,7 +47,7 @@ public final class VersionChecker {
             } else if (mcVersion.equals("26.3") || mcVersion.startsWith("26.3.")) {
                 bukkitVersion = BukkitVersion.v_26_3_R1;
             } else {
-                ZonePractice.getInstance().getLogger().warning("Could not extract MC version from: " + versionString);
+                AstralPractice.getInstance().getLogger().warning("Could not extract MC version from: " + versionString);
             }
 
             return bukkitVersion;

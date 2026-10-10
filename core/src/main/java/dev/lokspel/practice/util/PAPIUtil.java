@@ -1,6 +1,6 @@
 package dev.lokspel.practice.util;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -15,10 +15,10 @@ public final class PAPIUtil {
         }
 
         if (SoftDependUtil.isPAPI_ENABLED) {
-            return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(PlaceholderAPI.setPlaceholders(player, line)));
+            return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(PlaceholderAPI.setPlaceholders(player, line)));
         }
 
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(line));
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(line));
     }
 
 }

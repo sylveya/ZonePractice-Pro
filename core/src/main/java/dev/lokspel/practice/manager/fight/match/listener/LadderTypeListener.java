@@ -1,9 +1,9 @@
 package dev.lokspel.practice.manager.fight.match.listener;
 
 import com.destroystokyo.paper.event.player.PlayerPickupExperienceEvent;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.util.*;
 import dev.lokspel.practice.manager.ladder.type.Spleef;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.arena.arenas.interfaces.BasicArena;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
@@ -468,7 +468,7 @@ public class LadderTypeListener implements Listener {
     }
 
 
-    private static final String HIDDEN_ITEM = "ZPP_HIDDEN_ITEM";
+    private static final String HIDDEN_ITEM = "AP_HIDDEN_ITEM";
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent e) {
@@ -539,7 +539,7 @@ public class LadderTypeListener implements Listener {
             return;
         }
 
-        if (!ZonePractice.getEntityHider().canSee(player, e.getItem())) {
+        if (!AstralPractice.getEntityHider().canSee(player, e.getItem())) {
             e.setCancelled(true);
             return;
         }
@@ -679,7 +679,7 @@ public class LadderTypeListener implements Listener {
         }
 
         DeathCause cause = FightUtil.convert(damageSource.getDamageType());
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                 match.killPlayer(player, killer, cause.getMessage().replace("%killer%", killer != null ? killer.getName() : "Unknown")), 1L);
 
         if (killer != null) {

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.command.practice.arguments;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
@@ -29,7 +29,7 @@ public final class HologramArg {
     private HologramArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
             return;
         }
@@ -129,7 +129,7 @@ public final class HologramArg {
 
         HologramManager.getInstance().createHologram(hologram);
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                 HologramSetupManager.getInstance().getHologramSetupGUIs().get(hologram).get(GUIType.Hologram_Main).open(player), 3L);
 
         Common.sendMMMessage(player, LanguageManager.getString("COMMAND.HOLOGRAM.CREATE-SUCCESS").replace("%hologram%", hologram.getName()));
@@ -138,7 +138,7 @@ public final class HologramArg {
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
 
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             return arguments;
         }
 

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.backend;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.util.Common;
 import dev.lokspel.practice.util.StringUtil;
 import lombok.Getter;
@@ -15,13 +15,13 @@ public enum BackendManager {
     ;
 
     private static final String PRACTICE_STATS_SERVER_HASH_PATH = "TELEMETRY.PRACTICE_STATS.SERVER_HASH";
-    private static final String PRACTICE_STATS_SERVER_HASH_PREFIX = "ZPPV1_";
+    private static final String PRACTICE_STATS_SERVER_HASH_PREFIX = "APV1_";
 
     private static File file;
     @Getter
     private static YamlConfiguration config;
 
-    public static void createFile(ZonePractice practice) {
+    public static void createFile(AstralPractice practice) {
         file = new File(practice.getDataFolder(), "backend.yml");
         config = new YamlConfiguration();
 

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.guis.cosmetics.shield;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.gui.GUI;
 import dev.lokspel.practice.manager.gui.GUIItem;
@@ -163,13 +163,13 @@ public class ShieldLayoutListGui extends GUI {
                     int newIndex = layouts.size() - 1;
                     profile.save();
                     final int finalIndex = newIndex;
-                    org.bukkit.Bukkit.getScheduler().runTask(ZonePractice.getInstance(),
+                    org.bukkit.Bukkit.getScheduler().runTask(AstralPractice.getInstance(),
                             () -> new ShieldEditorGui(profile, finalIndex, this).open(player));
                     return List.of(AnvilGUI.ResponseAction.close());
                 })
                 .text("My Layout")
                 .title(GUIFile.getConfig().getString("GUIS.COSMETICS.SHIELD.LAYOUTS.NAME-TITLE", "Layout Name"))
-                .plugin(ZonePractice.getInstance())
+                .plugin(AstralPractice.getInstance())
                 .open(player);
     }
 
@@ -205,13 +205,13 @@ public class ShieldLayoutListGui extends GUI {
                     if (name.length() > 24) name = name.substring(0, 24);
                     layouts.get(index).setName(name);
                     profile.save();
-                    org.bukkit.Bukkit.getScheduler().runTask(ZonePractice.getInstance(),
+                    org.bukkit.Bukkit.getScheduler().runTask(AstralPractice.getInstance(),
                             () -> update(true));
                     return List.of(AnvilGUI.ResponseAction.close());
                 })
                 .text(currentName)
                 .title(GUIFile.getConfig().getString("GUIS.COSMETICS.SHIELD.LAYOUTS.RENAME-TITLE", "Rename Layout"))
-                .plugin(ZonePractice.getInstance())
+                .plugin(AstralPractice.getInstance())
                 .open(player);
     }
 

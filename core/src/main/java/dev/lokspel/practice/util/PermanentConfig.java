@@ -21,8 +21,8 @@ public final class PermanentConfig {
     public static final boolean PARTY_SPLIT_TEAM_DAMAGE = ConfigManager.getBoolean("MATCH-SETTINGS.PARTY.SPLIT-TEAM-DAMAGE");
     public static final boolean PARTY_VS_PARTY_TEAM_DAMAGE = ConfigManager.getBoolean("MATCH-SETTINGS.PARTY.PARTY-VS-PARTY-TEAM-DAMAGE");
 
-    public static final String FIGHT_ENTITY = "ZONEPRACTICE_PRO_FIGHT_ENTITY";
-    public static final String PLACED_IN_FIGHT = "ZONE_PRACTICE_BLOCK_CHANGE";
+    public static final String FIGHT_ENTITY = "ASTRALPRACTICE_FIGHT_ENTITY";
+    public static final String PLACED_IN_FIGHT = "ASTRALPRACTICE_BLOCK_CHANGE";
 
     static {
         if (ARENA_FAST_COPY_ENABLED) {

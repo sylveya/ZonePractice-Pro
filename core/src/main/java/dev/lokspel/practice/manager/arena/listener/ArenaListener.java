@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.arena.listener;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.interfaces.BasicArena;
@@ -172,7 +172,7 @@ public class ArenaListener implements Listener {
                 // Use addPluginChunkTicket to force-keep the chunk loaded.
                 // This is safe from recursion (unlike getChunkAtAsync which can
                 // trigger chunk scheduling → more unloads → StackOverflowError).
-                e.getChunk().addPluginChunkTicket(ZonePractice.getInstance());
+                e.getChunk().addPluginChunkTicket(AstralPractice.getInstance());
             }
         }
     }

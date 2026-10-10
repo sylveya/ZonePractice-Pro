@@ -67,7 +67,7 @@ public class EventHostGui extends GUI {
                     return;
                 }
 
-                if (!player.hasPermission("zpp.event.host." + eventType.name().toLowerCase()) && !player.hasPermission("zpp.event.host.all")) {
+                if (!player.hasPermission("ap.event.host." + eventType.name().toLowerCase()) && !player.hasPermission("ap.event.host.all")) {
                     Common.sendMMMessage(player, LanguageManager.getString("EVENT.CANT-HOST-EVENT").replace("%event%", eventType.getName()));
                     return;
                 }

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.event;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.util.ArenaWorldUtil;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.event.EventManager;
@@ -42,7 +42,7 @@ public class EventSetupManager implements Listener {
     private final Map<EventData, Map<GUIType, GUI>> eventSetupGUIs = new HashMap<>();
 
     public EventSetupManager() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     public void buildEventSetupGUIs(EventData eventData) {
@@ -77,7 +77,7 @@ public class EventSetupManager implements Listener {
                 return;
         }
 
-        if (!player.hasPermission("zpp.setup")) return;
+        if (!player.hasPermission("ap.setup")) return;
         if (!action.equals(Action.LEFT_CLICK_BLOCK) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
         if (item == null) return;
         if (block == null) return;

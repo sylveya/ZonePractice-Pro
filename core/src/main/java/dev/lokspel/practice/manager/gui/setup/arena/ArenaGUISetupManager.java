@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.setup.arena;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.ArenaManager;
 import dev.lokspel.practice.manager.arena.arenas.Arena;
 import dev.lokspel.practice.manager.arena.arenas.FFAArena;
@@ -41,7 +41,7 @@ public class ArenaGUISetupManager implements Listener {
     private final Map<DisplayArena, Map<GUIType, GUI>> arenaSetupGUIs = new HashMap<>();
 
     public ArenaGUISetupManager() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     public void buildArenaSetupGUIs(DisplayArena arena) {
@@ -62,7 +62,7 @@ public class ArenaGUISetupManager implements Listener {
     }
 
     public void loadGUIs() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () ->
         {
             GUIManager.getInstance().addGUI(new ArenaSummaryGui());
 
@@ -98,7 +98,7 @@ public class ArenaGUISetupManager implements Listener {
                 return;
         }
 
-        if (!player.hasPermission("zpp.setup")) return;
+        if (!player.hasPermission("ap.setup")) return;
         if (!action.equals(Action.LEFT_CLICK_BLOCK) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
         if (item == null) return;
 

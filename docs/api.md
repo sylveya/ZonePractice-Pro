@@ -1,4 +1,4 @@
-<img width="2000" height="1000" alt="image(6)" src="https://i.imgur.com/5NX2JVG.png" />
+<img width="2000" height="1000" alt="image(6)" src="https://i.imgur.com/ydTpj5d.png" />
 
 ---
 
@@ -16,13 +16,13 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'com.github.sylveya.ZonePractice-Pro:ZonePracticePro-Api:2.4.0'
+    compileOnly 'com.github.sylveya.AstralPractice:AstralPractice-Api:2.4.0'
 }
 ```
 
 ## Maven
 
-- Add jitpack to repositories and ZonePractice Pro to dependencies:
+- Add jitpack to repositories and AstralPractice to dependencies:
 
 ```xml
  <repositories>
@@ -32,23 +32,23 @@ dependencies {
   </repository>
  </repositories>
  <dependency>
-     <groupId>com.github.sylveya.ZonePractice-Pro</groupId>
-     <artifactId>ZonePracticePro-Api</artifactId>
+     <groupId>com.github.sylveya.AstralPractice</groupId>
+     <artifactId>AstralPractice-Api</artifactId>
      <version>2.4.0</version>
      <scope>provided</scope>
  </dependency>
  ```
 
-- Also make sure you have added ZonePractice Pro as a dependency in your plugin.yml:
+- Also make sure you have added AstralPractice as a dependency in your plugin.yml:
 
 ```yml
-depend: [ZonePracticePro]
+depend: [AstralPractice]
 ```
 
 ## Usage
 
 ```java
-ZonePracticeApi api = ZonePracticeApi.getInstance();
+AstralPracticeApi api = AstralPracticeApi.getInstance();
 api.getPlayerDivision(player, DivisionName.FULL);
 api.getElo(player, "Nodebuff");
 api.getLadderWins(player, "Nodebuff", WeightClass.RANKED);

@@ -1,9 +1,9 @@
 package dev.lokspel.practice.manager.fight.match;
 
 import dev.lokspel.api.Event.Match.MatchRoundEndEvent;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.util.TimeUtil;
 import dev.lokspel.api.Event.Match.MatchRoundStartEvent;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.fight.match.enums.RoundStatus;
 import dev.lokspel.practice.manager.fight.match.enums.TeamEnum;
 import dev.lokspel.practice.manager.fight.match.interfaces.Team;
@@ -78,7 +78,7 @@ public abstract class Round extends BukkitRunnable {
             MatchFightPlayer matchFightPlayer = match.getMatchPlayers().get(player);
             matchFightPlayer.setKitChooserOrKit(match instanceof Team ? ((Team) match).getTeam(player) : TeamEnum.TEAM1);
 
-            Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+            Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                     player.addPotionEffects(match.getLadder().getKitData().getEffects()), 2L);
         }
 
@@ -157,7 +157,7 @@ public abstract class Round extends BukkitRunnable {
     private boolean running = false;
 
     public void beginRunnable() {
-        this.runTaskTimer(ZonePractice.getInstance(), 0, 20L);
+        this.runTaskTimer(AstralPractice.getInstance(), 0, 20L);
         this.running = true;
     }
 

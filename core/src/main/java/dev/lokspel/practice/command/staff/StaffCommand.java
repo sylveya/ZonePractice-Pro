@@ -66,14 +66,14 @@ public class StaffCommand implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) return arguments;
 
         if (args.length == 1) {
-            if (player.hasPermission("zpp.staffmode.chat") && ConfigManager.getBoolean("chat.staff-chat.enabled"))
+            if (player.hasPermission("ap.staffmode.chat") && ConfigManager.getBoolean("chat.staff-chat.enabled"))
                 arguments.add("chat");
-            if (player.hasPermission("zpp.staff")) {
+            if (player.hasPermission("ap.staff")) {
                 arguments.add("enable");
                 arguments.add("vanish");
             }
-            if (player.hasPermission("zpp.staffmode.forceend")) arguments.add("forceend");
-            if (player.hasPermission("zpp.staffmode.stop")) arguments.add("stop");
+            if (player.hasPermission("ap.staffmode.forceend")) arguments.add("forceend");
+            if (player.hasPermission("ap.staffmode.stop")) arguments.add("stop");
 
             StringUtil.copyPartialMatches(args[0], arguments, completion);
         } else {

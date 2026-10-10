@@ -32,7 +32,7 @@ public class SpectateCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (!player.hasPermission("zpp.spectate")) {
+        if (!player.hasPermission("ap.spectate")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.SPECTATE.NO-SPECTATE"));
             return false;
         }
@@ -86,7 +86,7 @@ public class SpectateCommand implements CommandExecutor, TabCompleter {
         List<String> arguments = new ArrayList<>();
         List<String> completion = new ArrayList<>();
         if (!(sender instanceof Player player)) return arguments;
-        if (!player.hasPermission("zpp.spectate")) return arguments;
+        if (!player.hasPermission("ap.spectate")) return arguments;
 
         if (args.length == 1) {
             for (Player online : Bukkit.getOnlinePlayers())

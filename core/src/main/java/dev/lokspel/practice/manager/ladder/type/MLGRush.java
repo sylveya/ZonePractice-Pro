@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.ladder.type;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.arena.util.ArenaUtil;
 import dev.lokspel.practice.manager.fight.match.Match;
 import dev.lokspel.practice.manager.fight.match.MatchManager;
@@ -39,9 +39,9 @@ public class MLGRush extends BedFight implements LadderHandle, BlockReturnDelay 
 
     private static final int PLACE_BLOCK_LIMIT = 64;
 
-    private static final String MLGRUSH_BLOCK_OWNER = "ZONEPRACTICE_PRO_MLGRUSH_BLOCK_OWNER";
-    private static final String MLGRUSH_BLOCK_MATERIAL = "ZONEPRACTICE_PRO_MLGRUSH_BLOCK_MATERIAL";
-    private static final String MLGRUSH_BLOCK_ITEM = "ZONEPRACTICE_PRO_MLGRUSH_BLOCK_ITEM";
+    private static final String MLGRUSH_BLOCK_OWNER = "ASTRALPRACTICE_MLGRUSH_BLOCK_OWNER";
+    private static final String MLGRUSH_BLOCK_MATERIAL = "ASTRALPRACTICE_MLGRUSH_BLOCK_MATERIAL";
+    private static final String MLGRUSH_BLOCK_ITEM = "ASTRALPRACTICE_MLGRUSH_BLOCK_ITEM";
 
     @Getter
     @Setter
@@ -161,14 +161,14 @@ public class MLGRush extends BedFight implements LadderHandle, BlockReturnDelay 
     ) {
         Player player = e.getPlayer();
         Material material = returnItem.getType();
-        BukkitScheduler scheduler = ZonePractice.getInstance().getServer().getScheduler();
+        BukkitScheduler scheduler = AstralPractice.getInstance().getServer().getScheduler();
 
-        scheduler.runTaskLater(ZonePractice.getInstance(), () -> {
+        scheduler.runTaskLater(AstralPractice.getInstance(), () -> {
             if (e.isCancelled()) {
                 return;
             }
 
-            scheduler.runTaskLater(ZonePractice.getInstance(), () -> {
+            scheduler.runTaskLater(AstralPractice.getInstance(), () -> {
                 if (MatchManager.getInstance().getLiveMatchByPlayer(player) != match) {
                     return;
                 }

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.gui.guis.customladder.premadecustom.CustomLadderEditorGui;
 import dev.lokspel.practice.manager.gui.setup.SetupHubGui;
@@ -65,7 +65,7 @@ public class GUIManager implements Listener {
     private static final ItemStack DUMMY_ITEM = ItemCreateUtil.createItem("DUMMY", Material.GLOWSTONE_DUST);
 
     private GUIManager() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
 
         this.addGUI(new SetupHubGui());
     }

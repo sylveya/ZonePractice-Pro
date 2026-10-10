@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.event;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.fight.event.enums.EventType;
 import dev.lokspel.practice.util.Common;
@@ -136,7 +136,7 @@ public class AutoEventScheduler {
         };
 
         // Poll every 20 seconds — fine-grained enough to never miss a minute
-        task.runTaskTimer(ZonePractice.getInstance(), 20L, 20L * 20L);
+        task.runTaskTimer(AstralPractice.getInstance(), 20L, 20L * 20L);
     }
 
     /** Cancels the scheduler (called on plugin disable). */

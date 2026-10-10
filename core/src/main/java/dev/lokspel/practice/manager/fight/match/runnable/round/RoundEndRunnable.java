@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.match.runnable.round;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.match.Match;
@@ -77,7 +77,7 @@ public class RoundEndRunnable extends BukkitRunnable {
         // Send titles and victory/defeat messages immediately (before delay)
         sendRoundEndTitles();
         
-        this.runTaskTimer(ZonePractice.getInstance(), 0, 20L);
+        this.runTaskTimer(AstralPractice.getInstance(), 0, 20L);
 
         return this;
     }

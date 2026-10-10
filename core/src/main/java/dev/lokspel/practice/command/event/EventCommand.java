@@ -77,11 +77,11 @@ public class EventCommand implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) return arguments;
 
         if (args.length == 1) {
-            if (player.hasPermission("zpp.event.host")) arguments.add("host");
-            if (player.hasPermission("zpp.event.join")) arguments.add("join");
-            if (player.hasPermission("zpp.event.stop.collecting") || player.hasPermission("zpp.event.stop.live"))
+            if (player.hasPermission("ap.event.host")) arguments.add("host");
+            if (player.hasPermission("ap.event.join")) arguments.add("join");
+            if (player.hasPermission("ap.event.stop.collecting") || player.hasPermission("ap.event.stop.live"))
                 arguments.add("stop");
-            if (player.hasPermission("zpp.setup")) {
+            if (player.hasPermission("ap.setup")) {
                 arguments.add("brackets");
                 arguments.add("juggernaut");
                 arguments.add("lms");

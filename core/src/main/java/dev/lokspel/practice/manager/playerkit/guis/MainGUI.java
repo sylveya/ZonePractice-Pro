@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.playerkit.guis;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
 import dev.lokspel.practice.manager.gui.GUI;
@@ -66,7 +66,7 @@ public class MainGUI extends GUI {
 
     @Override
     public void update() {
-        Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), () -> {
             Inventory inventory = gui.get(1);
 
             for (Map.Entry<Integer, KitItem> entry : kitItems.getSlots().entrySet()) {
@@ -151,7 +151,7 @@ public class MainGUI extends GUI {
                     openConfirmGUI(player, ConfirmGuiType.RESET_CUSTOM_KIT, this, this);
                     break;
                 case 7:
-                    if (!player.hasPermission("zpp.playerkit.share")) {
+                    if (!player.hasPermission("ap.playerkit.share")) {
                         Common.sendMMMessage(player, LanguageManager.getString("CUSTOM-PLAYER-KIT.NO-PERMISSION"));
                         return;
                     }
@@ -175,9 +175,9 @@ public class MainGUI extends GUI {
                     break;
                 case 17:
                     new AnvilGUI.Builder()
-                            .plugin(ZonePractice.getInstance())
+                            .plugin(AstralPractice.getInstance())
                             .onClose(stateSnapshot ->
-                                    Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+                                    Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
                                         this.update();
                                         this.open(player);
                                     }, 2L))

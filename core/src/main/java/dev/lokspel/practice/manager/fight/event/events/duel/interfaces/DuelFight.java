@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.fight.event.events.duel.interfaces;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.event.EventManager;
 import dev.lokspel.practice.manager.fight.event.enums.EventStatus;
@@ -66,7 +66,7 @@ public class DuelFight {
                 sendPostKillCountdownTitle(secondsLeft);
                 secondsLeft--;
             }
-        }.runTaskTimer(ZonePractice.getInstance(), 0L, 20L);
+        }.runTaskTimer(AstralPractice.getInstance(), 0L, 20L);
     }
 
     private void finalizeFightEnd(final Player loser) {

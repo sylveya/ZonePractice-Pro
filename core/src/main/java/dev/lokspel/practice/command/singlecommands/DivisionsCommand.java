@@ -21,12 +21,12 @@ public class DivisionsCommand implements CommandExecutor {
 
         Profile profile = ProfileManager.getInstance().getProfile(player);
 
-        if (!player.hasPermission("zpp.divisions.view")) {
+        if (!player.hasPermission("ap.divisions.view")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.DIVISIONS.NO-PERMISSION"));
             return false;
         }
 
-        if (!player.hasPermission("zpp.admin")) {
+        if (!player.hasPermission("ap.admin")) {
             switch (profile.getStatus()) {
                 case MATCH:
                 case FFA:

@@ -122,33 +122,33 @@ public class PracticeCommand implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) return arguments;
 
         if (args.length == 1) {
-            if (player.hasPermission("zpp.practice.arenas"))
+            if (player.hasPermission("ap.practice.arenas"))
                 arguments.add("arenas");
-            if (player.hasPermission("zpp.practice.lobby"))
+            if (player.hasPermission("ap.practice.lobby"))
                 arguments.add("lobby");
-            if (player.hasPermission("zpp.practice.rename"))
+            if (player.hasPermission("ap.practice.rename"))
                 arguments.add("rename");
-            if (player.hasPermission("zpp.practice.info"))
+            if (player.hasPermission("ap.practice.info"))
                 arguments.add("info");
-            if (player.hasPermission("zpp.setup"))
+            if (player.hasPermission("ap.setup"))
                 arguments.add("goldenhead");
-            if (player.hasPermission("zpp.practice.elo.default") || player.hasPermission("zpp.practice.elo.specific"))
+            if (player.hasPermission("ap.practice.elo.default") || player.hasPermission("ap.practice.elo.specific"))
                 arguments.add("elo");
-            if (player.hasPermission("zpp.practice.ranked.default") || player.hasPermission("zpp.practice.ranked.add"))
+            if (player.hasPermission("ap.practice.ranked.default") || player.hasPermission("ap.practice.ranked.add"))
                 arguments.add("ranked");
-            if (player.hasPermission("zpp.practice.unranked.default") || player.hasPermission("zpp.practice.unranked.add"))
+            if (player.hasPermission("ap.practice.unranked.default") || player.hasPermission("ap.practice.unranked.add"))
                 arguments.add("unranked");
-            if (player.hasPermission("zpp.practice.exp"))
+            if (player.hasPermission("ap.practice.exp"))
                 arguments.add("exp");
-            if (player.hasPermission("zpp.practice.reset"))
+            if (player.hasPermission("ap.practice.reset"))
                 arguments.add("reset");
-            if (player.hasPermission("zpp.practice.nametag.set") || player.hasPermission("zpp.practice.nametag.reset"))
+            if (player.hasPermission("ap.practice.nametag.set") || player.hasPermission("ap.practice.nametag.reset"))
                 arguments.add("nametag");
-            if (player.hasPermission("zpp.setup"))
+            if (player.hasPermission("ap.setup"))
                 arguments.add("teleport");
-            if (player.hasPermission("zpp.setup"))
+            if (player.hasPermission("ap.setup"))
                 arguments.add("hologram");
-            if (player.hasPermission("zpp.practice.reload"))
+            if (player.hasPermission("ap.practice.reload"))
                 arguments.add("reload");
 
             StringUtil.copyPartialMatches(args[0], arguments, completion);

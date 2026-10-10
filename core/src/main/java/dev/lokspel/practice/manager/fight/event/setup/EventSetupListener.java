@@ -1,8 +1,8 @@
 package dev.lokspel.practice.manager.fight.event.setup;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.event.interfaces.Event;
 import dev.lokspel.api.Event.Event.EventEndEvent;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.arena.util.ArenaWorldUtil;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.event.interfaces.EventData;
@@ -64,7 +64,7 @@ public class EventSetupListener implements Listener {
             return;
         }
         org.bukkit.Bukkit.getScheduler().runTask(
-                ZonePractice.getInstance(),
+                AstralPractice.getInstance(),
                 () -> interactCooldown.remove(player.getUniqueId())
         );
 
@@ -156,7 +156,7 @@ public class EventSetupListener implements Listener {
             return;
         }
         org.bukkit.Bukkit.getScheduler().runTask(
-                ZonePractice.getInstance(),
+                AstralPractice.getInstance(),
                 () -> entityInteractCooldown.remove(player.getUniqueId())
         );
 
@@ -222,7 +222,7 @@ public class EventSetupListener implements Listener {
         // Some client/server combos can emit duplicate damage callbacks for one swing.
         if (!markerDamageCooldown.add(player.getUniqueId())) return;
         org.bukkit.Bukkit.getScheduler().runTask(
-                ZonePractice.getInstance(),
+                AstralPractice.getInstance(),
                 () -> markerDamageCooldown.remove(player.getUniqueId())
         );
 
@@ -413,6 +413,6 @@ public class EventSetupListener implements Listener {
     }
 
     private static void scheduleSave(EventData eventData) {
-        org.bukkit.Bukkit.getScheduler().runTaskAsynchronously(ZonePractice.getInstance(), eventData::setData);
+        org.bukkit.Bukkit.getScheduler().runTaskAsynchronously(AstralPractice.getInstance(), eventData::setData);
     }
 }

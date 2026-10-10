@@ -72,7 +72,7 @@ public class ArenaCommand implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) return arguments;
 
         if (args.length == 1) {
-            if (player.hasPermission("zpp.setup")) {
+            if (player.hasPermission("ap.setup")) {
                 arguments.add("create");
                 arguments.add("setup");
                 arguments.add("delete");
@@ -83,8 +83,8 @@ public class ArenaCommand implements CommandExecutor, TabCompleter {
                 arguments.add("disable");
             }
 
-            if (player.hasPermission("zpp.arena.stop")) arguments.add("stop");
-            if (player.hasPermission("zpp.arena.freeze")) arguments.add("freeze");
+            if (player.hasPermission("ap.arena.stop")) arguments.add("stop");
+            if (player.hasPermission("ap.arena.freeze")) arguments.add("freeze");
 
             StringUtil.copyPartialMatches(args[0], arguments, completion);
         } else {

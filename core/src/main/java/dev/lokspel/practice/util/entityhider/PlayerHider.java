@@ -8,7 +8,7 @@ import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPl
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerPlayerInfoUpdate;
 import dev.lokspel.api.Event.Spectate.End.MatchSpectateEndEvent;
 import dev.lokspel.api.Event.Spectate.Start.MatchSpectateStartEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.match.Match;
@@ -46,7 +46,7 @@ public class PlayerHider implements Listener {
     }
 
     private PlayerHider() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     @EventHandler ( priority = EventPriority.MONITOR )
@@ -56,7 +56,7 @@ public class PlayerHider implements Listener {
         final Player player = e.getPlayer();
         final Profile profile = ProfileManager.getInstance().getProfile(player);
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
         {
             for (Player online : Bukkit.getOnlinePlayers()) {
                 if (player == online) continue;
@@ -75,7 +75,7 @@ public class PlayerHider implements Listener {
                     }
                 } else if (!onlineStatus.equals(ProfileStatus.SPECTATE) && onlineProfile.isHidePlayers()) {
                     hidePlayer(online, player);
-                } else if (profile.isHideFromPlayers() && !online.hasPermission("zpp.staffmode.see")) {
+                } else if (profile.isHideFromPlayers() && !online.hasPermission("ap.staffmode.see")) {
                     hidePlayer(online, player);
                 }
 
@@ -83,7 +83,7 @@ public class PlayerHider implements Listener {
                 /*
                  * Hide the online from the player.
                  */
-                if (onlineProfile.isHideFromPlayers() && !player.hasPermission("zpp.staffmode.see")) {
+                if (onlineProfile.isHideFromPlayers() && !player.hasPermission("ap.staffmode.see")) {
                     hidePlayer(player, online);
                 } else if (profile.isHidePlayers() && ServerManager.getInstance().getInWorld().get(online) == WorldEnum.LOBBY) {
                     hidePlayer(player, online);
@@ -101,7 +101,7 @@ public class PlayerHider implements Listener {
         Profile profile = ProfileManager.getInstance().getProfile(player);
         if (profile == null) return;
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
         {
             if (ServerManager.getInstance().getInWorld().get(player) != WorldEnum.LOBBY) return;
 
@@ -114,7 +114,7 @@ public class PlayerHider implements Listener {
                 // Handle the teleported player
                 if (profile.isHidePlayers() && ServerManager.getInstance().getInWorld().get(online) == WorldEnum.LOBBY) {
                     hidePlayer(player, online);
-                } else if (!onlineProfile.isHideFromPlayers() || player.hasPermission("zpp.staffmode.see")) {
+                } else if (!onlineProfile.isHideFromPlayers() || player.hasPermission("ap.staffmode.see")) {
                     showPlayer(player, online);
                 } else {
                     hidePlayer(player, online);
@@ -124,10 +124,10 @@ public class PlayerHider implements Listener {
                 if (!(onlineProfile.getStatus().equals(ProfileStatus.MATCH) || onlineProfile.getStatus().equals(ProfileStatus.EVENT) || onlineProfile.getStatus().equals(ProfileStatus.FFA))) {
                     if (onlineProfile.isHidePlayers() && ServerManager.getInstance().getInWorld().get(online) == WorldEnum.LOBBY) {
                         hidePlayer(online, player);
-                    } else if (!profile.isHideFromPlayers() || online.hasPermission("zpp.staffmode.see")) {
+                    } else if (!profile.isHideFromPlayers() || online.hasPermission("ap.staffmode.see")) {
                         showPlayer(online, player);
                         showTabEntry(online, player);
-                    } else if (profile.isHideFromPlayers() || !online.hasPermission("zpp.staffmode.see")) {
+                    } else if (profile.isHideFromPlayers() || !online.hasPermission("ap.staffmode.see")) {
                         hidePlayer(online, player);
                     }
                 } else if (!ConfigManager.isShowPlayersInTab()) {
@@ -249,7 +249,7 @@ public class PlayerHider implements Listener {
             } else {
                 Profile onlineProfile = ProfileManager.getInstance().getProfile(online);
 
-                if (!onlineProfile.isHideFromPlayers() || player.hasPermission("zpp.staffmode.see")) {
+                if (!onlineProfile.isHideFromPlayers() || player.hasPermission("ap.staffmode.see")) {
                     showPlayer(player, online);
                 }
             }
@@ -276,7 +276,7 @@ public class PlayerHider implements Listener {
                     if (profile.isHideSpectators()) {
                         hidePlayer(player, online);
                     } else {
-                        if (!onlineProfile.isHideFromPlayers() || player.hasPermission("zpp.staffmode.see")) {
+                        if (!onlineProfile.isHideFromPlayers() || player.hasPermission("ap.staffmode.see")) {
                             showPlayer(player, online);
                         }
                     }
@@ -303,7 +303,7 @@ public class PlayerHider implements Listener {
             if (player.equals(online)) continue;
 
             if (profile.isHideFromPlayers()) {
-                if (online.hasPermission("zpp.staffmode.see")) continue;
+                if (online.hasPermission("ap.staffmode.see")) continue;
 
                 hidePlayer(online, player);
             } else {
@@ -337,7 +337,7 @@ public class PlayerHider implements Listener {
         boolean inLobby = keepInLobbyTab && ConfigManager.isShowPlayersInLobbyTab();
         boolean showPlayersInTab = ConfigManager.isShowPlayersInTab() || inLobby;
 
-        observer.hidePlayer(ZonePractice.getInstance(), target);
+        observer.hidePlayer(AstralPractice.getInstance(), target);
 
         if (showPlayersInTab) {
             // Re-adding the entry resets the name on the client side, so the lobby tab list has to
@@ -386,7 +386,7 @@ public class PlayerHider implements Listener {
     }
 
     public void showPlayer(Player observer, Player target) {
-        observer.showPlayer(ZonePractice.getInstance(), target);
+        observer.showPlayer(AstralPractice.getInstance(), target);
     }
 
     /**

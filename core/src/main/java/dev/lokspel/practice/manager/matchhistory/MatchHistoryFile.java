@@ -10,7 +10,7 @@ import java.util.UUID;
 
 /**
  * YAML-backed per-player match history stored at:
- *   plugins/ZonePracticePro/match-history/<uuid>.yml
+ *   plugins/AstralPractice/match-history/<uuid>.yml
  *
  * Stores up to 5 recent match entries per player.
  */

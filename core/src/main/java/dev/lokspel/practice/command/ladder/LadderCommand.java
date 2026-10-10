@@ -60,15 +60,15 @@ public class LadderCommand implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) return arguments;
 
         if (args.length == 1) {
-            if (player.hasPermission("zpp.setup")) {
+            if (player.hasPermission("ap.setup")) {
                 arguments.add("info");
                 arguments.add("create");
                 arguments.add("delete");
                 arguments.add("set");
             }
 
-            if (player.hasPermission("zpp.ladder.stop")) arguments.add("stop");
-            if (player.hasPermission("zpp.ladder.freeze")) arguments.add("freeze");
+            if (player.hasPermission("ap.ladder.stop")) arguments.add("stop");
+            if (player.hasPermission("ap.ladder.freeze")) arguments.add("freeze");
 
             StringUtil.copyPartialMatches(args[0], arguments, completion);
         } else {

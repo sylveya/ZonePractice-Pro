@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.guis.queue;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.fight.match.MatchManager;
@@ -88,7 +88,7 @@ public abstract class QueueSelectorGui extends GUI {
     @Override
     public boolean update(boolean forceRefresh) {
         if (!Bukkit.isPrimaryThread()) {
-            Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> update(forceRefresh));
+            Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> update(forceRefresh));
             return false;
         }
 
@@ -150,7 +150,7 @@ public abstract class QueueSelectorGui extends GUI {
     private void startTicker() {
         if (tickerTask != null) return;
 
-        tickerTask = Bukkit.getScheduler().runTaskTimer(ZonePractice.getInstance(), () -> {
+        tickerTask = Bukkit.getScheduler().runTaskTimer(AstralPractice.getInstance(), () -> {
             if (inGuiPlayers.isEmpty()) {
                 stopTicker();
                 return;
@@ -228,7 +228,7 @@ public abstract class QueueSelectorGui extends GUI {
     public void open(Player player, int page) {
         super.open(player, page);
         // Delay matches the 2L delay in GUI.open so we start only after inGuiPlayers is set
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             this.startTicker();
             InventoryView view = player.getOpenInventory();
             applySelectionGlow(player, page, view.getTopInventory());

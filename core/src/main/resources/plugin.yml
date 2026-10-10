@@ -1,6 +1,6 @@
-name: ZonePracticePro
+name: AstralPractice
 version: '${version}'
-main: dev.lokspel.practice.ZonePractice
+main: dev.lokspel.practice.AstralPractice
 authors: [ lokspel ]
 softdepend: [ PlaceholderAPI, Multiverse-Core, FastAsyncWorldEdit, My_Worlds, TAB ]
 loadbefore: [ CMI, CMILib ]
@@ -19,7 +19,7 @@ commands:
   settings:
     description: Settings command
   practice:
-    aliases: [prac, zonepractice, zoneprac, zonep]
+    aliases: [prac, astralpractice, astralprac, astralp]
   staff:
     aliases: staffmode
   spectate:
@@ -62,363 +62,363 @@ commands:
     description: Change your formatted display name.
 
 permissions:
-  zpp.admin:
+  ap.admin:
     default: op
     children:
-      zpp.setup: true
-      zpp.staff: true
-      zpp.event.*: true
-      zpp.settings.*: true
-      zpp.admin.scoreboard: true
-  zpp.setup:
+      ap.setup: true
+      ap.staff: true
+      ap.event.*: true
+      ap.settings.*: true
+      ap.admin.scoreboard: true
+  ap.setup:
     description: Setup everything.
     children:
-      zpp.ladder.freeze: true
-      zpp.arena.freeze: true
-  zpp.staff:
+      ap.ladder.freeze: true
+      ap.arena.freeze: true
+  ap.staff:
     description: Staff permission.
     children:
-      zpp.staffmode: true
-      zpp.staffmode.fly: true
-      zpp.staffmode.stop: true
-      zpp.staffmode.see: true
-      zpp.staffmode.chat: true
-      zpp.bypass.privatemessage: true
-      zpp.bypass.spectate: true
-  zpp.autosave.alert:
+      ap.staffmode: true
+      ap.staffmode.fly: true
+      ap.staffmode.stop: true
+      ap.staffmode.see: true
+      ap.staffmode.chat: true
+      ap.bypass.privatemessage: true
+      ap.bypass.spectate: true
+  ap.autosave.alert:
     description: Alerts when the auto save ends and starts.
 
   # Practice command permissions
-  zpp.practice.*:
+  ap.practice.*:
     children:
-      zpp.practice.lobby: true
-      zpp.practice.arenas: true
-      zpp.practice.info: true
-      zpp.practice.info.teleport: true
-      zpp.practice.info.cancel: true
-      zpp.practice.info.resetstats: true
-      zpp.practice.elo.default: true
-      zpp.practice.elo.specific: true
-      zpp.practice.ranked: true
-      zpp.practice.unranked: true
-      zpp.practice.exp: true
-      zpp.practice.rename: true
-      zpp.practice.reload: true
-      zpp.practice.stop: true
-  zpp.practice.lobby:
+      ap.practice.lobby: true
+      ap.practice.arenas: true
+      ap.practice.info: true
+      ap.practice.info.teleport: true
+      ap.practice.info.cancel: true
+      ap.practice.info.resetstats: true
+      ap.practice.elo.default: true
+      ap.practice.elo.specific: true
+      ap.practice.ranked: true
+      ap.practice.unranked: true
+      ap.practice.exp: true
+      ap.practice.rename: true
+      ap.practice.reload: true
+      ap.practice.stop: true
+  ap.practice.lobby:
     description: Teleport to and set the lobby.
-  zpp.practice.arenas:
+  ap.practice.arenas:
     description: Teleport to the arenas world.
-  zpp.practice.info:
+  ap.practice.info:
     description: Usage for the /prac info <player> command.
-  zpp.practice.info.teleport:
+  ap.practice.info.teleport:
     description: Teleport to the player's activities.
-  zpp.practice.info.cancel:
+  ap.practice.info.cancel:
     description: Cancel the player's activities.
-  zpp.practice.info.resetstats:
+  ap.practice.info.resetstats:
     description: Reset the player's statistics.
 
-  zpp.practice.elo.default:
+  ap.practice.elo.default:
     description: Reset the player's elos to default.
-  zpp.practice.elo.specific:
+  ap.practice.elo.specific:
     description: Set the player's elos to a specific number.
 
-  zpp.practice.rename:
+  ap.practice.rename:
     description: Usage for the /prac rename command.
-  zpp.practice.reset:
+  ap.practice.reset:
     description: Reset a player fully.
-  zpp.practice.reload:
+  ap.practice.reload:
     description: Reload practice config files.
 
-  zpp.practice.nametag.set:
+  ap.practice.nametag.set:
     description: Set player's nametag.
-  zpp.practice.nametag.reset:
+  ap.practice.nametag.reset:
     description: Reset player's nametag.
-  zpp.practice.nametag.name.others:
+  ap.practice.nametag.name.others:
     description: Allow changing other players' name format through /practice nametag name.
     default: op
 
-  zpp.nick.use:
+  ap.nick.use:
     description: Use /nick command.
     default: true
-  zpp.nick.others:
+  ap.nick.others:
     description: Set another player's display name using /nick.
     default: op
     children:
-      zpp.nick.use: true
-  zpp.nick.different-name:
+      ap.nick.use: true
+  ap.nick.different-name:
     description: Allow /nick to use a different visible username instead of only styling the real one.
     default: op
     children:
-      zpp.nick.use: true
-  zpp.nick.reset.others:
+      ap.nick.use: true
+  ap.nick.reset.others:
     description: Reset another player's display name using /nick reset.
     default: op
     children:
-      zpp.nick.use: true
+      ap.nick.use: true
 
-  zpp.practice.unranked.default:
+  ap.practice.unranked.default:
     description: Reset the player's daily unranked limit to default.
-  zpp.practice.unranked.add:
+  ap.practice.unranked.add:
     description: Add extra unranked to a player.
 
-  zpp.practice.ranked.default:
+  ap.practice.ranked.default:
     description: Reset the player's daily ranked limit to default.
-  zpp.practice.ranked.add:
+  ap.practice.ranked.add:
     description: Add extra rankeds to a player.
-  zpp.practice.ranked.ban:
+  ap.practice.ranked.ban:
     description: Ban a player from playing ranked matches.
-  zpp.practice.ranked.unban:
+  ap.practice.ranked.unban:
     description: Unban a player from playing ranked matches.
 
-  zpp.practice.exp.reset:
+  ap.practice.exp.reset:
     description: Reset the player's experience.
-  zpp.practice.exp.add:
+  ap.practice.exp.add:
     description: Add experience to a player.
-  zpp.practice.exp.set:
+  ap.practice.exp.set:
     description: Set experience to a player.
 
 
 
   # Player settings
-  zpp.settings.*:
+  ap.settings.*:
     children:
-      zpp.settings.open: true
-      zpp.bypass.cooldown: false
-      zpp.settings.duelrequest: true
-      zpp.settings.autoqueue: true
-      zpp.settings.scoreboard: true
-      zpp.settings.privatemessage: true
-      zpp.settings.partyinvite: true
-      zpp.settings.playerhide: true
-      zpp.settings.allowspectate: true
-      zpp.settings.worldtime: true
-      zpp.settings.prefixvisibility: true
-  zpp.settings.open:
+      ap.settings.open: true
+      ap.bypass.cooldown: false
+      ap.settings.duelrequest: true
+      ap.settings.autoqueue: true
+      ap.settings.scoreboard: true
+      ap.settings.privatemessage: true
+      ap.settings.partyinvite: true
+      ap.settings.playerhide: true
+      ap.settings.allowspectate: true
+      ap.settings.worldtime: true
+      ap.settings.prefixvisibility: true
+  ap.settings.open:
     description: Open the settings gui.
     default: true
-  zpp.settings.duelrequest:
+  ap.settings.duelrequest:
     description: Toggle duel requests.
-  zpp.settings.autoqueue:
+  ap.settings.autoqueue:
     description: Toggle auto-queue after a match ends.
-  zpp.settings.scoreboard:
+  ap.settings.scoreboard:
     description: Toggle the scoreboard.
-  zpp.settings.privatemessage:
+  ap.settings.privatemessage:
     description: Toggle private messages.
-  zpp.settings.partyinvite:
+  ap.settings.partyinvite:
     description: Toggle party invites.
-  zpp.settings.playerhide:
+  ap.settings.playerhide:
     description: Toggle player hider in lobby.
-  zpp.settings.allowspectate:
+  ap.settings.allowspectate:
     description: Toggle spectators in their matches.
-  zpp.settings.worldtime:
+  ap.settings.worldtime:
     description: Change world time.
-  zpp.settings.prefixvisibility:
+  ap.settings.prefixvisibility:
     description: Change prefix/suffix visibility mode in chat/tab/sidebar/nametag.
-  zpp.settings.fly:
+  ap.settings.fly:
     description: Toggle fly in the lobby.
 
   # Staff mode
-  zpp.staffmode:
+  ap.staffmode:
     description: Turn on staff mode.
     children:
-      zpp.bypass.spectate: true
-  zpp.staffmode.fly:
+      ap.bypass.spectate: true
+  ap.staffmode.fly:
     description: Fly in the lobby.
-  zpp.staffmode.forceend:
+  ap.staffmode.forceend:
     description: Able to force end matches (if possible party matches can continue) and freezes the player in the lobby.
-  zpp.staffmode.chat:
+  ap.staffmode.chat:
     description: Use staff chat.
-  zpp.staffmode.see:
+  ap.staffmode.see:
     description: See the hiding staffs.
 
-  zpp.ladder.freeze:
+  ap.ladder.freeze:
     description: Freeze ladders so player can't start a new game with it.
-  zpp.ladder.stop:
+  ap.ladder.stop:
     description: Stop all the matches with a ladder.
-  zpp.arena.freeze:
+  ap.arena.freeze:
     description: Freeze arenas so player can't start a new game with it.
-  zpp.arena.stop:
+  ap.arena.stop:
     description: Stop all the matches in a arena.
 
   # Basic permission
-  zpp.spectate:
+  ap.spectate:
     default: true
-  zpp.spectate.vanish:
+  ap.spectate.vanish:
     description: Toogle vanish when spectating.
-  zpp.spectate.menu:
+  ap.spectate.menu:
     description: Spectate menu use.
-  zpp.spectate.random:
+  ap.spectate.random:
     description: Spectate random match.
-  zpp.spectate.targets:
+  ap.spectate.targets:
     description: Open the fighter list and teleport to a single fighter while spectating.
-  zpp.statistics:
+  ap.statistics:
     default: true
-  zpp.statistics.other:
+  ap.statistics.other:
     description: View other players statistics.
-  zpp.divisions.view:
+  ap.divisions.view:
     default: true
     description: Open the divisions GUI.
 
-  zpp.ignorequeue:
+  ap.ignorequeue:
     default: true
     description: Ignore a player in unranked queue.
 
-  zpp.queue.multi:
+  ap.queue.multi:
     description: Allows players to queue for multiple ladders in the same queue type.
 
-  zpp.duel:
+  ap.duel:
     description: Use the /duel command.
-  zpp.duel.selectarena:
+  ap.duel.selectarena:
     description: Player can choose the arena to play in.
-  zpp.duel.selectrounds:
+  ap.duel.selectrounds:
     description: Player can choose how many rounds they want to play.
 
-  zpp.duel.infiniteinvite:
+  ap.duel.infiniteinvite:
     description: Player can invite player to duel any number of times.
-  zpp.party.selectarena:
+  ap.party.selectarena:
     description: Choose arena to play in with party.
-  zpp.party.selectrounds:
+  ap.party.selectrounds:
     description: Player can choose how many rounds they want to play.
-  zpp.party.infiniteinvite:
+  ap.party.infiniteinvite:
     description: Party leader can invite other parties any number of times. (Before the previous invite expire)
 
   # Party permissions
-  zpp.party.create:
+  ap.party.create:
     description: Create party.
-  zpp.party.info.others:
+  ap.party.info.others:
     description: View other player's party information.
-  zpp.party.changelimit:
+  ap.party.changelimit:
     description: Change party player limit.
-  zpp.party.public:
+  ap.party.public:
     description: Change party status to public.
-  zpp.party.view:
+  ap.party.view:
     description: View public parties.
-  zpp.party.joinpublic:
+  ap.party.joinpublic:
     description: Join a public party without an invite.
-  zpp.party.broadcast:
+  ap.party.broadcast:
     description: Broadcast the party, if it public.
-  zpp.party.allinvite:
+  ap.party.allinvite:
     description: Invite all the players in the server to the party.
-  zpp.party.partychat:
+  ap.party.partychat:
     description: Change party chat use status.
-  zpp.party.duelrequest:
+  ap.party.duelrequest:
     description: Toggle duel requests in party.
 
   # Event permissions
-  zpp.event.*:
+  ap.event.*:
     children:
-      zpp.event.host.all: true
-      zpp.event.join: true
-      zpp.event.stop.collecting: true
-      zpp.event.stop.live: true
-  zpp.event.host:
+      ap.event.host.all: true
+      ap.event.join: true
+      ap.event.stop.collecting: true
+      ap.event.stop.live: true
+  ap.event.host:
     description: Open the event host gui.
-  zpp.event.host.all:
+  ap.event.host.all:
     description: Host all the events.
     children:
-      zpp.event.host: true
-  zpp.event.join:
+      ap.event.host: true
+  ap.event.join:
     default: true
 
-  zpp.event.stop.collecting:
+  ap.event.stop.collecting:
     description: Stop events while its collecting.
-  zpp.event.stop.live:
+  ap.event.stop.live:
     description: Stop ongoing events.
 
   # Bypasses
-  zpp.bypass.privatemessage:
+  ap.bypass.privatemessage:
     description: Players with this permission can send private messages to players who don't accept them.
-  zpp.bypass.ranked.requirements:
+  ap.bypass.ranked.requirements:
     description: Bypass ranked requirements.
-  zpp.bypass.cooldown:
+  ap.bypass.cooldown:
     description: Cooldown bypass for spectate vanish, lobby vanish etc..
-  zpp.bypass.unranked.limit:
+  ap.bypass.unranked.limit:
     description: Bypass unranked limit per day.
-  zpp.bypass.ranked.limit:
+  ap.bypass.ranked.limit:
     description: Bypass ranked limit per day.
-  zpp.bypass.party.broadcast.limit:
+  ap.bypass.party.broadcast.limit:
     description: Bypass the daily party broadcast limit.
-  zpp.bypass.elo.change:
+  ap.bypass.elo.change:
     description: Players elo cannot be changed with commands.
-  zpp.bypass.forceend:
+  ap.bypass.forceend:
     description: Bypass staff forceend. (Can't end their match or event)
-  zpp.bypass.stop:
+  ap.bypass.stop:
     description: Bypass staff stop. (Can't be removed from match or event)
-  zpp.bypass.nametag:
+  ap.bypass.nametag:
     description: Bypass nametag change.
-  zpp.bypass.spectate:
+  ap.bypass.spectate:
     description: Bypass if a match is not viewable.
 
   # Custom Kits
-  zpp.customkit.1:
+  ap.customkit.1:
     description: Create 1 custom kit.
-  zpp.customkit.2:
+  ap.customkit.2:
     children:
-      zpp.customkit.1: true
-  zpp.customkit.3:
+      ap.customkit.1: true
+  ap.customkit.3:
     children:
-      zpp.customkit.2: true
-  zpp.customkit.4:
+      ap.customkit.2: true
+  ap.customkit.4:
     children:
-      zpp.customkit.3: true
+      ap.customkit.3: true
 
   # Custom player kit
-  zpp.playerkit.share:
+  ap.playerkit.share:
     description: Share custom kit with others.
-  zpp.playerkit.copy:
+  ap.playerkit.copy:
     description: Copy custom kit from others.
-  zpp.playerkit.queue.host:
+  ap.playerkit.queue.host:
     description: Host a custom kit queue.
-  zpp.playerkit.queue.use:
+  ap.playerkit.queue.use:
     description: Use custom kit queue commands.
     default: true
 
   # Cosmetics
-  zpp.cosmetics.main:
+  ap.cosmetics.main:
     description: Open the cosmetics GUI.
-  zpp.cosmetics.armortrim.base.*:
+  ap.cosmetics.armortrim.base.*:
     description: Allow access to all armor base tiers.
     children:
-      zpp.cosmetics.armortrim.base.leather: true
-      zpp.cosmetics.armortrim.base.gold: true
-      zpp.cosmetics.armortrim.base.iron: true
-      zpp.cosmetics.armortrim.base.diamond: true
-      zpp.cosmetics.armortrim.base.netherite: true
-  zpp.cosmetics.armortrim.base.leather:
+      ap.cosmetics.armortrim.base.leather: true
+      ap.cosmetics.armortrim.base.gold: true
+      ap.cosmetics.armortrim.base.iron: true
+      ap.cosmetics.armortrim.base.diamond: true
+      ap.cosmetics.armortrim.base.netherite: true
+  ap.cosmetics.armortrim.base.leather:
     description: Allow access to Leather armor tier.
-  zpp.cosmetics.armortrim.base.gold:
+  ap.cosmetics.armortrim.base.gold:
     description: Allow access to Gold armor tier.
-  zpp.cosmetics.armortrim.base.iron:
+  ap.cosmetics.armortrim.base.iron:
     description: Allow access to Iron armor tier.
-  zpp.cosmetics.armortrim.base.diamond:
+  ap.cosmetics.armortrim.base.diamond:
     description: Allow access to Diamond armor tier.
-  zpp.cosmetics.armortrim.base.netherite:
+  ap.cosmetics.armortrim.base.netherite:
     description: Allow access to Netherite armor tier.
-  zpp.cosmetics.armortrim.apply-global:
+  ap.cosmetics.armortrim.apply-global:
     description: Copy armor trim setting to all armor types.
-  zpp.cosmetics.lobby.*:
+  ap.cosmetics.lobby.*:
     description: Access all lobby movement cosmetics.
     children:
-      zpp.cosmetics.lobby.none: true
-      zpp.cosmetics.lobby.wind_charge: true
-      zpp.cosmetics.lobby.trident: true
-      zpp.cosmetics.lobby.spear: true
-  zpp.cosmetics.lobby.none:
+      ap.cosmetics.lobby.none: true
+      ap.cosmetics.lobby.wind_charge: true
+      ap.cosmetics.lobby.trident: true
+      ap.cosmetics.lobby.spear: true
+  ap.cosmetics.lobby.none:
     description: Select no lobby movement cosmetic.
-  zpp.cosmetics.lobby.wind_charge:
+  ap.cosmetics.lobby.wind_charge:
     description: Select the lobby wind charge cosmetic.
-  zpp.cosmetics.lobby.trident:
+  ap.cosmetics.lobby.trident:
     description: Select the lobby trident cosmetic.
-  zpp.cosmetics.lobby.spear:
+  ap.cosmetics.lobby.spear:
     description: Select the lobby spear cosmetic.
 
-  # Note: zpp.cosmetics.pattern.* and zpp.cosmetics.material.* permissions are
+  # Note: ap.cosmetics.pattern.* and ap.cosmetics.material.* permissions are
   # dynamically registered at runtime by ArmorTrimPermissionManager based on
   # available trim patterns and materials in the server's Minecraft version.
   # They do NOT need to be declared here.
 
   # Match History
-  zpp.matchhistory:
+  ap.matchhistory:
     description: Access /matchhistory command.
     default: op

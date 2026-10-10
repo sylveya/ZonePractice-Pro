@@ -32,7 +32,7 @@ public final class EloArg {
                 return;
             }
 
-            if (!player.hasPermission("zpp.practice.elo.default")) {
+            if (!player.hasPermission("ap.practice.elo.default")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -79,7 +79,7 @@ public final class EloArg {
                 return;
             }
 
-            if (!player.hasPermission("zpp.practice.elo.specific")) {
+            if (!player.hasPermission("ap.practice.elo.specific")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return;
             }
@@ -243,27 +243,27 @@ public final class EloArg {
         List<String> arguments = new ArrayList<>();
 
         if (args.length == 2) {
-            if (player.hasPermission("zpp.practice.elo.default")) arguments.add("reset");
-            if (player.hasPermission("zpp.practice.elo.specific")) arguments.add("set");
+            if (player.hasPermission("ap.practice.elo.default")) arguments.add("reset");
+            if (player.hasPermission("ap.practice.elo.specific")) arguments.add("set");
 
             return StringUtil.copyPartialMatches(args[1], arguments, new ArrayList<>());
         } else if (args.length == 3) {
-            if (player.hasPermission("zpp.practice.elo.default") && args[1].equalsIgnoreCase("reset")) {
+            if (player.hasPermission("ap.practice.elo.default") && args[1].equalsIgnoreCase("reset")) {
                 for (Player online : Bukkit.getOnlinePlayers())
                     arguments.add(online.getName());
-            } else if (player.hasPermission("zpp.practice.elo.specific") && args[1].equalsIgnoreCase("set")) {
+            } else if (player.hasPermission("ap.practice.elo.specific") && args[1].equalsIgnoreCase("set")) {
                 for (Player online : Bukkit.getOnlinePlayers())
                     arguments.add(online.getName());
             }
 
             return StringUtil.copyPartialMatches(args[2], arguments, new ArrayList<>());
         } else if (args.length == 4) {
-            if (player.hasPermission("zpp.practice.elo.default") && args[1].equalsIgnoreCase("reset")) {
+            if (player.hasPermission("ap.practice.elo.default") && args[1].equalsIgnoreCase("reset")) {
                 for (Ladder ladder : LadderManager.getInstance().getLadders())
                     arguments.add(ladder.getName());
 
                 arguments.add("*");
-            } else if (player.hasPermission("zpp.practice.elo.specific") && args[1].equalsIgnoreCase("set")) {
+            } else if (player.hasPermission("ap.practice.elo.specific") && args[1].equalsIgnoreCase("set")) {
                 for (Ladder ladder : LadderManager.getInstance().getLadders())
                     arguments.add(ladder.getName());
 

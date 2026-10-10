@@ -17,7 +17,7 @@ public final class EffectArg {
     private EffectArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.LADDER.NO-PERMISSION"));
             return;
         }

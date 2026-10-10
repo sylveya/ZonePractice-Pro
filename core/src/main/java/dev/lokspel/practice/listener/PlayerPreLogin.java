@@ -1,6 +1,6 @@
 package dev.lokspel.practice.listener;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.util.Common;
 import org.bukkit.Bukkit;
@@ -19,7 +19,7 @@ public class PlayerPreLogin implements Listener {
     @EventHandler ( priority = EventPriority.HIGHEST )
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
         // Check if plugin is fully loaded
-        if (!ZonePractice.isFullyLoaded()) {
+        if (!AstralPractice.isFullyLoaded()) {
             String message = LanguageManager.getString("PLUGIN-LOADING-MESSAGE");
             if (message == null || message.isEmpty()) {
                 message = "<red>The server is still loading. Please try again in a moment.";

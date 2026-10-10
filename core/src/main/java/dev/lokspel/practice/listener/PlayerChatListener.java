@@ -1,6 +1,6 @@
 package dev.lokspel.practice.listener;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.ffa.FFAManager;
@@ -32,7 +32,7 @@ import java.util.Set;
 
 public class PlayerChatListener implements Listener {
 
-    private static final String MESSAGE_PLACEHOLDER = "<zpp-message>";
+    private static final String MESSAGE_PLACEHOLDER = "<ap-message>";
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerChat(AsyncChatEvent e) {
@@ -77,7 +77,7 @@ public class PlayerChatListener implements Listener {
                 );
 
                 Bukkit.getScheduler().runTask(
-                        ZonePractice.getInstance(),
+                        AstralPractice.getInstance(),
                         () -> Common.sendMMMessage(player, disabled)
                 );
             }
@@ -96,7 +96,7 @@ public class PlayerChatListener implements Listener {
 
 
         // Staff shortcut
-        if (player.hasPermission("zpp.staff")
+        if (player.hasPermission("ap.staff")
                 && ConfigManager.getBoolean("CHAT.STAFF-CHAT.SHORTCUT")
                 && rawMessage.startsWith("#")) {
 
@@ -174,7 +174,7 @@ public class PlayerChatListener implements Listener {
 
             } else {
 
-                component = ZonePractice.getMiniMessage()
+                component = AstralPractice.getMiniMessage()
                         .deserialize(
                                 StringUtil.legacyToMiniMessage(format)
                         );

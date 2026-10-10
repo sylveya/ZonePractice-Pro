@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.ladder.type;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.fight.match.Match;
 import dev.lokspel.practice.manager.fight.match.enums.RoundStatus;
 import dev.lokspel.practice.manager.fight.match.util.MatchUtil;
@@ -85,7 +85,7 @@ public class SkyWars extends NormalLadder implements CustomConfig, LadderHandle 
 
         match.addBlockChange(new ChangedBlock(chest));
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                 chest.setBlockData(Material.AIR.createBlockData()), 2L);
     }
 

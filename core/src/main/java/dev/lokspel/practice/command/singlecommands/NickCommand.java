@@ -1,6 +1,6 @@
 package dev.lokspel.practice.command.singlecommands;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.inventory.InventoryUtil;
@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 public class NickCommand implements CommandExecutor, TabCompleter {
 
     private static final PlainTextComponentSerializer PLAIN_TEXT_SERIALIZER = PlainTextComponentSerializer.plainText();
-    private static final String DIFFERENT_NAME_PERMISSION = "zpp.nick.different-name";
+    private static final String DIFFERENT_NAME_PERMISSION = "ap.nick.different-name";
 
     private static String joinArgs(String[] args, int start) {
         StringBuilder builder = new StringBuilder();
@@ -56,7 +56,7 @@ public class NickCommand implements CommandExecutor, TabCompleter {
 
     private static String renderNamePreview(Player target, String rawTemplate) {
         String normalizedTemplate = NameFormatUtil.normalizePlayerNameTemplate(rawTemplate);
-        return ZonePractice.getMiniMessage().serialize(
+        return AstralPractice.getMiniMessage().serialize(
                 NameFormatUtil.applyPlayerPlaceholders(
                         NameFormatUtil.parseConfiguredComponent(normalizedTemplate),
                         target.getName()
@@ -91,7 +91,7 @@ public class NickCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (!player.hasPermission("zpp.nick.use")) {
+        if (!player.hasPermission("ap.nick.use")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
             return false;
         }
@@ -110,7 +110,7 @@ public class NickCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            if (!player.hasPermission("zpp.nick.reset.others")) {
+            if (!player.hasPermission("ap.nick.reset.others")) {
                 Common.sendMMMessage(player, LanguageManager.getString("COMMAND.PRACTICE.NO-PERMISSION"));
                 return false;
             }
@@ -135,7 +135,7 @@ public class NickCommand implements CommandExecutor, TabCompleter {
         Player target = player;
         int templateStartIndex = 0;
 
-        if (args.length >= 2 && player.hasPermission("zpp.nick.others")) {
+        if (args.length >= 2 && player.hasPermission("ap.nick.others")) {
             Player selectedTarget = Bukkit.getPlayer(args[0]);
             if (selectedTarget != null) {
                 target = selectedTarget;
@@ -183,18 +183,18 @@ public class NickCommand implements CommandExecutor, TabCompleter {
         List<String> completion = new ArrayList<>();
 
         if (!(sender instanceof Player player)) return arguments;
-        if (!player.hasPermission("zpp.nick.use")) return arguments;
+        if (!player.hasPermission("ap.nick.use")) return arguments;
 
         if (args.length == 1) {
             arguments.add("reset");
 
-            if (player.hasPermission("zpp.nick.others") || player.hasPermission("zpp.nick.reset.others")) {
+            if (player.hasPermission("ap.nick.others") || player.hasPermission("ap.nick.reset.others")) {
                 for (Player online : Bukkit.getOnlinePlayers()) {
                     arguments.add(online.getName());
                 }
             }
             org.bukkit.util.StringUtil.copyPartialMatches(args[0], arguments, completion);
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("reset") && player.hasPermission("zpp.nick.reset.others")) {
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("reset") && player.hasPermission("ap.nick.reset.others")) {
             for (Player online : Bukkit.getOnlinePlayers()) {
                 arguments.add(online.getName());
             }

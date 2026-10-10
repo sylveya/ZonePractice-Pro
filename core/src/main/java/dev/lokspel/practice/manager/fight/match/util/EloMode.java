@@ -41,7 +41,7 @@ public enum EloMode {
 
         if (configured.isEmpty()) {
             activeMode = SKILL;
-            Common.sendConsoleMMMessage("<yellow>[ZonePractice] " + CONFIG_PATH + " is not set, defaulting to SKILL.");
+            Common.sendConsoleMMMessage("<yellow>[AstralPractice] " + CONFIG_PATH + " is not set, defaulting to SKILL.");
             return;
         }
 
@@ -49,7 +49,7 @@ public enum EloMode {
             activeMode = EloMode.valueOf(configured.toUpperCase());
         } catch (IllegalArgumentException e) {
             activeMode = SKILL;
-            Common.sendConsoleMMMessage("<red>[ZonePractice] Invalid " + CONFIG_PATH + ": '" + configured
+            Common.sendConsoleMMMessage("<red>[AstralPractice] Invalid " + CONFIG_PATH + ": '" + configured
                     + "'. Valid options: SKILL, RANDOM. Defaulting to SKILL.");
         }
     }

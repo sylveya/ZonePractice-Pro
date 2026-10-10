@@ -80,16 +80,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew --no-daemon --console=plain clean build -Pversion="$BUILD_VERSION"
 
-      - name: Rename Jar File
-        run: |
-          mv "distribution/build/libs/ZonePracticePro-${BUILD_VERSION}.jar" \
-            "distribution/build/libs/ZonePractice-Pro-${BUILD_VERSION}.jar"
-
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: ZonePractice-Pro-${{ env.BUILD_VERSION }}
-          path: distribution/build/libs/ZonePractice-Pro-${{ env.BUILD_VERSION }}.jar
+          name: AstralPractice-${{ env.BUILD_VERSION }}
+          path: distribution/build/libs/AstralPractice-${{ env.BUILD_VERSION }}.jar
           if-no-files-found: error
 
       - name: Resolve Dev Changelog Args
@@ -164,10 +159,10 @@ jobs:
         uses: softprops/action-gh-release@v3.0.3
         with:
           tag_name: ${{ env.BUILD_VERSION }}
-          name: ZonePractice Pro ${{ env.BUILD_VERSION }}
+          name: AstralPractice ${{ env.BUILD_VERSION }}
           body: ${{ steps.changelog.outputs.notes }}
           prerelease: false
-          files: distribution/build/libs/ZonePractice-Pro-${{ env.BUILD_VERSION }}.jar
+          files: distribution/build/libs/AstralPractice-${{ env.BUILD_VERSION }}.jar
 
       - name: Publish to Modrinth
         if: ${{ inputs.publish-artifacts == true && env.MODRINTH_ID != '' && env.MODRINTH_TOKEN != '' }}
@@ -176,8 +171,8 @@ jobs:
           modrinth-id: ${{ secrets.MODRINTH_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-featured: ${{ inputs.is-release-build }}
-          files: distribution/build/libs/ZonePractice-Pro-${{ env.BUILD_VERSION }}.jar
-          name: ZonePractice Pro ${{ env.BUILD_VERSION }}
+          files: distribution/build/libs/AstralPractice-${{ env.BUILD_VERSION }}.jar
+          name: AstralPractice ${{ env.BUILD_VERSION }}
           version: ${{ inputs.is-release-build == true && env.BUILD_VERSION || format('{0}-build.{1}', env.BUILD_VERSION, github.run_number) }}
           version-type: ${{ inputs.release-version-type }}
           changelog: ${{ steps.changelog.outputs.notes }}

@@ -1,6 +1,6 @@
 package dev.lokspel.practice.listener;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.command.privatemessage.MessageCommand;
 import dev.lokspel.practice.manager.fight.match.MatchManager;
 import dev.lokspel.practice.manager.nametag.NametagManager;
@@ -58,12 +58,12 @@ public class PlayerQuit implements Listener {
 
             profile.setPlayerCustomKitSelector(null);
 
-            if (ZonePractice.getInstance().isEnabled()) {
-                Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+            if (AstralPractice.getInstance().isEnabled()) {
+                Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                         profile.setStatus(ProfileStatus.OFFLINE), 5L);
 
                 UUID uuid = player.getUniqueId();
-                Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () ->
+                Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () ->
                         ProfileManager.getInstance().demoteOfflineProfile(uuid), 40L);
             }
         }
@@ -92,9 +92,9 @@ public class PlayerQuit implements Listener {
             profile.getActionBar().resetForReconnect();
             profile.setLastJoin(System.currentTimeMillis());
 
-            if (ZonePractice.getInstance().isEnabled()) {
+            if (AstralPractice.getInstance().isEnabled()) {
                 UUID uuid = player.getUniqueId();
-                Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+                Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
                     profile.setStatus(ProfileStatus.OFFLINE);
                     ProfileManager.getInstance().demoteOfflineProfile(uuid);
                 }, 40L);

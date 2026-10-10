@@ -6,7 +6,7 @@ import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +59,7 @@ public class SaveResource {
             "tntsumo.yml"
     };
 
-    public void saveResources(ZonePractice practice) {
+    public void saveResources(AstralPractice practice) {
         Map<String, Object> backup = backupCustomKeys(practice);
 
         for (String fileName : ROOT_FILES) {
@@ -81,7 +81,7 @@ public class SaveResource {
         }
     }
 
-    private Map<String, Object> backupCustomKeys(ZonePractice practice) {
+    private Map<String, Object> backupCustomKeys(AstralPractice practice) {
         File file = new File(practice.getDataFolder(), "config.yml");
         if (!file.exists()) return Collections.emptyMap();
 
@@ -111,7 +111,7 @@ public class SaveResource {
         return backup;
     }
 
-    private void restoreCustomKeys(ZonePractice practice, Map<String, Object> backup) {
+    private void restoreCustomKeys(AstralPractice practice, Map<String, Object> backup) {
         if (backup.isEmpty()) return;
 
         File file = new File(practice.getDataFolder(), "config.yml");

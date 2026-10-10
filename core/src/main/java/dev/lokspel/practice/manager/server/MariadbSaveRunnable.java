@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.server;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.profile.ProfileManager;
 import lombok.Getter;
@@ -12,7 +12,7 @@ public class MariadbSaveRunnable extends BukkitRunnable {
     private final int interval = ConfigManager.getInt("MARIADB-DATABASE.SAVE-PERIOD");
 
     public void begin() {
-        this.runTaskTimerAsynchronously(ZonePractice.getInstance(), interval * 60 * 20L, interval * 60 * 20L);
+        this.runTaskTimerAsynchronously(AstralPractice.getInstance(), interval * 60 * 20L, interval * 60 * 20L);
     }
 
     @Override

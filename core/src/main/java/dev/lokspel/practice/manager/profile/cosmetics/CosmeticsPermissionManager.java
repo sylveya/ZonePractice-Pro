@@ -31,16 +31,16 @@ public enum CosmeticsPermissionManager {
     public static void registerAllPermissions() {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
-        registerPermission(pluginManager, "zpp.cosmetics.shield.use", "Use shield cosmetics.");
-        registerPermission(pluginManager, "zpp.cosmetics.lobby.*", "Use all lobby item cosmetics.");
+        registerPermission(pluginManager, "ap.cosmetics.shield.use", "Use shield cosmetics.");
+        registerPermission(pluginManager, "ap.cosmetics.lobby.*", "Use all lobby item cosmetics.");
         for (CosmeticsData.LobbyItemType lobbyItemType : CosmeticsData.LobbyItemType.values()) {
             registerPermission(pluginManager, lobbyItemType.getPermissionNode(), "Use lobby item cosmetic " + lobbyItemType.name().toLowerCase(Locale.ROOT) + ".");
         }
-        registerPermission(pluginManager, "zpp.cosmetics.shield.layouts.*", "Use all shield layout slots.");
-        registerPermission(pluginManager, "zpp.cosmetics.shield.layouts.unlimited", "Use unlimited shield layouts.");
+        registerPermission(pluginManager, "ap.cosmetics.shield.layouts.*", "Use all shield layout slots.");
+        registerPermission(pluginManager, "ap.cosmetics.shield.layouts.unlimited", "Use unlimited shield layouts.");
         for (int layouts = 1; layouts <= MAX_SHIELD_LAYOUTS; layouts++) {
             registerPermission(pluginManager,
-                    "zpp.cosmetics.shield.layouts." + layouts,
+                    "ap.cosmetics.shield.layouts." + layouts,
                     "Use up to " + layouts + " shield layouts.");
         }
 
@@ -61,7 +61,7 @@ public enum CosmeticsPermissionManager {
             REGISTERED_PATTERNS.add(pattern);
             PATTERN_IDS.put(pattern, id);
             registerPermission(pluginManager,
-                    "zpp.cosmetics.armortrim.pattern." + id,
+                    "ap.cosmetics.armortrim.pattern." + id,
                     "Use armor trim pattern " + id + ".");
         });
 
@@ -78,7 +78,7 @@ public enum CosmeticsPermissionManager {
             REGISTERED_MATERIALS.add(material);
             MATERIAL_IDS.put(material, id);
             registerPermission(pluginManager,
-                    "zpp.cosmetics.armortrim.material." + id,
+                    "ap.cosmetics.armortrim.material." + id,
                     "Use armor trim material " + id + ".");
         });
 
@@ -111,7 +111,7 @@ public enum CosmeticsPermissionManager {
         }
 
         return player.isOp()
-                || player.hasPermission("zpp.cosmetics.armortrim.base.*")
+                || player.hasPermission("ap.cosmetics.armortrim.base.*")
                 || player.hasPermission(tier.getPermissionNode());
     }
 
@@ -120,7 +120,7 @@ public enum CosmeticsPermissionManager {
             return false;
         }
 
-        return hasPatternPermission(player, "zpp.cosmetics.armortrim.pattern." + getTrimId(pattern));
+        return hasPatternPermission(player, "ap.cosmetics.armortrim.pattern." + getTrimId(pattern));
     }
 
     public static boolean hasPatternPermission(Player player, String node) {
@@ -129,7 +129,7 @@ public enum CosmeticsPermissionManager {
         }
 
         return player.isOp()
-                || player.hasPermission("zpp.cosmetics.armortrim.pattern.*")
+                || player.hasPermission("ap.cosmetics.armortrim.pattern.*")
                 || player.hasPermission(node);
     }
 
@@ -138,7 +138,7 @@ public enum CosmeticsPermissionManager {
             return false;
         }
 
-        return hasMaterialPermission(player, "zpp.cosmetics.armortrim.material." + getTrimId(material));
+        return hasMaterialPermission(player, "ap.cosmetics.armortrim.material." + getTrimId(material));
     }
 
     public static boolean hasMaterialPermission(Player player, String node) {
@@ -147,7 +147,7 @@ public enum CosmeticsPermissionManager {
         }
 
         return player.isOp()
-                || player.hasPermission("zpp.cosmetics.armortrim.material.*")
+                || player.hasPermission("ap.cosmetics.armortrim.material.*")
                 || player.hasPermission(node);
     }
 
@@ -176,8 +176,8 @@ public enum CosmeticsPermissionManager {
         }
 
         return player.isOp()
-                || player.hasPermission("zpp.cosmetics.shield.*")
-                || player.hasPermission("zpp.cosmetics.shield.use");
+                || player.hasPermission("ap.cosmetics.shield.*")
+                || player.hasPermission("ap.cosmetics.shield.use");
     }
 
     public static boolean hasLobbyItemPermission(Player player, CosmeticsData.LobbyItemType lobbyItemType) {
@@ -190,7 +190,7 @@ public enum CosmeticsPermissionManager {
         }
 
         return player.isOp()
-                || player.hasPermission("zpp.cosmetics.lobby.*")
+                || player.hasPermission("ap.cosmetics.lobby.*")
                 || player.hasPermission(lobbyItemType.getPermissionNode());
     }
 
@@ -200,14 +200,14 @@ public enum CosmeticsPermissionManager {
         }
 
         if (player.isOp()
-                || player.hasPermission("zpp.cosmetics.shield.*")
-                || player.hasPermission("zpp.cosmetics.shield.layouts.*")
-                || player.hasPermission("zpp.cosmetics.shield.layouts.unlimited")) {
+                || player.hasPermission("ap.cosmetics.shield.*")
+                || player.hasPermission("ap.cosmetics.shield.layouts.*")
+                || player.hasPermission("ap.cosmetics.shield.layouts.unlimited")) {
             return MAX_SHIELD_LAYOUTS;
         }
 
         for (int layouts = MAX_SHIELD_LAYOUTS; layouts >= 1; layouts--) {
-            if (player.hasPermission("zpp.cosmetics.shield.layouts." + layouts)) {
+            if (player.hasPermission("ap.cosmetics.shield.layouts." + layouts)) {
                 return layouts;
             }
         }

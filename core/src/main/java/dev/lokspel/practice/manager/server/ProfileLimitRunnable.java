@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.server;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.fight.match.enums.WeightClass;
 import dev.lokspel.practice.manager.profile.Profile;
@@ -24,7 +24,7 @@ public class ProfileLimitRunnable extends BukkitRunnable {
         long i2 = zdt.toInstant().toEpochMilli() - System.currentTimeMillis();
         long i3 = (i2 / 1000) * 20;
 
-        this.runTaskTimerAsynchronously(ZonePractice.getInstance(), i3, 86400000L);
+        this.runTaskTimerAsynchronously(AstralPractice.getInstance(), i3, 86400000L);
     }
 
     @Override

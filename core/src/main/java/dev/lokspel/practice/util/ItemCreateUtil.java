@@ -1,7 +1,7 @@
 package dev.lokspel.practice.util;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -27,7 +27,7 @@ public class ItemCreateUtil {
      */
     private static Component parseColor(String raw) {
         if (raw == null || raw.isEmpty()) return Component.empty();
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(raw))
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(raw))
                 .decorationIfAbsent(net.kyori.adventure.text.format.TextDecoration.ITALIC,
                         net.kyori.adventure.text.format.TextDecoration.State.FALSE);
     }

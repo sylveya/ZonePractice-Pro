@@ -29,7 +29,7 @@ public class DuelCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (!player.hasPermission("zpp.duel")) {
+        if (!player.hasPermission("ap.duel")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.DUEL.NO-PERMISSION"));
             return false;
         }
@@ -58,7 +58,7 @@ public class DuelCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (DuelManager.getInstance().isRequested(player, target) && !player.hasPermission("zpp.duel.infiniteinvite")) {
+        if (DuelManager.getInstance().isRequested(player, target) && !player.hasPermission("ap.duel.infiniteinvite")) {
             Common.sendMMMessage(player, LanguageManager.getString("command.duel.already-invited").replace("%target%", target.getName()));
             return false;
         }

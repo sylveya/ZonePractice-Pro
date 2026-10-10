@@ -1,7 +1,7 @@
 package dev.lokspel.practice.manager.matchhistory;
 
 import dev.lokspel.api.Event.Match.MatchEndEvent;
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.database.Database;
 import dev.lokspel.practice.manager.fight.match.type.duel.Duel;
 import dev.lokspel.practice.manager.fight.util.Stats.Statistic;
@@ -33,7 +33,7 @@ public class MatchHistoryManager implements Listener {
     private final Map<UUID, MatchHistory> matchHistories = new ConcurrentHashMap<>();
 
     private MatchHistoryManager() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     public MatchHistory getMatchHistory(UUID uuid) {
@@ -67,7 +67,7 @@ public class MatchHistoryManager implements Listener {
     }
 
     private CompletableFuture<List<MatchHistoryEntry>> loadFromDatabase(UUID playerUuid) {
-        Database database = ZonePractice.getDatabase();
+        Database database = AstralPractice.getDatabase();
         if (database == null) return CompletableFuture.completedFuture(List.of());
 
         return database.getMatchHistoryRepository().getHistory(playerUuid, MAX_HISTORY)
@@ -78,7 +78,7 @@ public class MatchHistoryManager implements Listener {
     }
 
     private void saveToDatabase(MatchHistoryResult result, MatchHistoryResult opponentView) {
-        Database database = ZonePractice.getDatabase();
+        Database database = AstralPractice.getDatabase();
         if (database == null) return;
 
         database.getMatchHistoryRepository().save(result.toRow(), opponentView.toRow(), MAX_HISTORY)

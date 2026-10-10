@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.queue;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.ConfigManager;
 import dev.lokspel.practice.manager.backend.LanguageManager;
 import dev.lokspel.practice.manager.division.Division;
@@ -27,7 +27,7 @@ import java.util.List;
 public class QueueManager implements Listener {
 
     private static final String MULTI_QUEUE_CONFIG_PATH = "QUEUE.MULTI";
-    private static final String MULTI_QUEUE_PERMISSION_DEFAULT = "zpp.queue.multi";
+    private static final String MULTI_QUEUE_PERMISSION_DEFAULT = "ap.queue.multi";
 
     private static QueueManager instance;
 
@@ -40,7 +40,7 @@ public class QueueManager implements Listener {
     private final List<Queue> queues = Collections.synchronizedList(new ArrayList<>());
 
     private QueueManager() {
-        Bukkit.getPluginManager().registerEvents(this, ZonePractice.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AstralPractice.getInstance());
     }
 
     public Queue getQueue(final Player queuePlayer) {
@@ -116,7 +116,7 @@ public class QueueManager implements Listener {
 
         Profile profile = ProfileManager.getInstance().getProfile(player);
 
-        if (!player.hasPermission("zpp.bypass.ranked.requirements")) {
+        if (!player.hasPermission("ap.bypass.ranked.requirements")) {
             Division requirement = DivisionManager.getInstance().getMinimumForRanked();
             if (requirement != null && !DivisionManager.getInstance().meetsMinimumForRanked(profile)) {
                 sendRankedProgressMessage(player, profile, requirement);
@@ -128,7 +128,7 @@ public class QueueManager implements Listener {
             }
         }
 
-        if (profile.getRankedLeft() <= 0 && !player.hasPermission("zpp.bypass.ranked.limit")) {
+        if (profile.getRankedLeft() <= 0 && !player.hasPermission("ap.bypass.ranked.limit")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.QUEUES.RANKED.NO-RANKED-LEFT"));
             if (!keepInventoryOpen) {
                 player.closeInventory();

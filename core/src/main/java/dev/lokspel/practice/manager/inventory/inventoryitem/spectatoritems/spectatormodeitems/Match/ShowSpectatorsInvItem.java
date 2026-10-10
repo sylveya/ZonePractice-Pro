@@ -22,12 +22,12 @@ public class ShowSpectatorsInvItem extends InvItem {
 
     @Override
     public void handleClickEvent(Player player) {
-        if (!player.hasPermission("zpp.spectate.vanish")) {
+        if (!player.hasPermission("ap.spectate.vanish")) {
             Common.sendMMMessage(player, LanguageManager.getString("SPECTATE.NO-PERMISSIONS"));
             return;
         }
 
-        if (!player.hasPermission("zpp.bypass.cooldown") && PlayerCooldown.isActive(player, CooldownObject.SPECTATOR_VANISH)) {
+        if (!player.hasPermission("ap.bypass.cooldown") && PlayerCooldown.isActive(player, CooldownObject.SPECTATOR_VANISH)) {
             Common.sendMMMessage(player, StringUtil.replaceSecondString(LanguageManager.getString("SPECTATE.VANISH-COOLDOWN"), PlayerCooldown.getLeftInDouble(player, CooldownObject.SPECTATOR_VANISH)));
             return;
         } else

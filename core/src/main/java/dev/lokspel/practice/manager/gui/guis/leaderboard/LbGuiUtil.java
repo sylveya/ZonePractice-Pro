@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.gui.guis.leaderboard;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.backend.GUIFile;
 import dev.lokspel.practice.manager.division.Division;
 import dev.lokspel.practice.manager.gui.GUIItem;
@@ -33,7 +33,7 @@ public enum LbGuiUtil {
 
     private static Component parseColor(String raw) {
         if (raw == null || raw.isEmpty()) return Component.empty();
-        return ZonePractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(raw))
+        return AstralPractice.getMiniMessage().deserialize(StringUtil.legacyToMiniMessage(raw))
                 .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
     }
 

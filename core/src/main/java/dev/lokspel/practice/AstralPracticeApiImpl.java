@@ -3,7 +3,7 @@ package dev.lokspel.practice;
 import dev.lokspel.api.Enum.DivisionName;
 import dev.lokspel.api.Enum.WeightClass;
 import dev.lokspel.api.Utilities.PlayerNametag;
-import dev.lokspel.api.ZonePracticeApi;
+import dev.lokspel.api.AstralPracticeApi;
 import dev.lokspel.practice.manager.fight.match.Match;
 import dev.lokspel.practice.manager.fight.match.MatchManager;
 import dev.lokspel.practice.manager.inventory.InventoryUtil;
@@ -14,10 +14,10 @@ import dev.lokspel.practice.manager.profile.ProfileManager;
 import dev.lokspel.practice.manager.profile.group.Group;
 import org.bukkit.entity.Player;
 
-public class ZonePracticeApiImpl extends ZonePracticeApi {
+public class AstralPracticeApiImpl extends AstralPracticeApi {
 
     public static void setup() {
-        ZonePracticeApi.instance = new ZonePracticeApiImpl();
+        AstralPracticeApi.instance = new AstralPracticeApiImpl();
     }
 
     @Override

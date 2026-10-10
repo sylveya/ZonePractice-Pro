@@ -1,6 +1,6 @@
 package dev.lokspel.practice.manager.playerkit.guis;
 
-import dev.lokspel.practice.ZonePractice;
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.gui.GUI;
 import dev.lokspel.practice.manager.gui.GUIManager;
 import dev.lokspel.practice.manager.gui.GUIType;
@@ -108,7 +108,7 @@ public class PotionsGUI extends GUI {
         PlayerKitEditing playerKitEditing = PlayerKitManager.getInstance().getEditing().get(player);
         GUI mainGUI = playerKitEditing.getCustomLadder().getMainGUI();
 
-        Bukkit.getScheduler().runTaskLater(ZonePractice.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstralPractice.getInstance(), () -> {
             if (GUIManager.getInstance().getOpenGUI().containsKey(player)) {
                 return;
             }

@@ -92,14 +92,14 @@ public class PartySettingsGui extends GUI {
 
         switch (slot) {
             case 10:
-                if (player.hasPermission("zpp.party.duelrequest")) {
+                if (player.hasPermission("ap.party.duelrequest")) {
                     party.setDuelRequests(!party.isDuelRequests());
                     update();
                 } else
                     Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-PERMISSION"));
                 break;
             case 11:
-                if (player.hasPermission("zpp.party.changelimit")) {
+                if (player.hasPermission("ap.party.changelimit")) {
                     int groupPartyLimit = PartyManager.getInstance().resolvePartyMemberLimit(party.getLeader());
                     if (clickType.isLeftClick() && party.getMaxPlayerLimit() > 2) {
                         if (party.getMembers().size() < party.getMaxPlayerLimit()) {
@@ -116,7 +116,7 @@ public class PartySettingsGui extends GUI {
                     Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-PERMISSION"));
                 break;
             case 12:
-                if (player.hasPermission("zpp.party.partychat")) {
+                if (player.hasPermission("ap.party.partychat")) {
                     boolean partyChat = !party.isPartyChat();
                     party.setPartyChat(partyChat);
 
@@ -141,14 +141,14 @@ public class PartySettingsGui extends GUI {
                     Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-PERMISSION"));
                 break;
             case 14:
-                if (player.hasPermission("zpp.party.allinvite")) {
+                if (player.hasPermission("ap.party.allinvite")) {
                     party.setAllInvite(!party.isAllInvite());
                     update();
                 } else
                     Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-PERMISSION"));
                 break;
             case 15:
-                if (player.hasPermission("zpp.party.public")) {
+                if (player.hasPermission("ap.party.public")) {
                     if (PlayerCooldown.isActive(player, CooldownObject.PUBLIC_PARTY_CHANGE)) {
                         Common.sendMMMessage(player, StringUtil.replaceSecondString(LanguageManager.getString("WAIT-FOR-COOLDOWN"), PlayerCooldown.getLeftInDouble(player, CooldownObject.LEADERBOARD_GUI_REFRESH)));
                         return;
@@ -166,7 +166,7 @@ public class PartySettingsGui extends GUI {
                     Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-PERMISSION"));
                 break;
             case 16:
-                if (player.hasPermission("zpp.party.broadcast")) {
+                if (player.hasPermission("ap.party.broadcast")) {
                     if (party.isBroadcastParty()) {
                         if (PlayerCooldown.isActive(player, CooldownObject.BROADCAST_PARTY_CHANGE)) {
                             Common.sendMMMessage(player, StringUtil.replaceSecondString(LanguageManager.getString("WAIT-FOR-COOLDOWN"), PlayerCooldown.getLeftInDouble(player, CooldownObject.BROADCAST_PARTY_CHANGE)));
@@ -179,11 +179,11 @@ public class PartySettingsGui extends GUI {
                     } else {
                         if (party.isPublicParty()) {
                             Profile leaderProfile = ProfileManager.getInstance().getProfile(player);
-                            if (!player.hasPermission("zpp.bypass.party.broadcast.limit") && leaderProfile.getPartyBroadcastLeft() <= 0) {
+                            if (!player.hasPermission("ap.bypass.party.broadcast.limit") && leaderProfile.getPartyBroadcastLeft() <= 0) {
                                 Common.sendMMMessage(player, LanguageManager.getString("PARTY.NO-BROADCAST-LEFT"));
                                 return;
                             }
-                            if (!player.hasPermission("zpp.bypass.party.broadcast.limit")) {
+                            if (!player.hasPermission("ap.bypass.party.broadcast.limit")) {
                                 leaderProfile.setPartyBroadcastLeft(leaderProfile.getPartyBroadcastLeft() - 1);
                             }
 

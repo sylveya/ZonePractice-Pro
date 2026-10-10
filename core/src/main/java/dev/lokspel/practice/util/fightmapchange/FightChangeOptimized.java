@@ -1,7 +1,7 @@
 package dev.lokspel.practice.util.fightmapchange;
 
+import dev.lokspel.practice.AstralPractice;
 import dev.lokspel.practice.manager.leaderboard.hologram.TextDisplayFactory;
-import dev.lokspel.practice.ZonePractice;
 import dev.lokspel.practice.manager.fight.util.BlockUtil;
 import dev.lokspel.practice.manager.fight.util.ChangedBlock;
 import dev.lokspel.practice.manager.fight.util.PlayerUtil;
@@ -204,7 +204,7 @@ public class FightChangeOptimized {
             public void run() {
                 tickTempBlocks();
             }
-        }.runTaskTimer(ZonePractice.getInstance(), 0L, 1L);
+        }.runTaskTimer(AstralPractice.getInstance(), 0L, 1L);
     }
 
     /**
@@ -340,7 +340,7 @@ public class FightChangeOptimized {
     public void rollback(int maxCheck, int maxChange, @Nullable Runnable onComplete) {
         rollingBack = true;
 
-        if (ZonePractice.getInstance().isEnabled()) {
+        if (AstralPractice.getInstance().isEnabled()) {
             addRollbackChunkTickets();
         }
 
@@ -357,7 +357,7 @@ public class FightChangeOptimized {
             removeRollbackChunkTickets();
 
             if (onComplete != null && !org.bukkit.Bukkit.isPrimaryThread()) {
-                org.bukkit.Bukkit.getScheduler().runTask(ZonePractice.getInstance(), () -> finishRollback(onComplete));
+                org.bukkit.Bukkit.getScheduler().runTask(AstralPractice.getInstance(), () -> finishRollback(onComplete));
                 return;
             }
 
@@ -366,7 +366,7 @@ public class FightChangeOptimized {
         }
 
         // Quick rollback if server is shutting down
-        if (!ZonePractice.getInstance().isEnabled()) {
+        if (!AstralPractice.getInstance().isEnabled()) {
             quickRollback();
             removeRollbackChunkTickets();
 
@@ -452,7 +452,7 @@ public class FightChangeOptimized {
     }
 
     private void addRollbackChunkTickets() {
-        org.bukkit.plugin.Plugin plugin = ZonePractice.getInstance();
+        org.bukkit.plugin.Plugin plugin = AstralPractice.getInstance();
         if (!plugin.isEnabled()) {
             return;
         }
@@ -470,7 +470,7 @@ public class FightChangeOptimized {
     }
 
     private void removeRollbackChunkTickets() {
-        org.bukkit.plugin.Plugin plugin = ZonePractice.getInstance();
+        org.bukkit.plugin.Plugin plugin = AstralPractice.getInstance();
         if (!plugin.isEnabled()) {
             rollbackChunkTickets.clear();
             return;
@@ -612,7 +612,7 @@ public class FightChangeOptimized {
 
         void start() {
             isRunning = true;
-            this.runTaskTimer(ZonePractice.getInstance(), 0L, 1L);
+            this.runTaskTimer(AstralPractice.getInstance(), 0L, 1L);
         }
 
         @Override

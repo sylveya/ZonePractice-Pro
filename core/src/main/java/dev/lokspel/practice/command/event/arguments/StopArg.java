@@ -16,7 +16,7 @@ public final class StopArg {
     private StopArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.event.stop.collecting") && !player.hasPermission("zpp.event.stop.live")) {
+        if (!player.hasPermission("ap.event.stop.collecting") && !player.hasPermission("ap.event.stop.live")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.EVENT.ARGUMENTS.STOP.NO-PERMISSION"));
             return;
         }
@@ -38,12 +38,12 @@ public final class StopArg {
 
             // Check permissions based on event status
             if (event.getStatus().equals(EventStatus.COLLECTING)) {
-                if (!player.hasPermission("zpp.event.stop.collecting")) {
+                if (!player.hasPermission("ap.event.stop.collecting")) {
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.EVENT.ARGUMENTS.STOP.NO-PERMISSION"));
                     return;
                 }
             } else {
-                if (!player.hasPermission("zpp.event.stop.live")) {
+                if (!player.hasPermission("ap.event.stop.live")) {
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.EVENT.ARGUMENTS.STOP.NO-PERMISSION"));
                     return;
                 }
@@ -67,12 +67,12 @@ public final class StopArg {
 
             // Check permissions based on event status
             if (event.getStatus().equals(EventStatus.COLLECTING)) {
-                if (!player.hasPermission("zpp.event.stop.collecting")) {
+                if (!player.hasPermission("ap.event.stop.collecting")) {
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.EVENT.ARGUMENTS.STOP.NO-PERMISSION"));
                     return;
                 }
             } else {
-                if (!player.hasPermission("zpp.event.stop.live")) {
+                if (!player.hasPermission("ap.event.stop.live")) {
                     Common.sendMMMessage(player, LanguageManager.getString("COMMAND.EVENT.ARGUMENTS.STOP.NO-PERMISSION"));
                     return;
                 }
@@ -86,7 +86,7 @@ public final class StopArg {
 
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
-        if (!player.hasPermission("zpp.event.stop.collecting") && !player.hasPermission("zpp.event.stop.live"))
+        if (!player.hasPermission("ap.event.stop.collecting") && !player.hasPermission("ap.event.stop.live"))
             return arguments;
 
         if (args.length == 2) {

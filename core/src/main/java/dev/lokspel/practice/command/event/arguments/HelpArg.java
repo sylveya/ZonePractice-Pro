@@ -9,10 +9,10 @@ public final class HelpArg {
     private HelpArg() {}
 
     public static void run(Player player, String label) {
-        if (player.hasPermission("zpp.setup") && player.hasPermission("zpp.event.stop")) {
+        if (player.hasPermission("ap.setup") && player.hasPermission("ap.event.stop")) {
             for (String line : LanguageManager.getList("COMMAND.EVENT.ARGUMENTS.HELP.STAFF"))
                 Common.sendMMMessage(player, line.replace("%label%", label));
-        } else if (player.hasPermission("zpp.event.join") || player.hasPermission("zpp.event.host")) {
+        } else if (player.hasPermission("ap.event.join") || player.hasPermission("ap.event.host")) {
             for (String line : LanguageManager.getList("COMMAND.EVENT.ARGUMENTS.HELP.USER"))
                 Common.sendMMMessage(player, line.replace("%label%", label));
         } else

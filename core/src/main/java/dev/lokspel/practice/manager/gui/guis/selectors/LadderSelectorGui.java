@@ -223,9 +223,9 @@ public class LadderSelectorGui extends GUI {
              * Duel games ladder selector
              */
             if (party == null) {
-                if (player.hasPermission("zpp.duel.selectarena")) {
+                if (player.hasPermission("ap.duel.selectarena")) {
                     new ArenaSelectorGui(ladder, matchType, this).open(player);
-                } else if (player.hasPermission("zpp.duel.selectrounds")) {
+                } else if (player.hasPermission("ap.duel.selectrounds")) {
                     new DuelRoundSelectorGui(matchType, ladder, null, this, null).open(player);
                 } else {
                     Player target = DuelManager.getInstance().getPendingRequestTarget().get(player);
@@ -258,9 +258,9 @@ public class LadderSelectorGui extends GUI {
                         return;
                     }
 
-                    if (player.hasPermission("zpp.party.selectarena")) {
+                    if (player.hasPermission("ap.party.selectarena")) {
                         new ArenaSelectorGui(ladder, matchType, this).open(player);
-                    } else if (player.hasPermission("zpp.party.selectrounds")) {
+                    } else if (player.hasPermission("ap.party.selectrounds")) {
                         new DuelRoundSelectorGui(matchType, ladder, null, this, party).open(player);
                     } else {
                         startPartyMatch(player, party, ladder, ladder.getRounds());
@@ -278,9 +278,9 @@ public class LadderSelectorGui extends GUI {
                         return;
                     }
 
-                    if (player.hasPermission("zpp.party.selectarena")) {
+                    if (player.hasPermission("ap.party.selectarena")) {
                         new ArenaSelectorGui(ladder, matchType, this).open(player);
-                    } else if (player.hasPermission("zpp.party.selectrounds")) {
+                    } else if (player.hasPermission("ap.party.selectrounds")) {
                         new DuelRoundSelectorGui(matchType, ladder, null, this, party).open(player);
                     } else {
                         player.closeInventory();

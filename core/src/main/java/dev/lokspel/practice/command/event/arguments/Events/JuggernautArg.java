@@ -18,7 +18,7 @@ public final class JuggernautArg {
     private JuggernautArg() {}
 
     public static void run(Player player, String label, String[] args) {
-        if (!player.hasPermission("zpp.setup")) {
+        if (!player.hasPermission("ap.setup")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.EVENT.NO-PERMISSION"));
             return;
         }
@@ -88,7 +88,7 @@ public final class JuggernautArg {
     public static List<String> tabComplete(Player player, String[] args) {
         List<String> arguments = new ArrayList<>();
 
-        if (!player.hasPermission("zpp.setup")) return arguments;
+        if (!player.hasPermission("ap.setup")) return arguments;
 
         if (args.length == 2) {
             arguments.add("setkit");

@@ -18,7 +18,7 @@ public class CopyKitCommand implements CommandExecutor {
             return false;
         }
 
-        if (!player.hasPermission("zpp.playerkit.copy")) {
+        if (!player.hasPermission("ap.playerkit.copy")) {
             Common.sendMMMessage(player, LanguageManager.getString("CUSTOM-PLAYER-KIT.NO-PERMISSION"));
             return false;
         }

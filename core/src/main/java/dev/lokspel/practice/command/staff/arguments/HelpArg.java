@@ -9,7 +9,7 @@ public final class HelpArg {
     private HelpArg() {}
 
     public static void run(Player player, String label) {
-        if (!player.hasPermission("zpp.staffmode")) {
+        if (!player.hasPermission("ap.staffmode")) {
             Common.sendMMMessage(player, LanguageManager.getString("COMMAND.STAFF.NO-PERMISSION"));
             return;
         }
